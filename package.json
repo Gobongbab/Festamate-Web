@@ -16,6 +16,7 @@
     "@stackflow/react": "^1.5.1",
     "@tailwindcss/vite": "^4.0.12",
     "@types/node": "^22.13.10",
+    "daisyui": "^5.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.12"
