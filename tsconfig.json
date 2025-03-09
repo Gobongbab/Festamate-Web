@@ -4,7 +4,9 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "skipLibCheck": true,
+    "noUnusedLocals": false
   },
   "files": [],
   "references": [
