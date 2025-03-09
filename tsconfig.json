@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noUnusedLocals": false
   },
   "files": [],
   "references": [
