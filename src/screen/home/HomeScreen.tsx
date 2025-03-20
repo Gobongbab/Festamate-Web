@@ -1,9 +1,8 @@
-import { type ActivityComponentType } from '@stackflow/react'
 import { AppScreen } from '@stackflow/plugin-basic-ui'
-import { Card, Dock } from '@/shared/ui'
+import { Dock } from '@/shared/ui'
+import { HomeContainer } from '@/widgets/home/ui'
 
-const HomeScreen: ActivityComponentType = () => {
-  const arr = Array.from({ length: 7 })
+export default function HomeScreen() {
   return (
     <AppScreen
       appBar={{
@@ -25,51 +24,10 @@ const HomeScreen: ActivityComponentType = () => {
         backgroundColor: '#f4f4f4',
       }}
     >
-      <div className='scrollbar-hide flex size-full flex-col gap-y-6 overflow-scroll overflow-y-scroll p-6'>
-        <div className='rounded-10 from-primary/50 to-primary-hover/90 flex h-fit w-full flex-col gap-y-2 bg-gradient-to-r p-6 text-white'>
-          <div className='flex items-baseline justify-between'>
-            <span className='agbalumo-regular text-xl font-bold'>
-              Festamate!
-            </span>
-            <span className='hover:text-dark cursor-pointer text-sm text-white'>
-              <u>위치보기</u>
-            </span>
-          </div>
-          <span className='text-xl font-semibold'>부스에 방문해보세요!</span>
-        </div>
-        <div className='flex w-full flex-col gap-y-3'>
-          <div className='flex items-baseline gap-x-2'>
-            <span className='text-lg font-semibold'>개설된 모임방</span>
-            <span className='text-light hover:text-dark cursor-pointer text-sm'>
-              <u>더보기</u>
-            </span>
-          </div>
-          <div className='scrollbar-hide flex h-71 items-center gap-x-3 overflow-x-scroll'>
-            {arr.map(() => (
-              <Card />
-            ))}
-          </div>
-        </div>
-        <div className='mb-34 flex w-full flex-col gap-y-3'>
-          <div className='flex items-baseline gap-x-2'>
-            <span className='text-lg font-semibold'>참여한 모임방</span>
-            <span className='text-light hover:text-dark cursor-pointer text-sm'>
-              <u>더보기</u>
-            </span>
-          </div>
-          <div className='scrollbar-hide flex h-71 items-center gap-x-3 overflow-x-scroll'>
-            {arr.map(() => (
-              <Card />
-            ))}
-          </div>
-        </div>
-        <button className='box-shadow-buttonLg rounded-10 text-md hover:bg-primary-hover fixed bottom-20 z-30 h-16 w-[calc(100%-3rem)] cursor-pointer bg-[#775bf0] font-semibold text-white'>
-          모임방 생성하기
-        </button>
+      <div className='scrollbar-hide container-mobile flex size-full flex-col gap-y-6 overflow-scroll overflow-y-scroll p-6 pb-19'>
+        <HomeContainer />
       </div>
       <Dock />
     </AppScreen>
   )
 }
-
-export default HomeScreen
