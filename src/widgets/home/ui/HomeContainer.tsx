@@ -10,7 +10,7 @@ export default function HomeContainer() {
       <GroupCarousel label='참여한 모임방' key='joinedGroup' />
       <button className='box-shadow-buttonLg rounded-10 text-md hover:bg-primary-hover z-30 mb-6 h-16 w-full flex-shrink-0 cursor-pointer bg-[#775bf0] font-semibold text-white'>
         모임방 생성하기
-      </button>{' '}
+      </button>
     </>
   )
 }
