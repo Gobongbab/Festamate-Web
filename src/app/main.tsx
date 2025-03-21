@@ -1,7 +1,8 @@
-import "./index.css";
-import { createRoot } from "react-dom/client";
-import "@stackflow/plugin-basic-ui/index.css";
+import './index.css'
+import { createRoot } from 'react-dom/client'
+import '@stackflow/plugin-basic-ui/index.css'
 
-import { Stack } from "@/app/stackflow";
+import { Stack } from '@/app/stackflow'
+import '@/app/fcm'
 
-createRoot(document.getElementById("root")!).render(<Stack />);
+createRoot(document.getElementById('root')!).render(<Stack />)
