@@ -1,11 +1,11 @@
 {
-  "semi": false,              
-  "singleQuote": true,         
-  "jsxSingleQuote": true,    
-  "trailingComma": "all",      
-  "bracketSpacing": true,      
-  "printWidth": 80,            
-  "arrowParens": "avoid",      
+  "semi": true,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "printWidth": 80,
+  "arrowParens": "avoid",
   "endOfLine": "lf",
   "plugins": ["prettier-plugin-tailwindcss"]
 }
