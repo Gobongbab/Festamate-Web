@@ -10,6 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Input({
+  id,
   placeholder = '',
   type,
   value,
@@ -23,6 +24,8 @@ export default function Input({
     <div className='flex flex-col gap-y-1.5'>
       {label && <span className={cn(labelClassName)}>{label}</span>}
       <input
+        id={id}
+        name={id}
         className={cn(
           'bg-fill border-border rounded-5 w-full border-[1px] px-4 py-2 focus:outline-none',
           className,
