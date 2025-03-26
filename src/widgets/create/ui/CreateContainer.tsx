@@ -5,8 +5,8 @@ import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
 
 export default function CreateContainer() {
   const MODE = [
-    { title: '세부 정보', form: <GroupDetailForm /> },
-    { title: '제목 설명', form: <GroupTitleForm /> },
+    { title: '세부 정보', form: <GroupDetailForm />, button: '다음으로' },
+    { title: '제목 설명', form: <GroupTitleForm />, button: '생성하기' },
   ];
   const [mode, setMode] = useState(0);
 
@@ -22,7 +22,9 @@ export default function CreateContainer() {
                 MODE[mode].title === title && 'text-dark border-black',
               )}
               name='group-data-details'
-              onClick={() => setMode(index)}
+              onClick={() => {
+                if (index === 0) setMode(index);
+              }}
             >
               {title}
             </button>
@@ -30,7 +32,12 @@ export default function CreateContainer() {
         </div>
         {MODE[mode].form}
       </div>
-      <button>다음으로</button>
+      <button
+        className='box-shadow-buttonLg rounded-10 text-md hover:bg-primary-hover z-30 mb-6 h-16 w-full flex-shrink-0 cursor-pointer bg-[#775bf0] font-semibold text-white'
+        onClick={() => setMode(prev => (prev === 0 ? 1 : 1))}
+      >
+        {MODE[mode].button}
+      </button>
     </div>
   );
 }
