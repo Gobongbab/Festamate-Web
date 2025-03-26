@@ -17,9 +17,9 @@
   --color-fill: #f9f9f9;
 
   --text-2xl: 48px;
-  --text-xl: 24px;
+  --text-xl: 22px;
   --text-lg: 20px;
-  --text-md: 16px;
+  --text-md: 18px;
   --text-sm: 14px;
 
   --radius-10: 10px;
@@ -81,7 +81,7 @@
   }
 
   .title {
-    @apply text-lg font-semibold;
+    @apply text-md font-semibold;
   }
 }
 
