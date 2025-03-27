@@ -24,11 +24,11 @@ export const NormalAppBar = (title?: string) => ({
   ...baseStyle,
 });
 
-export const SearchAppBar = () => ({
+export const SearchAppBar = (searchOnClick: () => void) => ({
   renderLeft: () => (
     <div className='flex size-full items-center'>
       <Input className='mx-6 w-[265px]' placeholder='검색어를 입력하세요' />
-      <FiSearch size={24} />
+      <FiSearch size={24} onClick={searchOnClick} />
     </div>
   ),
 
