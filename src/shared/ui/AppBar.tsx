@@ -1,22 +1,37 @@
-export const AppBar = () => ({
+import { FiSearch } from 'react-icons/fi';
+import Input from './Input';
+
+const baseStyle = { height: '64px', backgroundColor: '#f4f4f4' };
+
+export const AppBar = (searchOnClick: () => void) => ({
   renderLeft: () => (
     <span className='agbalumo-regular ml-2 text-lg font-bold'>Festamate!</span>
   ),
   renderRight: () => (
-    <div
-      className='mr-2 size-10 rounded-[50%] bg-cover bg-center'
-      style={{
-        backgroundImage:
-          'url(https://i.pinimg.com/736x/04/15/e3/0415e3a6c56fc6e8f1e0ac1bed4b6aaf.jpg)',
-      }}
-    />
+    <button
+      name='search'
+      className='mr-2 cursor-pointer'
+      onClick={searchOnClick}
+    >
+      <FiSearch size={24} />
+    </button>
   ),
-  height: '60px',
-  backgroundColor: '#f4f4f4',
+  ...baseStyle,
 });
 
 export const NormalAppBar = (title?: string) => ({
   title: title,
-  height: '60px',
+  ...baseStyle,
+});
+
+export const SearchAppBar = () => ({
+  renderLeft: () => (
+    <div className='flex size-full items-center'>
+      <Input className='mx-6 w-[265px]' placeholder='검색어를 입력하세요' />
+      <FiSearch size={24} />
+    </div>
+  ),
+
+  ...baseStyle,
   backgroundColor: '#fff',
 });
