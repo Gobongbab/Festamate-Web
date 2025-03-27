@@ -16,6 +16,13 @@ export default function ResultScreen() {
       <div className='scrollbar-hide container-mobile flex size-full flex-col gap-y-6 overflow-scroll overflow-y-scroll p-6 pb-24'>
         <ResultContainer searchKey='과팅' />
       </div>
+      <button
+        name='create-group'
+        className='box-shadow-buttonLg rounded-10 text-md hover:bg-primary-hover absolute right-6 bottom-24 z-30 w-fit flex-shrink-0 cursor-pointer bg-[#775bf0] px-4 py-2 font-semibold text-white'
+        onClick={onClick}
+      >
+        +
+      </button>
       <Dock />
     </AppScreen>
   );
