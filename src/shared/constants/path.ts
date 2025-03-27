@@ -3,4 +3,5 @@ export const PATH = {
   USER: 'UserScreen',
   CREATE: 'CreateScreen',
   SEARCH: 'SearchScreen',
+  RESULT: 'ResultScreen',
 } as const;
