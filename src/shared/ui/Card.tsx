@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-export default function Card() {
+import { cn } from '@/shared/utils';
+
+export default function Card({ sizePreset = true }: { sizePreset?: boolean }) {
   return (
     <div
-      className='card h-70 w-50 flex-shrink-0 bg-cover bg-center shadow-sm'
+      className={cn(
+        'card flex-shrink-0 bg-cover bg-center shadow-sm',
+        sizePreset ? 'h-70 w-50' : 'h-60 w-full',
+      )}
       style={{
         backgroundImage:
           'url(https://i.pinimg.com/736x/81/09/5c/81095c402f3fda5bff8cb19692d96dd9.jpg)',
@@ -26,7 +31,7 @@ export default function Card() {
             }}
           />
           <p>1월 27일 18:00</p>
-          <p className='text-lg leading-tight font-semibold'>
+          <p className='text-md leading-tight font-semibold'>
             오늘 같이
             <br /> 놀 사람
           </p>
@@ -36,5 +41,5 @@ export default function Card() {
         </div>
       </div>
     </div>
-  )
+  );
 }

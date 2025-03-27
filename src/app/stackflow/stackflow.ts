@@ -5,10 +5,18 @@ import { stackflow } from '@stackflow/react';
 import { HomeScreen } from '@/screen/home';
 import { UserScreen } from '@/screen/user';
 import { CreateScreen } from '@/screen/create/ui';
+import { SearchScreen } from '@/screen/search/ui';
+import { ResultScreen } from '@/screen/result/ui';
 
 export const { Stack, useFlow } = stackflow({
   transitionDuration: 350,
-  activities: { HomeScreen, UserScreen, CreateScreen },
+  activities: {
+    HomeScreen,
+    UserScreen,
+    CreateScreen,
+    SearchScreen,
+    ResultScreen,
+  },
   plugins: [
     basicRendererPlugin(),
     basicUIPlugin({
