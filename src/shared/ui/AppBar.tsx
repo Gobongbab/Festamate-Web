@@ -26,10 +26,13 @@ export const NormalAppBar = (title?: string) => ({
 
 export const SearchAppBar = (searchOnClick: () => void) => ({
   renderLeft: () => (
-    <div className='flex size-full items-center'>
-      <Input className='mx-6 w-[265px]' placeholder='검색어를 입력하세요' />
-      <FiSearch size={24} onClick={searchOnClick} />
-    </div>
+    <Input
+      className='ml-6 w-[calc(100vw-132px)]'
+      placeholder='검색어를 입력하세요'
+    />
+  ),
+  renderRight: () => (
+    <FiSearch size={24} onClick={searchOnClick} className='mr-2' />
   ),
 
   ...baseStyle,
