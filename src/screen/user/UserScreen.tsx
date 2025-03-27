@@ -1,5 +1,5 @@
 import { AppScreen } from '@stackflow/plugin-basic-ui';
-import { AppBar, Dock } from '@/shared/ui';
+import { NormalAppBar, Dock } from '@/shared/ui';
 import { UserContainer } from '@/widgets/user/ui';
 
 export default function UserScreen() {
