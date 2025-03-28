@@ -8,8 +8,8 @@ import { useFlow } from '@/app/stackflow';
 import { PATH } from '@/shared/constants';
 
 export default function HomeScreen() {
-  const { push } = useFlow();
-  const searchOnClick = () => push(PATH.SEARCH, {});
+  const { replace } = useFlow();
+  const searchOnClick = () => replace(PATH.SEARCH, {});
 
   return (
     <AppScreen appBar={AppBar(searchOnClick)}>
