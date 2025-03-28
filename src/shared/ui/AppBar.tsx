@@ -1,11 +1,11 @@
 import { FiChevronLeft, FiSearch } from 'react-icons/fi';
 import Input from './Input';
 
-const baseStyle = { height: '64px', backgroundColor: '#f4f4f4' };
+const baseStyle = { height: '64px', backgroundColor: '#fff' };
 
 export const AppBar = (searchOnClick: () => void) => ({
   renderLeft: () => (
-    <span className='agbalumo-regular ml-2 text-lg font-bold'>Festamate!</span>
+    <span className='agbalumo-regular logo ml-2'>Festamate!</span>
   ),
   renderRight: () => (
     <button

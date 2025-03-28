@@ -89,6 +89,10 @@
   .title {
     @apply text-lg font-semibold;
   }
+
+  .logo {
+    @apply text-2xl font-bold;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
