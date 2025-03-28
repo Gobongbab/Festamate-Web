@@ -1,4 +1,4 @@
-import { FiSearch } from 'react-icons/fi';
+import { FiChevronLeft, FiSearch } from 'react-icons/fi';
 import Input from './Input';
 
 const baseStyle = { height: '64px', backgroundColor: '#f4f4f4' };
@@ -25,12 +25,18 @@ export const NormalAppBar = (title?: string) => ({
   ...baseStyle,
 });
 
-export const SearchAppBar = (searchOnClick: () => void) => ({
+export const SearchAppBar = (
+  closeOnClick: () => void,
+  searchOnClick: () => void,
+) => ({
   renderLeft: () => (
-    <Input
-      className='ml-6 w-[calc(100vw-132px)]'
-      placeholder='검색어를 입력하세요'
-    />
+    <>
+      <FiChevronLeft size={32} onClick={closeOnClick} />
+      <Input
+        className='ml-3 w-[calc(100vw-132px)]'
+        placeholder='검색어를 입력하세요'
+      />
+    </>
   ),
   renderRight: () => (
     <FiSearch size={24} onClick={searchOnClick} className='mr-2' />
