@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { MdAdd } from 'react-icons/md';
 
 import { useFlow } from '@/app/stackflow';
 import { PATH } from '@/shared/constants';
@@ -20,10 +21,10 @@ export default function ResultScreen() {
       </div>
       <button
         name='create-group'
-        className='box-shadow-buttonLg rounded-10 text-md hover:bg-primary-hover absolute right-6 bottom-24 z-30 w-fit flex-shrink-0 cursor-pointer bg-[#775bf0] px-4 py-2 font-semibold text-white'
+        className='box-shadow-buttonLg hover:bg-primary-hover absolute right-6 bottom-26 z-30 flex w-fit flex-shrink-0 cursor-pointer items-center gap-x-2 rounded-full bg-[#775bf0] px-5 py-2.5 text-lg font-medium text-white'
         onClick={createOnClick}
       >
-        +
+        <MdAdd size={14} /> 모임방 만들기
       </button>
       <Dock />
     </AppScreen>
