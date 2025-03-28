@@ -1,26 +1,28 @@
 import React from 'react';
 
 import { GroupCarousel } from '@/widgets/home/ui';
-import { useFlow } from '@/app/stackflow';
-import { PATH } from '@/shared/constants';
+import { ListItem } from '@/shared/ui';
 
 export default function HomeContainer() {
-  const { push } = useFlow();
-
-  const onClick = () => push(PATH.CREATE, {});
+  const arr = Array.from({ length: 4 });
 
   return (
     <>
       <BoothInfo />
       <GroupCarousel label='개설된 모임방' key='openedGroup' />
-      <GroupCarousel label='참여한 모임방' key='joinedGroup' />
-      <button
-        name='create-group'
-        className='box-shadow-buttonLg rounded-10 text-md hover:bg-primary-hover z-30 mb-6 h-16 w-full flex-shrink-0 cursor-pointer bg-[#775bf0] font-semibold text-white'
-        onClick={onClick}
-      >
-        모임방 생성하기
-      </button>
+      <div className='flex w-full flex-col gap-y-3'>
+        <div className='flex items-baseline justify-between gap-x-2'>
+          <span className='text-lg font-semibold'>참여한 모임방</span>
+          <span className='text-light hover:text-dark cursor-pointer text-sm'>
+            <u>더보기</u>
+          </span>
+        </div>
+        <div className='flex flex-col items-center gap-1.5'>
+          {arr.map((_, i) => (
+            <ListItem key={i} />
+          ))}
+        </div>
+      </div>
     </>
   );
 }
