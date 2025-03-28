@@ -18,14 +18,15 @@
   --color-border: #e5e5e5;
   --color-fill: #f9f9f9;
 
-  --text-2xl: 48px;
-  --text-xl: 22px;
-  --text-lg: 20px;
-  --text-md: 18px;
-  --text-sm: 14px;
+  --text-xl: 18px;
+  --text-lg: 16px;
+  --text-md: 14px;
+  --text-sm: 12px;
 
   --radius-10: 10px;
   --radius-5: 5px;
+
+  --spacing-card-height: 160px;
 }
 
 .agbalumo-regular {
@@ -83,7 +84,7 @@
   }
 
   .title {
-    @apply text-md font-semibold;
+    @apply text-lg font-semibold;
   }
 }
 
