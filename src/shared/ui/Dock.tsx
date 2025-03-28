@@ -25,18 +25,9 @@ export default function Dock() {
 }
 
 const DockButton = ({ item, selected }: DockButtonProps) => {
-  const stack = useStack();
-  const { replace, pop } = useFlow();
-
+  const { replace } = useFlow();
   const onClick = () => {
     replace(item, { animate: false }, { animate: false });
-    const info = stack.activities;
-    if (
-      info.filter(activity => activity.transitionState === 'enter-done')
-        .length > 0
-    ) {
-      pop();
-    }
   };
 
   return (
