@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card } from '@/shared/ui';
+import { ListItem } from '@/shared/ui';
 
 interface ResultContainerParams {
   searchKey: string;
@@ -11,12 +11,12 @@ export default function ResultContainer({ searchKey }: ResultContainerParams) {
 
   return (
     <>
-      <p className='text-md'>
+      <p className='text-lg'>
         "<b>{searchKey}</b>" 에 대한 검색 결과입니다.
       </p>
-      <div className='grid grid-cols-2 gap-3'>
+      <div className='flex flex-col gap-1.5'>
         {result.map(result => (
-          <Card key={result} sizePreset={false} />
+          <ListItem key={result} />
         ))}
       </div>
     </>

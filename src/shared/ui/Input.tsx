@@ -27,7 +27,7 @@ export default function Input({
         id={id}
         name={id}
         className={cn(
-          'bg-fill border-border rounded-5 w-full border-[1px] px-4 py-2 focus:outline-none',
+          'border-border rounded-5 w-full border-[1px] bg-white px-4 py-2 focus:outline-none',
           className,
           disabled && 'cursor-not-allowed opacity-50',
         )}

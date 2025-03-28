@@ -8,6 +8,7 @@ export default function GroupDetailForm() {
       <FormItem
         title='인원 선택'
         description='1:1은 2명, 2:2는 4명, 3:3은 6명을 선택해주세요.'
+        childrenWrapper={false}
       >
         <Radio id='people-2' label='2명' />
         <Radio id='people-4' label='4명' />
@@ -15,10 +16,12 @@ export default function GroupDetailForm() {
       </FormItem>
       <FormItem
         title='성별 선택'
-        description='1:1은 2명, 2:2는 4명, 3:3은 6명을 선택해주세요.'
+        description='모임방에 들어올 구성원들의 성별을 선택해주세요.'
+        childrenWrapper={false}
       >
         <Radio id='male' label='남자' />
         <Radio id='female' label='여자' />
+        <Radio id='whatever' label='무관' />
       </FormItem>
       <FormItem
         title='연락 수단'

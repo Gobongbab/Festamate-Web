@@ -18,14 +18,18 @@
   --color-border: #e5e5e5;
   --color-fill: #f9f9f9;
 
-  --text-2xl: 48px;
-  --text-xl: 22px;
-  --text-lg: 20px;
-  --text-md: 18px;
-  --text-sm: 14px;
+  --text-xl: 18px;
+  --text-lg: 16px;
+  --text-md: 14px;
+  --text-sm: 12px;
 
   --radius-10: 10px;
   --radius-5: 5px;
+
+  --spacing-dock-height: 72px;
+  --spacing-card-height: 160px;
+  --spacing-normal-spacing: 18px;
+  --spacing-normal-padding: 18px;
 }
 
 .agbalumo-regular {
@@ -79,11 +83,15 @@
   }
 
   .box-shadow-dock {
-    box-shadow: 0px -2px 20px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.04);
   }
 
   .title {
-    @apply text-md font-semibold;
+    @apply text-lg font-semibold;
+  }
+
+  .logo {
+    @apply text-2xl font-bold;
   }
 }
 

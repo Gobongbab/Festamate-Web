@@ -4,4 +4,7 @@ export { default as Input } from './Input';
 export { default as Toggle } from './Toggle';
 export { default as Radio } from './Radio';
 export { default as FormItem } from './FormItem';
+export { default as ListItem } from './ListItem';
+export { default as GroupCarousel } from './GroupCarousel';
+
 export * from './AppBar';
