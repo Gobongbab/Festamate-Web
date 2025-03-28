@@ -16,6 +16,7 @@ export const AppBar = (searchOnClick: () => void) => ({
       <FiSearch size={24} />
     </button>
   ),
+  closeButton: { renderIcon: () => <></> },
   ...baseStyle,
 });
 
@@ -34,7 +35,6 @@ export const SearchAppBar = (searchOnClick: () => void) => ({
   renderRight: () => (
     <FiSearch size={24} onClick={searchOnClick} className='mr-2' />
   ),
-
   ...baseStyle,
   backgroundColor: '#fff',
 });
