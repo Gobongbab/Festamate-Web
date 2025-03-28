@@ -13,7 +13,7 @@ export default function HomeScreen() {
 
   return (
     <AppScreen appBar={AppBar(searchOnClick)}>
-      <div className='scrollbar-hide container-mobile flex size-full flex-col gap-y-6 overflow-scroll overflow-y-scroll p-6 pb-20'>
+      <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding pb-dock-height flex size-full flex-col overflow-scroll overflow-y-scroll'>
         <HomeContainer />
       </div>
       <Dock />

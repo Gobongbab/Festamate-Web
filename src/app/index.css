@@ -26,7 +26,10 @@
   --radius-10: 10px;
   --radius-5: 5px;
 
+  --spacing-dock-height: 72px;
   --spacing-card-height: 160px;
+  --spacing-normal-spacing: 18px;
+  --spacing-normal-padding: 18px;
 }
 
 .agbalumo-regular {
@@ -80,7 +83,7 @@
   }
 
   .box-shadow-dock {
-    box-shadow: 0px -2px 20px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.04);
   }
 
   .title {

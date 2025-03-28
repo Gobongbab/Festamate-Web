@@ -28,7 +28,7 @@ export default function HomeContainer() {
 }
 
 const BoothInfo = () => (
-  <div className='rounded-10 from-primary/50 to-primary-hover/90 flex h-fit w-full flex-col gap-y-2 bg-gradient-to-r p-6 text-white'>
+  <div className='rounded-10 from-primary/50 to-primary-hover/90 p-normal-spacing flex h-fit w-full flex-col gap-y-2 bg-gradient-to-r text-white'>
     <div className='flex items-baseline justify-between'>
       <span className='agbalumo-regular text-xl font-bold'>Festamate!</span>
       <span className='hover:text-dark cursor-pointer text-sm text-white'>

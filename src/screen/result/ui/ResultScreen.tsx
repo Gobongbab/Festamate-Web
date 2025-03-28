@@ -15,7 +15,7 @@ export default function ResultScreen() {
 
   return (
     <AppScreen appBar={SearchAppBar(closeOnClick, searchOnClick)}>
-      <div className='scrollbar-hide container-mobile flex size-full flex-col gap-y-6 overflow-scroll overflow-y-scroll p-6 pb-24'>
+      <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll pb-24'>
         <ResultContainer searchKey='과팅' />
       </div>
       <button

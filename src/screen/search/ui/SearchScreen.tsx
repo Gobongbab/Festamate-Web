@@ -14,7 +14,7 @@ export default function SearchScreen() {
 
   return (
     <AppScreen appBar={SearchAppBar(closeOnClick, searchOnClick)}>
-      <div className='scrollbar-hide container-mobile flex size-full flex-col gap-y-6 overflow-scroll overflow-y-scroll p-6'>
+      <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
         <SearchContainer />
       </div>
     </AppScreen>

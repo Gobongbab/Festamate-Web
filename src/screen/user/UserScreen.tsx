@@ -5,7 +5,7 @@ import { UserContainer } from '@/widgets/user/ui';
 export default function UserScreen() {
   return (
     <AppScreen appBar={NormalAppBar('마이 페이지')}>
-      <div className='scrollbar-hide container-mobile flex size-full flex-col gap-y-6 overflow-scroll overflow-y-scroll p-6 pb-19'>
+      <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding pb-dock-height flex size-full flex-col overflow-scroll overflow-y-scroll'>
         <UserContainer />
       </div>
       <Dock />
