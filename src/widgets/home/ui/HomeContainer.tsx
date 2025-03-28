@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GroupCarousel } from '@/widgets/home/ui';
+import { GroupCarousel } from '@/shared/ui';
 import { ListItem } from '@/shared/ui';
 
 export default function HomeContainer() {
