@@ -4,4 +4,5 @@ export const PATH = {
   CREATE: 'CreateScreen',
   SEARCH: 'SearchScreen',
   RESULT: 'ResultScreen',
+  LIST: 'ListScreen',
 } as const;

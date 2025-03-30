@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card } from '@/shared/ui';
+import { ListItem } from '@/shared/ui';
 import { PathItem } from '../types';
 import { useFlow } from '@/app/stackflow';
 
@@ -11,7 +11,7 @@ export default function GroupCarousel({
   label: string;
   to: PathItem;
 }) {
-  const arr = Array.from({ length: 7 });
+  const arr = Array.from({ length: 4 });
   const { push } = useFlow();
 
   return (
@@ -20,15 +20,15 @@ export default function GroupCarousel({
         <span className='text-lg font-semibold'>{label}</span>
         <button
           name='more'
-          className='focus;outline-none text-light hover:text-dark cursor-pointer text-sm'
+          className='text-light hover:text-dark cursor-pointer text-sm focus:outline-none'
           onClick={() => push(to, { title: label })}
         >
           <u>더보기</u>
         </button>
       </div>
-      <div className='scrollbar-hide h-card-height flex items-center gap-x-3 overflow-x-scroll'>
+      <div className='flex flex-col items-center gap-1.5'>
         {arr.map((_, i) => (
-          <Card key={i} />
+          <ListItem key={i} />
         ))}
       </div>
     </div>
