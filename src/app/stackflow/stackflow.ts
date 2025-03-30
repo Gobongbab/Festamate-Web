@@ -7,6 +7,7 @@ import { UserScreen } from '@/screen/user';
 import { CreateScreen } from '@/screen/create/ui';
 import { SearchScreen } from '@/screen/search/ui';
 import { ResultScreen } from '@/screen/result/ui';
+import { ListScreen } from '@/screen/list/ui';
 
 export const { Stack, useFlow } = stackflow({
   transitionDuration: 350,
@@ -16,6 +17,7 @@ export const { Stack, useFlow } = stackflow({
     CreateScreen,
     SearchScreen,
     ResultScreen,
+    ListScreen,
   },
   plugins: [
     basicRendererPlugin(),
