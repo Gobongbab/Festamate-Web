@@ -1,28 +1,18 @@
 import React from 'react';
 
-import { GroupCarousel } from '@/shared/ui';
-import { ListItem } from '@/shared/ui';
+import { GroupCarousel, GroupList } from '@/shared/ui';
+import { PATH } from '@/shared/constants';
 
 export default function HomeContainer() {
-  const arr = Array.from({ length: 4 });
-
   return (
     <>
       <BoothInfo />
-      <GroupCarousel label='개설된 모임방' key='openedGroup' />
-      <div className='flex w-full flex-col gap-y-3'>
-        <div className='flex items-baseline justify-between gap-x-2'>
-          <span className='text-lg font-semibold'>참여한 모임방</span>
-          <span className='text-light hover:text-dark cursor-pointer text-sm'>
-            <u>더보기</u>
-          </span>
-        </div>
-        <div className='flex flex-col items-center gap-1.5'>
-          {arr.map((_, i) => (
-            <ListItem key={i} />
-          ))}
-        </div>
-      </div>
+      <GroupCarousel
+        label='🤗 개설된 모임방'
+        key='openedGroup'
+        to={PATH.LIST}
+      />
+      <GroupList label='🔥 인기 모임방' key='popularGroup' to={PATH.LIST} />
     </>
   );
 }
