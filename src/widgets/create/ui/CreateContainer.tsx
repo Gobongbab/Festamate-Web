@@ -2,18 +2,27 @@ import React, { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { cn } from '@/shared/utils';
+import { cn, getCookie, getDate } from '@/shared/utils';
 import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
 import { Room } from '../types';
 import { CONTENT_MAX_LENGTH, TITLE_MAX_LENGTH } from '../model';
+import { post, REQUEST } from '@/shared/api';
 
 export default function CreateContainer() {
   const [mode, setMode] = useState(0);
   const { register, watch } = useForm<Room>({
-    defaultValues: { content: '' },
+    defaultValues: {
+      content: '',
+      meetingDateTime: getDate(new Date(), 'YYYY-MM-DD HH:MM:') + '00',
+    },
   });
 
   const { title, content, openChatLink, preferredGender, headCount } = watch();
+  const handleSubmit = async () => {
+    const postData = watch();
+    const token = getCookie();
+    await post<Room>(REQUEST.ROOM, postData, await token);
+  };
 
   const MODE = [
     {
@@ -36,7 +45,7 @@ export default function CreateContainer() {
 
   return (
     <form className='flex size-full flex-col justify-between'>
-      <div className='flex flex-col gap-y-6'>
+      <div className='scrollbar-hide flex flex-col gap-y-6 overflow-scroll'>
         <div className='flex w-fit'>
           {MODE.map(({ title }, index) => (
             <button
@@ -65,7 +74,7 @@ export default function CreateContainer() {
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
           if (mode === 0) setMode(prev => (prev === 0 ? 1 : 1));
-          else console.log(watch());
+          else handleSubmit();
         }}
       >
         {MODE[mode].button}

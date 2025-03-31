@@ -5,6 +5,7 @@ import { UseFormWatch, type UseFormRegister } from 'react-hook-form';
 import { FormItem, Input, Radio } from '@/shared/ui';
 import { Room } from '../types';
 import { DETAIL_OPTION } from '../model';
+import { getDate } from '@/shared/utils';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
@@ -15,7 +16,7 @@ export default function GroupDetailForm({
   register,
   watch,
 }: GroupTitleFormProps) {
-  const { openChatLink, preferredGender, headCount } = watch();
+  const { openChatLink, preferredGender, headCount, meetingDateTime } = watch();
 
   return (
     <>
@@ -60,8 +61,25 @@ export default function GroupDetailForm({
           {...register('openChatLink', { required: true })}
         />
       </FormItem>
-      <FormItem title='모임 날짜' description='모임 날짜를 입력해주세요'>
-        <Input placeholder='DatePicker 개발 예정' />
+      <FormItem
+        title='모임 날짜'
+        className='mb-normal-spacing flex gap-x-2'
+        description='모임 날짜를 입력해주세요'
+      >
+        <button
+          type='button'
+          name='meeting-date-time'
+          className='border-border hover:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+        >
+          {getDate(meetingDateTime, 'YYYY년 MM월 DD일')}
+        </button>
+        <button
+          type='button'
+          name='meeting-date-time'
+          className='border-border hover:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+        >
+          {getDate(meetingDateTime, 'HH시 MM분')}
+        </button>
       </FormItem>
     </>
   );
