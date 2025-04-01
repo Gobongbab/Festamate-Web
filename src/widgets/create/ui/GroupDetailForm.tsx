@@ -30,7 +30,7 @@ export default function GroupDetailForm({
             id={id}
             value={value}
             label={label}
-            checked={headCount === value}
+            checked={Number(headCount) === value}
             {...register('headCount')}
           />
         ))}
