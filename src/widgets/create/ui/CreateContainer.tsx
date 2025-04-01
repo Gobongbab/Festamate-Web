@@ -25,7 +25,7 @@ export default function CreateContainer() {
     };
     const token = getCookie();
     console.log(postData);
-    await post<Room>(REQUEST.ROOM, postData, token);
+    await post<Room>(REQUEST.ROOM, postData, await token);
   };
 
   const MODE = [
