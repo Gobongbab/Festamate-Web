@@ -28,10 +28,13 @@ export const get = async ({
 export const post = async <T>(request: string, data: T, token?: string) => {
   try {
     const response = await instance.post(`${request}`, data, {
-      headers: { 'x-access-token': token },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response;
   } catch (error) {
+    console.log(error);
     const e = error as { message: string };
     throw new Error(e.message);
   }

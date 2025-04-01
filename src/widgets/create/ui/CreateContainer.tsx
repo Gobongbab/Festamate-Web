@@ -19,9 +19,13 @@ export default function CreateContainer() {
 
   const { title, content, openChatLink, preferredGender, headCount } = watch();
   const handleSubmit = async () => {
-    const postData = watch();
+    const postData = {
+      ...watch(),
+      headCount: Number(watch('headCount')) as 2 | 4 | 6,
+    };
     const token = getCookie();
-    await post<Room>(REQUEST.ROOM, postData, await token);
+    console.log(postData);
+    await post<Room>(REQUEST.ROOM, postData, token);
   };
 
   const MODE = [
