@@ -1,7 +1,7 @@
 import axios, { AxiosHeaders } from 'axios';
 
 const instance = axios.create({
-  baseURL: '//festamate.shop/api',
+  baseURL: 'https://festamate.shop/api',
 });
 
 export const get = async ({
