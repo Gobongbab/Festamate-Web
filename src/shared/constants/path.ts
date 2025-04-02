@@ -5,4 +5,5 @@ export const PATH = {
   SEARCH: 'SearchScreen',
   RESULT: 'ResultScreen',
   LIST: 'ListScreen',
+  ROOM: 'RoomScreen',
 } as const;
