@@ -7,10 +7,16 @@
 @theme {
   --color-primary-hover: #5f42cc;
   --color-primary: #775bf0;
+
+  --color-point-hover: #5f42cc;
+  --color-point: #775bf0;
+
   --color-sub: #f4f4f4;
 
   --color-dark: #333;
   --color-light: #9f9f9f;
+
+  --color-important: #ff0000;
 
   --color-female: #ff8181;
   --color-male: #1459f5;
@@ -92,6 +98,26 @@
 
   .logo {
     @apply text-2xl font-bold;
+  }
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-4px);
+    }
+    50% {
+      transform: translateX(4px);
+    }
+    75% {
+      transform: translateX(-4px);
+    }
+  }
+
+  .shake {
+    animation: shake 0.3s ease-in-out;
   }
 }
 
