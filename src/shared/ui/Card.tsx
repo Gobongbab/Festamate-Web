@@ -3,19 +3,24 @@ import React from 'react';
 import { RiUser3Fill } from 'react-icons/ri';
 import { IoMdFemale } from 'react-icons/io';
 
-import { cn } from '@/shared/utils';
+import { useFlow } from '@/app/stackflow';
+import { PATH } from '@/shared/constants';
 
-export default function Card({ sizePreset = true }: { sizePreset?: boolean }) {
+export default function Card() {
+  const { push } = useFlow();
+  const handleClick = () => {
+    push(PATH.ROOM, { title: '모임방 상세' });
+  };
+
   return (
-    <div
-      className={cn(
-        'card rounded-10 relative flex-shrink-0 bg-cover bg-center shadow-sm',
-        sizePreset ? 'h-card-height w-44' : 'h-60 w-full',
-      )}
+    <button
+      name='room-card'
+      className='card rounded-10 h-card-height relative w-44 flex-shrink-0 bg-cover bg-center shadow-sm'
       style={{
         backgroundImage:
           'url(https://i.pinimg.com/736x/81/09/5c/81095c402f3fda5bff8cb19692d96dd9.jpg)',
       }}
+      onClick={handleClick}
     >
       <div className='rounded-10 absolute inset-0 z-0 bg-black/40 bg-gradient-to-b from-transparent from-0% via-transparent via-50% to-black/60 to-100%' />
       <div className='absolute top-0 z-10 flex w-fit items-center gap-x-2 p-4 text-sm text-white'>
@@ -35,6 +40,6 @@ export default function Card({ sizePreset = true }: { sizePreset?: boolean }) {
           <p className='text-sub text-sm'>1월 27일 18:00</p>
         </div>
       </div>
-    </div>
+    </button>
   );
 }
