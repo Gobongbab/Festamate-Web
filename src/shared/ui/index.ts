@@ -7,5 +7,6 @@ export { default as FormItem } from './FormItem';
 export { default as ListItem } from './ListItem';
 export { default as GroupCarousel } from './GroupCarousel';
 export { default as GroupList } from './GroupList';
+export { default as Button } from './Button';
 
 export * from './AppBar';

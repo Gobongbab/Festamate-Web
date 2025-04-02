@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { cn, getCookie, getDate } from '@/shared/utils';
-import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
-import { Room } from '../types';
-import { CONTENT_MAX_LENGTH, TITLE_MAX_LENGTH } from '../model';
 import { post, REQUEST } from '@/shared/api';
+import { Button } from '@/shared/ui';
+
+import { CONTENT_MAX_LENGTH, TITLE_MAX_LENGTH } from '@/widgets/create/model';
+import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
+import { Room } from '@/widgets/create/types';
 
 export default function CreateContainer() {
   const [mode, setMode] = useState(0);
@@ -70,19 +72,18 @@ export default function CreateContainer() {
         </div>
         {MODE[mode].form}
       </div>
-      <button
+      <Button
         name='group-form-submit'
         type='button'
-        className='disabled:bg-sub disabled:text-border box-shadow-buttonLg rounded-10 hover:bg-primary-hover z-30 mb-6 h-16 w-full flex-shrink-0 cursor-pointer bg-[#775bf0] text-lg font-semibold text-white transition duration-300'
+        className='disabled:bg-sub disabled:text-border box-shadow-buttonLg rounded-10 hover:bg-primary-hover mb-normal-spacing bg-point z-30 h-16 w-full flex-shrink-0 cursor-pointer text-lg font-semibold text-white transition duration-300'
         disabled={!MODE[mode].isFormValid}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
           if (mode === 0) setMode(prev => (prev === 0 ? 1 : 1));
           else handleSubmit();
         }}
-      >
-        {MODE[mode].button}
-      </button>
+        label={MODE[mode].button}
+      />
     </form>
   );
 }
