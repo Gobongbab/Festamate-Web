@@ -1,9 +1,9 @@
-## 고봉밥: Festamate
+> 번호팅 디지털화 프로젝트, `Festamate!`
 
-Frontend 레포지토리입니다.
 
-## 개발 서버 구동 방법
+![Frame 2085666792](https://github.com/user-attachments/assets/427622a8-8cfd-486b-a89c-d34ed41f0f44)
 
-```
-pnpm run dev
-```
+
+![Frame 2085666793](https://github.com/user-attachments/assets/e7d304a5-b711-4cbd-8322-b8553705ee35)
+
+
