@@ -26,7 +26,7 @@ export default function RoomContainer() {
         </FormItem>
         <div className='h-normal-spacing' />
       </div>
-      <div className='z-30 flex h-16 w-full flex-shrink-0 gap-x-3 text-lg font-semibold text-white'>
+      <div className='z-30 flex h-fit w-full gap-x-3 text-lg font-semibold text-white'>
         <Button name='room-participate' label='참여하기' halfWidth />
         <Button
           name='room-participate-with-friend'
