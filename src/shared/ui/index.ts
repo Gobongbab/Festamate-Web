@@ -8,5 +8,6 @@ export { default as ListItem } from './ListItem';
 export { default as GroupCarousel } from './GroupCarousel';
 export { default as GroupList } from './GroupList';
 export { default as Button } from './Button';
+export { default as LoginBottomSheet } from './LoginBottomSheet';
 
 export * from './AppBar';
