@@ -9,6 +9,7 @@ import { SearchScreen } from '@/screen/search/ui';
 import { ResultScreen } from '@/screen/result/ui';
 import { ListScreen } from '@/screen/list/ui';
 import { RoomScreen } from '@/screen/room/ui';
+import { LoginScreen } from '@/screen/login/ui';
 
 export const { Stack, useFlow } = stackflow({
   transitionDuration: 350,
@@ -20,6 +21,7 @@ export const { Stack, useFlow } = stackflow({
     ResultScreen,
     ListScreen,
     RoomScreen,
+    LoginScreen,
   },
   plugins: [
     basicRendererPlugin(),

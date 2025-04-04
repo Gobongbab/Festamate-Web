@@ -6,4 +6,5 @@ export const PATH = {
   RESULT: 'ResultScreen',
   LIST: 'ListScreen',
   ROOM: 'RoomScreen',
+  LOGIN: 'LoginScreen',
 } as const;
