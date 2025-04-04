@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { KakaoIcon } from '@/assets';
+import { KakaoIcon } from '@/assets/icons';
 import { Button } from '@/shared/ui';
 import { useFlow } from '@/app/stackflow';
 
