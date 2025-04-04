@@ -43,6 +43,7 @@ export default function Input({
         type={type}
         value={value}
         onChange={onChange}
+        disabled={disabled}
         {...rest}
       />
       {maxLength && typeof value === 'string' && (
