@@ -1,23 +1,24 @@
-import './index.css'
-import '@/app/fcm'
-import '@stackflow/plugin-basic-ui/index.css'
+import './index.css';
+import '@/app/fcm';
+import '@stackflow/plugin-basic-ui/index.css';
 
-import { createRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client';
+import { RecoilRoot } from 'recoil';
 
-import { Stack } from '@/app/stackflow'
-import { getToken } from 'firebase/messaging'
-import { messaging } from '@/app/fcm'
+import { Stack } from '@/app/stackflow';
+import { getToken } from 'firebase/messaging';
+import { messaging } from '@/app/fcm';
 
 async function handleAllowNotification() {
-  const permission = await Notification.requestPermission()
+  const permission = await Notification.requestPermission();
 
   if (permission === 'granted') {
-    console.log('알림 권한이 허용되었습니다.')
-    await getDeviceToken()
+    console.log('알림 권한이 허용되었습니다.');
+    await getDeviceToken();
   } else if (permission === 'denied') {
-    console.log('알림 권한이 거부되었습니다.')
+    console.log('알림 권한이 거부되었습니다.');
   } else {
-    console.log('사용자가 알림 권한을 결정하지 않았습니다.')
+    console.log('사용자가 알림 권한을 결정하지 않았습니다.');
   }
 }
 
@@ -27,17 +28,21 @@ async function getDeviceToken() {
   })
     .then(currentToken => {
       if (currentToken) {
-        console.log('토큰: ', currentToken)
+        console.log('토큰: ', currentToken);
       } else {
-        console.log('토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.')
+        console.log('토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.');
       }
     })
     .catch(err => {
-      alert(err)
-      console.log('토큰을 가져오는 중 에러 발생: ', err)
-    })
+      alert(err);
+      console.log('토큰을 가져오는 중 에러 발생: ', err);
+    });
 }
 
-handleAllowNotification()
+handleAllowNotification();
 
-createRoot(document.getElementById('root')!).render(<Stack />)
+createRoot(document.getElementById('root')!).render(
+  <RecoilRoot>
+    <Stack />
+  </RecoilRoot>,
+);
