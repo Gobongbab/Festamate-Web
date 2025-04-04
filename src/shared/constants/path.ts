@@ -7,4 +7,5 @@ export const PATH = {
   LIST: 'ListScreen',
   ROOM: 'RoomScreen',
   LOGIN: 'LoginScreen',
+  SIGNUP: 'SignupScreen',
 } as const;

@@ -25,6 +25,12 @@ export default function LoginBottomSheet({
     push(PATH.LOGIN, {});
   };
 
+  const handleJoinClick = () => {
+    setIsOpen(false);
+    setVisible(false);
+    push(PATH.SIGNUP, {});
+  };
+
   useEffect(() => {
     if (isOpen) {
       setVisible(true);
@@ -70,11 +76,11 @@ export default function LoginBottomSheet({
         <div className='flex items-baseline justify-between'>
           <span className='text-lg font-medium'>계정이 없나요?</span>
           <button
-            className='text-md focus:outline-none'
+            className='text-md cursor-pointer focus:outline-none'
             name='close-bottom-sheet'
-            onClick={onClose}
+            onClick={handleJoinClick}
           >
-            회원가입 하러가기
+            <u>회원가입 하러가기</u>
           </button>
         </div>
       </div>
