@@ -2,8 +2,8 @@ import { basicUIPlugin } from '@stackflow/plugin-basic-ui';
 import { basicRendererPlugin } from '@stackflow/plugin-renderer-basic';
 import { stackflow } from '@stackflow/react';
 
-import { HomeScreen } from '@/screen/home';
-import { UserScreen } from '@/screen/user';
+import { HomeScreen } from '@/screen/home/ui';
+import { UserScreen } from '@/screen/user/ui';
 import { CreateScreen } from '@/screen/create/ui';
 import { SearchScreen } from '@/screen/search/ui';
 import { ResultScreen } from '@/screen/result/ui';
