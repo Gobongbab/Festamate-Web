@@ -13,6 +13,8 @@
 
   --color-sub: #f4f4f4;
 
+  --color-kakao: #fee500;
+
   --color-dark: #333;
   --color-light: #9f9f9f;
 
@@ -90,6 +92,22 @@
 
   .box-shadow-dock {
     box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.04);
+  }
+
+  .box-shadow-bottom-sheet {
+    box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .overlay-visible {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 
   .title {

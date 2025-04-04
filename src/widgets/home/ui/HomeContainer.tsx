@@ -8,11 +8,12 @@ export default function HomeContainer() {
     <>
       <BoothInfo />
       <GroupCarousel
-        label='🤗 개설된 모임방'
+        label='추천 모임방'
         key='openedGroup'
         to={PATH.LIST}
+        covered
       />
-      <GroupList label='🔥 인기 모임방' key='popularGroup' to={PATH.LIST} />
+      <GroupList label='개설된 모임방' key='popularGroup' to={PATH.LIST} />
     </>
   );
 }
