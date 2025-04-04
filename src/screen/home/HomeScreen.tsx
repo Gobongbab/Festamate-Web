@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { MdAdd } from 'react-icons/md';
@@ -10,8 +10,9 @@ import { PATH } from '@/shared/constants';
 
 export default function HomeScreen() {
   const hasToken = false;
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { replace, push } = useFlow();
+
   const searchOnClick = () => replace(PATH.SEARCH, {});
   const createOnClick = () => {
     if (hasToken) push(PATH.CREATE, {});
@@ -33,7 +34,11 @@ export default function HomeScreen() {
         </button>
         <Dock />
       </AppScreen>
-      <LoginBottomSheet isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <LoginBottomSheet
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={() => setIsOpen(false)}
+      />
     </>
   );
 }
