@@ -27,6 +27,7 @@ export default function GroupCarousel({
           name='more'
           className='focus;outline-none text-light hover:text-dark cursor-pointer text-sm'
           onClick={() => push(to, { title: label })}
+          disabled={covered}
         >
           <u>더보기</u>
         </button>
