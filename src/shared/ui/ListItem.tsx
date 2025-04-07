@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { RiUser3Fill } from 'react-icons/ri';
 
 import { useFlow } from '@/app/stackflow';
-
 import { PATH } from '@/shared/constants';
 
-export default function ListItem() {
+const ListItem = forwardRef<HTMLButtonElement>(function ListItem(_, ref) {
   const { push } = useFlow();
+
   const handleClick = () => {
     push(PATH.ROOM, { title: '모임방 상세' });
   };
@@ -17,6 +17,7 @@ export default function ListItem() {
       name='listitem'
       className='border-border rounded-10 grid h-28 w-full cursor-pointer grid-cols-[1fr_4fr] gap-3 py-3 focus:outline-none'
       onClick={handleClick}
+      ref={ref}
     >
       <div className='rounded-5 h-full bg-red-500/10'></div>
       <div className='flex h-full flex-col justify-between overflow-hidden'>
@@ -37,4 +38,6 @@ export default function ListItem() {
       </div>
     </button>
   );
-}
+});
+
+export default ListItem;
