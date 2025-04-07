@@ -36,8 +36,7 @@ export default function UserItem({
           </span>
         </div>
         <div className='flex w-fit items-center gap-x-1'>
-          <span>{department}</span>·
-          <span>{studentId.slice(2, 4)}학번 재학생</span>
+          <span>{department}</span>·<span>{studentId}학번 재학생</span>
         </div>
       </div>
     </div>
