@@ -2,12 +2,10 @@ import React from 'react';
 
 import { KakaoIcon } from '@/assets/icons';
 import { Button } from '@/shared/ui';
-import { useFlow } from '@/app/stackflow';
 
 export default function LoginContainer() {
-  const { pop } = useFlow();
-  const handleClick = () => {
-    pop();
+  const handleClick = async () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}`;
   };
 
   return (

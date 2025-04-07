@@ -9,6 +9,7 @@ import { RecoilRoot } from 'recoil';
 import { Stack } from '@/app/stackflow';
 import { getToken } from 'firebase/messaging';
 import { messaging } from '@/app/fcm';
+import { post, REQUEST } from '@/shared/api';
 
 async function handleAllowNotification() {
   const permission = await Notification.requestPermission();
@@ -41,6 +42,15 @@ async function getDeviceToken() {
 }
 
 handleAllowNotification();
+
+if (window.location.href.includes('/?code=')) {
+  const baseUrl = window.location.href;
+  const code = baseUrl.split('/?code=')[1];
+  console.log(`카카오 인가코드: ${code}`);
+  const response = await post(REQUEST.LOGIN, { code: code });
+  console.log(response);
+  window.location.replace('http://localhost:5173/');
+}
 
 const queryClient = new QueryClient();
 
