@@ -52,7 +52,7 @@ export const useInfiniteRooms = () => {
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       if (lastPage.last) return undefined;
-      return lastPage.totalPages + 1;
+      return lastPage.number + 1;
     },
   });
 };
