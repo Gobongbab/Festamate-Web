@@ -3,13 +3,13 @@ import React from 'react';
 import { RiUser3Fill } from 'react-icons/ri';
 import { IoMdFemale } from 'react-icons/io';
 
-import { useFlow } from '@/app/stackflow';
-import { PATH } from '@/shared/constants';
+// import { useFlow } from '@/app/stackflow';
+// import { PATH } from '@/shared/constants';
 
 export default function Card() {
-  const { push } = useFlow();
+  // const { push } = useFlow();
   const handleClick = () => {
-    push(PATH.ROOM, { title: '모임방 상세' });
+    // push(PATH.ROOM, { title: '모임방 상세' });
   };
 
   return (

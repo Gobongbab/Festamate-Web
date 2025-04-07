@@ -1,27 +1,32 @@
-import axios, { AxiosHeaders } from 'axios';
+import axios, { AxiosHeaders, AxiosResponse } from 'axios';
+
+interface GetRequestParams<TParams = unknown, THeaders = unknown> {
+  request: string;
+  headers?: THeaders;
+  params?: TParams;
+}
 
 const instance = axios.create({
   baseURL: 'https://festamate.shop/api',
 });
 
-export const get = async ({
+export const get = async <TResponse>({
   request,
   headers,
   params,
-}: {
-  request: string;
-  headers?: unknown;
-  params?: unknown;
-}) => {
+}: GetRequestParams): Promise<AxiosResponse<TResponse>> => {
   try {
-    const response = await instance.get(`${request}`, {
+    const response = await instance.get<TResponse>(`${request}`, {
       params: params,
       headers: headers as AxiosHeaders,
     });
     return response;
   } catch (error: unknown) {
-    const e = error as { message: string };
-    throw new Error(e.message);
+    console.log(error);
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    }
+    throw new Error('Unknown error occurred');
   }
 };
 

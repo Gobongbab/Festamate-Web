@@ -3,15 +3,17 @@ import React from 'react';
 import { ListItem } from '@/shared/ui';
 import { PathItem } from '../types';
 import { useFlow } from '@/app/stackflow';
+import { useInfiniteRooms } from '@/shared/api';
 
-export default function GroupCarousel({
+export default function GroupList({
   label,
   to,
 }: {
   label: string;
   to: PathItem;
 }) {
-  const arr = Array.from({ length: 4 });
+  const { data } = useInfiniteRooms();
+  const rooms = data ? data.pages.flatMap(page => page.content) : [];
   const { push } = useFlow();
 
   return (
@@ -27,8 +29,8 @@ export default function GroupCarousel({
         </button>
       </div>
       <div className='flex flex-col items-center gap-1.5'>
-        {arr.map((_, i) => (
-          <ListItem key={i} />
+        {rooms.map(room => (
+          <ListItem key={room.id} {...room} />
         ))}
       </div>
     </div>

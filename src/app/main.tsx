@@ -1,6 +1,7 @@
 import './index.css';
 import '@/app/fcm';
 import '@stackflow/plugin-basic-ui/index.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
@@ -41,8 +42,12 @@ async function getDeviceToken() {
 
 handleAllowNotification();
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById('root')!).render(
-  <RecoilRoot>
-    <Stack />
-  </RecoilRoot>,
+  <QueryClientProvider client={queryClient}>
+    <RecoilRoot>
+      <Stack />
+    </RecoilRoot>
+  </QueryClientProvider>,
 );

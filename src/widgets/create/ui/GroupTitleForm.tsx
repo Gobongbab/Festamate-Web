@@ -4,7 +4,7 @@ import { cn } from '@/shared/utils';
 
 import { FormItem, Input } from '@/shared/ui';
 import { type UseFormWatch, type UseFormRegister } from 'react-hook-form';
-import { Room } from '../types';
+import { Room } from '@/shared/types';
 import { CONTENT_MAX_LENGTH, TITLE_MAX_LENGTH } from '../model';
 
 interface GroupTitleFormProps {
@@ -20,10 +20,13 @@ export default function GroupTitleForm({
 
   return (
     <>
-      <FormItem title='모임방 이름'>
+      <FormItem
+        title='모임방 이름'
+        description='모임방 이름은 꼭 5자 이상으로 작성해주세요!'
+      >
         <Input
           id='title'
-          placeholder='어떤 모임인지 간단하게 설명해주세요.'
+          placeholder='모임방에 대해 간단하게 설명해주세요. ex) 체대 주점 가실 분..'
           value={title}
           maxLength={TITLE_MAX_LENGTH}
           {...register('title', { required: true })}
@@ -35,7 +38,7 @@ export default function GroupTitleForm({
           placeholder='설명을 입력해주세요.'
           {...register('content', { required: true })}
           className={cn(
-            'border-border rounded-5 h-60 w-full resize-none border-[1px] px-4 py-2 focus:outline-none',
+            'border-border rounded-5 text-md h-64 w-full resize-none border-[1px] px-4 py-3 focus:outline-none',
             content.length > CONTENT_MAX_LENGTH && 'border-important shake',
           )}
         />
