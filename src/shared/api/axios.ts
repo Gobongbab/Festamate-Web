@@ -32,11 +32,13 @@ export const get = async <TResponse>({
 
 export const post = async <T>(request: string, data: T, token?: string) => {
   try {
-    const response = await instance.post(`${request}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = token
+      ? await instance.post(`${request}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      : await instance.post(`${request}`, data, {});
     return response;
   } catch (error) {
     console.log(error);
