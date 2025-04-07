@@ -5,7 +5,7 @@ import { PathItem } from '../types';
 import { useFlow } from '@/app/stackflow';
 import { useInfiniteRooms } from '@/shared/api';
 
-export default function GroupCarousel({
+export default function GroupList({
   label,
   to,
 }: {
