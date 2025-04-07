@@ -15,7 +15,7 @@ const ListItem = forwardRef<HTMLButtonElement>(function ListItem(_, ref) {
   return (
     <button
       name='listitem'
-      className='border-border rounded-10 grid h-28 w-full cursor-pointer grid-cols-[1fr_4fr] gap-3 py-3 focus:outline-none'
+      className='border-border rounded-10 grid h-30 w-full cursor-pointer grid-cols-[1fr_4fr] gap-3 py-3 focus:outline-none'
       onClick={handleClick}
       ref={ref}
     >
