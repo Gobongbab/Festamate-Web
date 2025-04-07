@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { cn } from '../utils';
 
 interface FormItemProps {
   title: string;
-  description?: string;
-  children: React.ReactNode;
+  description?: string | ReactNode;
+  children: ReactNode;
   childrenWrapper?: boolean;
   className?: string;
 }
