@@ -52,6 +52,7 @@ export default function ListContainer() {
         rooms.map((room, index) => (
           <ListItem
             key={room.id}
+            title={room.title}
             ref={index === rooms.length - 1 ? lastRoomRef : null}
           />
         ))}
