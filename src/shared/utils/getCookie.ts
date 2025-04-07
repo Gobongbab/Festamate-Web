@@ -4,5 +4,5 @@ export const getCookie = () => {
   // const parts = value.split(`; ${name}=`);
   // if (parts.length === 2) return parts[parts.length - 1].split(';').shift();
 
-  return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDM0OTY3NTIsImV4cCI6MTc1MjEzNjc1Miwic3ViIjoiOSIsImlkIjo5LCJuYW1lIjoiVGVzdCBVc2VyIiwibmlja25hbWUiOiJ0ZXN0X25pY2tuYW1lIiwic3R1ZGVudElkIjoidGVzdF9zdHVkZW50X2lkIiwicGhvbmVOdW1iZXIiOiIwMTAtMDAwMC0wMDAwIiwiZ2VuZGVyIjoiTUFMRSIsIm1ham9yIjoiQ09NUFVURVJfU0NJRU5DRSIsInR5cGUiOiJ0ZXN0X2FjY2VzcyJ9.Pgq1vhINJXI3ZoMpaXE-0a_Nm5o6NqnOALNngoDLt-0';
+  return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDQwMTA5NDgsImV4cCI6MTc1MjY1MDk0OCwic3ViIjoiMTUiLCJpZCI6MTUsIm5hbWUiOiJUZXN0IFVzZXIiLCJuaWNrbmFtZSI6InRlc3Rfbmlja25hbWUiLCJzdHVkZW50SWQiOiJ0ZXN0X3N0dWRlbnRfaWQiLCJwaG9uZU51bWJlciI6IjAxMC0wMDAwLTAwMDAiLCJnZW5kZXIiOiJNQUxFIiwibWFqb3IiOiJDT01QVVRFUl9TQ0lFTkNFIiwidHlwZSI6InRlc3RfYWNjZXNzIn0.GxPRAPYgnJ6W_H1N22eUjseXFUyknAh8CgEVAz572X8';
 };
