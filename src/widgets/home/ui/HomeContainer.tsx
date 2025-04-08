@@ -2,6 +2,7 @@ import React from 'react';
 
 import { GroupCarousel, GroupList } from '@/shared/ui';
 import { PATH } from '@/shared/constants';
+import { REQUEST } from '@/shared/api';
 
 export default function HomeContainer() {
   return (
@@ -11,9 +12,15 @@ export default function HomeContainer() {
         label='추천 모임방'
         key='openedGroup'
         to={PATH.LIST}
+        request={REQUEST.ROOM}
         covered
       />
-      <GroupList label='개설된 모임방' key='popularGroup' to={PATH.LIST} />
+      <GroupList
+        label='개설된 모임방'
+        key='popularGroup'
+        request={REQUEST.ROOM}
+        to={PATH.LIST}
+      />
     </>
   );
 }

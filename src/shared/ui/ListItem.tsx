@@ -5,8 +5,8 @@ import { IoLocationSharp } from 'react-icons/io5';
 
 import { useFlow } from '@/app/stackflow';
 import { GENDER, PATH } from '@/shared/constants';
-import { RoomListItem } from '../types';
-import { cn, getDate } from '../utils';
+import { RoomListItem } from '@/shared/types';
+import { cn, getDate } from '@/shared/utils';
 
 interface ListItemProps {
   header?: boolean;
@@ -38,6 +38,7 @@ const ListItem = forwardRef<HTMLButtonElement, RoomListItem & ListItemProps>(
         )}
         onClick={handleClick}
         ref={ref}
+        disabled={header}
       >
         <div
           className='rounded-5 bg-fill h-full bg-cover bg-center'
@@ -51,12 +52,18 @@ const ListItem = forwardRef<HTMLButtonElement, RoomListItem & ListItemProps>(
             </p>
           </div>
           <div className='text-light flex w-full items-center justify-between'>
-            <div className='rounded-5 text-light flex w-fit items-center gap-x-2 text-sm'>
-              <p className='flex items-center gap-x-1'>
-                <IoLocationSharp size={12} />
-                <span>{place}</span>
-              </p>
-              ·
+            <div className='rounded-5 text-light flex w-fit items-center gap-x-1.5 text-sm'>
+              {!header && (
+                <>
+                  <p className='flex items-center justify-start gap-x-1 overflow-hidden'>
+                    <IoLocationSharp size={12} />
+                    <span className='w-fit max-w-14 overflow-hidden text-start text-nowrap text-ellipsis'>
+                      {place}
+                    </span>
+                  </p>
+                  ·
+                </>
+              )}
               <p className='flex items-center gap-x-1'>
                 <RiUser3Fill size={12} /> {currentParticipants}명 /{' '}
                 {maxParticipants}명
