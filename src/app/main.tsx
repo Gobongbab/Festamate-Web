@@ -41,16 +41,20 @@ async function getDeviceToken() {
     });
 }
 
+async function getAccessToken() {
+  console.log('getAccessToken');
+  if (window.location.href.includes('/?code=')) {
+    const baseUrl = window.location.href;
+    const code = baseUrl.split('/?code=')[1];
+    const response = await post(REQUEST.LOGIN, { code: code });
+    console.log(response.data);
+    // window.location.replace('http://localhost:5173/');
+  }
+}
+
 handleAllowNotification();
 
-if (window.location.href.includes('/?code=')) {
-  const baseUrl = window.location.href;
-  const code = baseUrl.split('/?code=')[1];
-  console.log(`카카오 인가코드: ${code}`);
-  const response = await post(REQUEST.LOGIN, { code: code });
-  console.log(response);
-  window.location.replace('http://localhost:5173/');
-}
+getAccessToken();
 
 const queryClient = new QueryClient();
 
