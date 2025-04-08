@@ -29,7 +29,14 @@ export default function AuthScreen() {
   return (
     <div className='container-mobile grid h-screen place-items-center'>
       {isPending && <span className='text-lg'>로그인 중...</span>}
-      {isError && <div className='flex-col text-lg'>로그인에 실패했어요</div>}
+      {isError && (
+        <div className='flex flex-col text-lg'>
+          로그인에 실패했어요.
+          <button className='focus:outline-none' onClick={() => navigate('/')}>
+            홈으로 돌아가기
+          </button>
+        </div>
+      )}
     </div>
   );
 }
