@@ -5,8 +5,8 @@ import { IoLocationSharp } from 'react-icons/io5';
 
 import { useFlow } from '@/app/stackflow';
 import { GENDER, PATH } from '@/shared/constants';
-import { RoomListItem } from '../types';
-import { cn, getDate } from '../utils';
+import { RoomListItem } from '@/shared/types';
+import { cn, getDate } from '@/shared/utils';
 
 interface ListItemProps {
   header?: boolean;
