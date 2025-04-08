@@ -1,0 +1,60 @@
+import React, { type Dispatch, type SetStateAction, useState } from 'react';
+
+import { useAtomValue } from 'jotai';
+
+import { Input } from '@/shared/ui';
+import { KakaoAccessTokenAtom } from '@/shared/atom';
+
+interface PhoneCertifyFormProps {
+  setProcess: Dispatch<SetStateAction<number>>;
+}
+
+export default function PhoneCertifyForm({
+  setProcess,
+}: PhoneCertifyFormProps) {
+  const [value, setValue] = useState<string>('');
+  const { access_token } = useAtomValue(KakaoAccessTokenAtom);
+
+  const handleClick = () => {
+    console.log(access_token);
+    setProcess(prev => prev + 1);
+  };
+
+  return (
+    <div className='flex w-full flex-col gap-6'>
+      <div className='flex w-full flex-col gap-2'>
+        <div className='flex-1'>
+          <Input
+            id='phone-number'
+            placeholder='전화번호를 입력해 주세요'
+            type='phone'
+            disabled
+          />
+        </div>
+        <div className='flex-1'>
+          <Input
+            id='phone-number-certification'
+            placeholder='인증번호를 입력해 주세요'
+            type='number'
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className='flex flex-col items-center justify-center gap-4'>
+        <button
+          name='check-certifications'
+          className='disabled:text-light bg-fill border-border rounded-5 hover:bg-sub w-fit cursor-pointer border-[1px] p-2 px-6 transition duration-150'
+          onClick={handleClick}
+          disabled={!(value.length > 3)}
+        >
+          인증번호 확인
+        </button>
+        <button name='resend-certifications' onClick={handleClick}>
+          <u>인증번호가 오지 않나요?</u>
+        </button>
+      </div>
+    </div>
+  );
+}
