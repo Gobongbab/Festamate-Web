@@ -5,19 +5,25 @@ import { useFlow } from '@/app/stackflow';
 import { Card } from '@/shared/ui';
 import { PathItem } from '@/shared/types';
 import { cn } from '@/shared/utils';
+import { useRoomList } from '@/shared/api';
+import { PATH } from '../constants';
 
 interface GroupCarouselProps {
   label: string;
   to: PathItem;
   covered?: boolean;
+  request: string;
 }
 export default function GroupCarousel({
   label,
   to,
   covered = false,
+  request,
 }: GroupCarouselProps) {
-  const arr = Array.from({ length: 7 });
+  const { data } = useRoomList(request);
   const { push } = useFlow();
+
+  const rooms = data ? data.content : [];
 
   return (
     <div className='flex w-full flex-col gap-y-3'>
@@ -38,9 +44,15 @@ export default function GroupCarousel({
           covered ? 'overflow-hidden' : 'overflow-x-scroll',
         )}
       >
-        {arr.map((_, i) => (
-          <Card key={i} />
-        ))}
+        {data && (
+          <>
+            {rooms.length === 0 ? (
+              <div className='grid h-30 items-center'>{label}이 없어요!</div>
+            ) : (
+              rooms.map(room => <Card key={room.id} {...room} />)
+            )}
+          </>
+        )}
         {covered && (
           <div className='absolute inset-0 z-60 grid size-full place-items-center bg-black/1 backdrop-blur-sm'>
             <div className='flex flex-col items-center gap-2'>
@@ -52,6 +64,7 @@ export default function GroupCarousel({
               <button
                 name='next-step'
                 className='bg-fill/80 border-border rounded-5 w-fit cursor-pointer border-[1px] p-2 px-4'
+                onClick={() => push(PATH.LOGIN, {})}
               >
                 로그인 하러가기
               </button>

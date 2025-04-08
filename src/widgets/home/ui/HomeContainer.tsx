@@ -12,6 +12,7 @@ export default function HomeContainer() {
         label='추천 모임방'
         key='openedGroup'
         to={PATH.LIST}
+        request={REQUEST.ROOM}
         covered
       />
       <GroupList
