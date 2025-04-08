@@ -1,12 +1,17 @@
 import React, {
   ChangeEvent,
+  useEffect,
   useState,
   type Dispatch,
   type SetStateAction,
 } from 'react';
 
+import { useAtomValue } from 'jotai';
+
 import { StudentIdSample } from '@/assets/images';
 import { cn } from '@/shared/utils';
+import { KakaoAccessTokenAtom } from '@/shared/atom';
+import { useCertifyStudent } from '@/widgets/signup/api';
 
 interface StudentCertifyFormProps {
   setProcess: Dispatch<SetStateAction<number>>;
@@ -16,10 +21,22 @@ export default function StudentCertifyForm({
   setProcess,
 }: StudentCertifyFormProps) {
   const [image, setImage] = useState<string>('');
+  const [file, setFile] = useState<File | undefined>(undefined);
+
+  const { access_token } = useAtomValue(KakaoAccessTokenAtom);
+  const { mutate, isSuccess, isError, isPending, isIdle, data } =
+    useCertifyStudent();
+
+  const handleClick = () => {
+    const formData = new FormData();
+    formData.append('file', file!);
+    mutate({ formData: formData, token: access_token });
+  };
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
@@ -27,12 +44,15 @@ export default function StudentCertifyForm({
       reader.readAsDataURL(file);
     } else {
       setImage('');
+      setFile(undefined);
     }
   };
 
-  const handleClick = () => {
-    setProcess(prev => prev + 1);
-  };
+  useEffect(() => {
+    console.log(data);
+    if (isSuccess) setProcess(prev => prev + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isSuccess]);
 
   return (
     <>
@@ -60,7 +80,7 @@ export default function StudentCertifyForm({
           )}
         </div>
         {image !== '' && (
-          <p className='text-positive mt-1 text-sm'>✅ 사진 업로드 완료!</p>
+          <p className='text-positive mt-2 text-sm'>사진 업로드 완료!</p>
         )}
       </label>
 
@@ -68,9 +88,12 @@ export default function StudentCertifyForm({
         name='phone-number-auth'
         className='disabled:text-light bg-fill border-border rounded-5 hover:bg-sub w-fit cursor-pointer border-[1px] p-2 px-6 transition duration-150'
         onClick={handleClick}
-        disabled={image === ''}
+        disabled={image === '' || isPending || isSuccess}
       >
-        학적 인증하기
+        {isIdle && '학적 인증하기'}
+        {isError && '다시 시도하기'}
+        {isPending && '인증 중'}
+        {isSuccess && '인증 성공!'}
       </button>
     </>
   );
