@@ -1,29 +1,44 @@
 import React from 'react';
 
-import { Button, FormItem } from '@/shared/ui';
-import { UserItem, RoomHeader } from '@/widgets/room/ui';
-import { ROOM_MAKERS, ROOM_PARTICIPANTS } from '@/mock';
+import { Button, FormItem, ListItem } from '@/shared/ui';
+import { RoomListItem } from '@/shared/types';
 
-export default function RoomContainer() {
+import { UserItem } from '@/widgets/room/ui';
+import { useRoomDetail } from '@/widgets/room/api';
+
+export default function RoomContainer(props: RoomListItem) {
+  const { id, content } = props;
+  const { data, isLoading } = useRoomDetail(id);
+
   return (
     <div className='flex size-full flex-col justify-between'>
       <div className='scrollbar-hide flex flex-col gap-y-6 overflow-scroll'>
-        <RoomHeader />
+        <ListItem {...props} header />
         <div className='border-sub flex h-fit w-full border-b-2 pb-6'>
-          컴공 봄부스에서 닭강정한대요@ 컴공 봄부스에서 닭강정한대요@ 컴공
-          봄부스에서 닭강정한대요@ 컴공 봄부스에서 닭강정한대요@ 컴공 봄부스에서
-          닭강정한대요@ 사실 저도 잘 모르는데 같이 가서 보면 좋을 것 같아요!
+          {content}
         </div>
-        <FormItem title='모임을 연 멤버'>
-          {ROOM_MAKERS.map(m => (
-            <UserItem {...m} key={m.id} />
-          ))}
-        </FormItem>
-        <FormItem title='모임에 참여한 멤버'>
-          {ROOM_PARTICIPANTS.map(m => (
-            <UserItem {...m} key={m.id} />
-          ))}
-        </FormItem>
+        {isLoading && (
+          <>
+            <FormItem title='모임을 연 멤버'>
+              <div className='skeleton h-15 w-full'></div>
+            </FormItem>
+            <FormItem title='모임에 참여한 멤버'>
+              <div className='skeleton h-15 w-full'></div>
+            </FormItem>
+          </>
+        )}
+        {!isLoading && data && (
+          <>
+            <FormItem title='모임을 연 멤버'>
+              {data?.participants.map(m => <UserItem {...m} key={m.id} />)}
+            </FormItem>
+            <FormItem title='모임에 참여한 멤버'>
+              {data?.participants.map(m => {
+                if (!m.isHost) return <UserItem {...m} key={m.id} />;
+              })}
+            </FormItem>
+          </>
+        )}
         <div className='h-normal-spacing' />
       </div>
       <div className='z-30 flex h-fit w-full gap-x-3 text-lg font-semibold text-white'>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ListItem } from '@/shared/ui';
+// import { ListItem } from '@/shared/ui';
 
 interface ResultContainerParams {
   searchKey: string;
@@ -16,7 +16,7 @@ export default function ResultContainer({ searchKey }: ResultContainerParams) {
       </p>
       <div className='flex flex-col gap-1.5'>
         {result.map(result => (
-          <ListItem key={result} />
+          <div key={result} />
         ))}
       </div>
     </>

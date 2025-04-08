@@ -32,13 +32,13 @@ export default function HomeScreen() {
         >
           <MdAdd size={14} /> 모임방 만들기
         </button>
-        <Dock />
       </AppScreen>
       <LoginBottomSheet
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         onClose={() => setIsOpen(false)}
       />
+      <Dock />
     </>
   );
 }

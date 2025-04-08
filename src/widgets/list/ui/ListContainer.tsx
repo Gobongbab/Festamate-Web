@@ -51,11 +51,12 @@ export default function ListContainer() {
         rooms.length > 0 &&
         rooms.map((room, index) => (
           <ListItem
+            {...room}
             key={room.id}
-            title={room.title}
             ref={index === rooms.length - 1 ? lastRoomRef : null}
           />
         ))}
+      {data && rooms.length === 0 && <div>방이 없어요!</div>}
     </>
   );
 }

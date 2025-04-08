@@ -50,9 +50,9 @@ export default function LoginBottomSheet({
 
       <div
         className={cn(
-          'box-shadow-bottom-sheet rounded-t-10 fixed bottom-0 left-0 z-400 flex h-60 h-fit w-full flex-col bg-white p-6 pt-8 pb-12 shadow-lg transition-transform duration-300',
+          'rounded-t-10 fixed bottom-0 left-0 z-400 flex h-60 h-fit w-full flex-col bg-white p-6 pt-8 pb-12 shadow-lg transition-transform duration-300',
           isOpen ? 'translate-y-0' : 'translate-y-full',
-          visible ? 'block' : 'none',
+          visible ? 'box-shadow-bottom-sheet block' : 'none',
         )}
       >
         <div className='flex items-baseline justify-between'>

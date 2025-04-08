@@ -5,6 +5,7 @@ export type Room = {
   meetingDateTime: string;
   title: string;
   content: string;
+  place: string;
 };
 
 export type RoomDetail = Room & {
