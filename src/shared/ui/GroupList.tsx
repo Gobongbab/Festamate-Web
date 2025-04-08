@@ -3,18 +3,19 @@ import React from 'react';
 import { ListItem } from '@/shared/ui';
 import { PathItem } from '../types';
 import { useFlow } from '@/app/stackflow';
-import { useInfiniteRooms } from '@/shared/api';
+import { useRoomList } from '@/shared/api';
 
-export default function GroupList({
-  label,
-  to,
-}: {
+interface GroupListProps {
   label: string;
   to: PathItem;
-}) {
-  const { data } = useInfiniteRooms();
-  const rooms = data ? data.pages.flatMap(page => page.content) : [];
+  request: string;
+}
+
+export default function GroupList({ label, to, request }: GroupListProps) {
+  const { data } = useRoomList(request);
   const { push } = useFlow();
+
+  const rooms = data ? data.content : [];
 
   return (
     <div className='flex w-full flex-col gap-y-3'>
