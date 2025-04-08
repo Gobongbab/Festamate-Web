@@ -3,7 +3,7 @@ import React from 'react';
 import { useFlow } from '@/app/stackflow';
 import { useStack } from '@stackflow/react';
 import { DOCK, DOCK_ITEMS } from '@/shared/constants';
-import { DockItem } from '@/shared/types';
+import { DockItem, PathItem } from '@/shared/types';
 
 interface DockButtonProps {
   item: DockItem;
@@ -13,14 +13,21 @@ interface DockButtonProps {
 export default function Dock() {
   const stack = useStack();
   const info = stack.activities;
-  const current = info[info.length - 1].name as DockItem;
-
+  const current = info
+    .filter(i => i.transitionState === 'enter-done')
+    .map(i => i.name)
+    .pop() as PathItem;
+  const render = current === 'HomeScreen' || current === 'UserScreen';
   return (
-    <div className='dock box-shadow-dock container-mobile h-dock-height p-normal-spacing fixed right-0 bottom-0 left-0 z-60 flex items-center justify-between border-none'>
-      {DOCK_ITEMS.map(item => (
-        <DockButton key={item} item={item} selected={current === item} />
-      ))}
-    </div>
+    <>
+      {render && (
+        <div className='dock box-shadow-dock container-mobile h-dock-height p-normal-spacing fixed right-0 bottom-0 left-0 z-60 flex items-center justify-between border-none'>
+          {DOCK_ITEMS.map(item => (
+            <DockButton key={item} item={item} selected={current === item} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 
