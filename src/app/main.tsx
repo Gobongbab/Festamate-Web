@@ -4,12 +4,12 @@ import '@stackflow/plugin-basic-ui/index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { createRoot } from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { Stack } from '@/app/stackflow';
 import { getToken } from 'firebase/messaging';
 import { messaging } from '@/app/fcm';
-import { post, REQUEST } from '@/shared/api';
+import { AuthScreen } from '@/screen/auth/ui';
 
 async function handleAllowNotification() {
   const permission = await Notification.requestPermission();
@@ -43,21 +43,18 @@ async function getDeviceToken() {
 
 handleAllowNotification();
 
-if (window.location.href.includes('/?code=')) {
-  const baseUrl = window.location.href;
-  const code = baseUrl.split('/?code=')[1];
-  console.log(`카카오 인가코드: ${code}`);
-  const response = await post(REQUEST.LOGIN, { code: code });
-  console.log(response);
-  window.location.replace('http://localhost:5173/');
-}
-
 const queryClient = new QueryClient();
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Stack />,
+  },
+  { path: '/auth', element: <AuthScreen /> },
+]);
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
-    <RecoilRoot>
-      <Stack />
-    </RecoilRoot>
+    <RouterProvider router={router} />
   </QueryClientProvider>,
 );
