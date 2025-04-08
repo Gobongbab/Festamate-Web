@@ -3,9 +3,9 @@ import React from 'react';
 import { useFlow } from '@/app/stackflow';
 
 import { Card } from '@/shared/ui';
-import { PathItem } from '@/shared/types';
+import { PathItem, RoomListItem } from '@/shared/types';
 import { cn } from '@/shared/utils';
-import { useRoomList } from '@/shared/api';
+import { REQUEST, useRoomList } from '@/shared/api';
 import { PATH } from '../constants';
 
 interface GroupCarouselProps {
@@ -23,7 +23,12 @@ export default function GroupCarousel({
   const { data } = useRoomList(request);
   const { push } = useFlow();
 
-  const rooms = data ? data.content : [];
+  let rooms;
+
+  if (request === REQUEST.ROOM_PARTICIPATED)
+    /**내가 참여한 모임방의 응답은 content 없이 바로 주어져 다음과 같이 작성하였습니다 */
+    rooms = (data as unknown as RoomListItem[]) || [];
+  else rooms = data ? data.content : [];
 
   return (
     <div className='flex w-full flex-col gap-y-3'>
@@ -47,7 +52,9 @@ export default function GroupCarousel({
         {data && (
           <>
             {rooms.length === 0 ? (
-              <div className='grid h-30 items-center'>{label}이 없어요!</div>
+              <div className='grid h-30 w-full place-items-center'>
+                {label}이 없어요!
+              </div>
             ) : (
               rooms.map(room => <Card key={room.id} {...room} />)
             )}

@@ -2,12 +2,17 @@ import React from 'react';
 
 import { FormItem, GroupCarousel } from '@/shared/ui';
 import { PATH } from '@/shared/constants';
+import { REQUEST } from '@/shared/api';
 
 export default function UserContainer() {
   return (
     <>
       <Profile />
-      <GroupCarousel label='내가 만든 모임방' to={PATH.LIST} />
+      <GroupCarousel
+        label='내가 만든 모임방'
+        to={PATH.LIST}
+        request={REQUEST.ROOM_PARTICIPATED}
+      />
       <div className='bg-sub mt-normal-spacing h-[1px] w-full flex-shrink-0' />
       <FormItem title='계정' childrenWrapper={false}>
         <button className='flex w-full justify-start focus:outline-none'>
