@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 
-import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import { KakaoAccessTokenAtom } from '@/shared/atom';
 import { useKakaoToken } from '@/screen/auth/api';
+import { useSetAtom } from 'jotai';
 
 export default function AuthScreen() {
   const navigate = useNavigate();
-  const setKakaoAccessToken = useSetRecoilState(KakaoAccessTokenAtom);
+  const setKakaoAccessToken = useSetAtom(KakaoAccessTokenAtom);
   const params = new URLSearchParams(location.search);
   const code = params.get('code');
   const { mutate, isPending, isError, data, isSuccess } = useKakaoToken();

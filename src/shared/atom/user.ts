@@ -1,13 +1,3 @@
-import { atom } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
+import { atom } from 'jotai';
 
-const { persistAtom } = recoilPersist({
-  key: 'InitialKakaoAccessToken',
-  storage: sessionStorage,
-});
-
-export const KakaoAccessTokenAtom = atom({
-  key: 'KakaoAccessToken',
-  default: { access_token: '' },
-  effects_UNSTABLE: [persistAtom],
-});
+export const KakaoAccessTokenAtom = atom({ access_token: '' });

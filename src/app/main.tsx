@@ -4,7 +4,6 @@ import '@stackflow/plugin-basic-ui/index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { createRoot } from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { Stack } from '@/app/stackflow';
@@ -56,8 +55,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
-    <RecoilRoot>
-      <RouterProvider router={router} />
-    </RecoilRoot>
+    <RouterProvider router={router} />
   </QueryClientProvider>,
 );
