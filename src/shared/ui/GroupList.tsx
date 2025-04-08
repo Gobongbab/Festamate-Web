@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ListItem } from '@/shared/ui';
+import { ListItem, ListSkeleton } from '@/shared/ui';
 import { PathItem } from '../types';
 import { useFlow } from '@/app/stackflow';
 import { useRoomList } from '@/shared/api';
@@ -11,8 +11,10 @@ interface GroupListProps {
   request: string;
 }
 
+const GROUP_LIST_SKELETON_COUNT = 6;
+
 export default function GroupList({ label, to, request }: GroupListProps) {
-  const { data } = useRoomList(request);
+  const { data, isLoading } = useRoomList(request);
   const { push } = useFlow();
 
   const rooms = data ? data.content : [];
@@ -30,10 +32,25 @@ export default function GroupList({ label, to, request }: GroupListProps) {
         </button>
       </div>
       <div className='flex flex-col items-center gap-1.5'>
-        {rooms.map(room => (
-          <ListItem key={room.id} {...room} />
-        ))}
+        {data && (
+          <>
+            {rooms.length === 0 ? (
+              <div className='grid h-30 items-center'>{label}이 없어요!</div>
+            ) : (
+              rooms.map(room => <ListItem key={room.id} {...room} />)
+            )}
+          </>
+        )}
+        {isLoading && <GroupListSkeleton />}
       </div>
     </div>
   );
 }
+
+const GroupListSkeleton = () => (
+  <>
+    {Array.from({ length: GROUP_LIST_SKELETON_COUNT }).map((_, i) => (
+      <ListSkeleton key={i} />
+    ))}
+  </>
+);
