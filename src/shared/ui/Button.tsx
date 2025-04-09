@@ -9,14 +9,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   halfWidth?: boolean;
   shadow?: boolean;
-  bgColor?: string;
   size?: Size;
 }
 
 const SIZE: Record<Size, string> = {
-  lg: 'h-16 font-semibold text-lg',
-  md: 'py-4 font-medium text-md',
-  sm: 'py-2',
+  lg: 'h-16 font-semibold text-lg mb-normal-spacing z-30 rounded-10',
+  md: 'py-3.5 font-medium text-md rounded-10',
+  sm: 'py-2 px-4 rounded-5 border-border bg-fill w-fit text-dark border-[1px]',
 };
 
 export default function Button({
@@ -26,21 +25,20 @@ export default function Button({
   name,
   type,
   halfWidth = false,
-  shadow = true,
+  shadow = false,
   className,
-  bgColor,
   size = 'lg',
 }: ButtonProps) {
   return (
     <button
+      id={name}
       name={name}
       type={type || 'button'}
       className={cn(
-        'disabled:bg-sub disabled:text-border rounded-10 mb-normal-spacing z-30 flex-shrink-0 cursor-pointer text-white transition duration-300',
+        'hover:bg-point-hover bg-point disabled:bg-sub disabled:text-border flex-shrink-0 cursor-pointer text-white transition duration-300',
         halfWidth ? 'flex-1' : 'w-full',
-        shadow && 'box-shadow-buttonLg',
+        shadow && 'box-shadow-button',
         className,
-        bgColor ?? 'hover:bg-point-hover bg-point',
         SIZE[size],
       )}
       disabled={disabled ?? false}
