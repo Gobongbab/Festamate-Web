@@ -1,6 +1,7 @@
 import React, { useState, type Dispatch, type SetStateAction } from 'react';
 
 import { cn } from '@/shared/utils';
+import { Button } from '@/shared/ui';
 
 interface GenderFormProps {
   setProcess: Dispatch<SetStateAction<number>>;
@@ -32,13 +33,12 @@ export default function GenderForm({ setProcess }: GenderFormProps) {
           <GenderButton label={gender} key={gender} />
         ))}
       </div>
-      <button
-        name='phone-number-auth'
-        className='border-border w-fit cursor-pointer border-b-[1.5px] p-2 px-4'
+      <Button
+        name='gender-form-next'
+        size='sm'
         onClick={() => setProcess(prev => prev + 1)}
-      >
-        다음
-      </button>
+        label='다음'
+      />
     </div>
   );
 }

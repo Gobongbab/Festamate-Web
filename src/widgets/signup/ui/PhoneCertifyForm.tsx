@@ -2,7 +2,7 @@ import React, { type Dispatch, type SetStateAction, useState } from 'react';
 
 import { useAtomValue } from 'jotai';
 
-import { Input } from '@/shared/ui';
+import { Button, Input } from '@/shared/ui';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
 
 interface PhoneCertifyFormProps {
@@ -43,15 +43,18 @@ export default function PhoneCertifyForm({
       </div>
 
       <div className='flex flex-col items-center justify-center gap-4'>
-        <button
+        <Button
           name='check-certifications'
-          className='disabled:text-light bg-fill border-border rounded-5 hover:bg-sub w-fit cursor-pointer border-[1px] p-2 px-6 transition duration-150'
+          size='sm'
           onClick={handleClick}
           disabled={!(value.length > 3)}
+          label='인증번호 확인'
+        />
+        <button
+          name='resend-certifications'
+          onClick={handleClick}
+          className='focus:outline-none'
         >
-          인증번호 확인
-        </button>
-        <button name='resend-certifications' onClick={handleClick}>
           <u>인증번호가 오지 않나요?</u>
         </button>
       </div>

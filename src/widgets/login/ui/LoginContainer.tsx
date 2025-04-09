@@ -15,8 +15,8 @@ export default function LoginContainer() {
         <p className='logo agbalumo-regular mb-6'>Festamate!</p>
         <Button
           onClick={handleClick}
-          className='text-dark h-fit py-3 font-medium'
-          bgColor='bg-kakao'
+          size='md'
+          className='text-dark bg-kakao h-fit py-3 font-medium'
           label={
             <div className='flex w-full items-center justify-center gap-x-4'>
               <img src={KakaoIcon} className='size-6' />

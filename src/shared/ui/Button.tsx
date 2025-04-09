@@ -15,7 +15,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const SIZE: Record<Size, string> = {
   lg: 'h-16 font-semibold text-lg mb-normal-spacing z-30 rounded-10',
   md: 'py-3.5 font-medium text-md rounded-10',
-  sm: 'py-2 px-4 rounded-5 border-border bg-fill w-fit text-dark border-[1px]',
+  sm: 'py-2 px-4 rounded-5 border-border bg-fill w-fit text-dark border-[1px] disabled:text-light hover:bg-sub',
 };
 
 export default function Button({
