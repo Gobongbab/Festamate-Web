@@ -18,7 +18,7 @@ export default function LoginContainer() {
           size='md'
           className='text-dark bg-kakao h-fit py-3 font-medium'
           label={
-            <div className='flex w-full items-center justify-center gap-x-4'>
+            <div className='flex w-full items-center justify-center gap-x-4 py-1'>
               <img src={KakaoIcon} className='size-6' />
               <span>카카오톡 간편 로그인</span>
             </div>

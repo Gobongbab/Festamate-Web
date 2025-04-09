@@ -13,8 +13,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const SIZE: Record<Size, string> = {
-  lg: 'h-16 font-semibold text-lg mb-normal-spacing z-30 rounded-10',
-  md: 'py-3.5 font-medium text-md rounded-10',
+  lg: 'py-3.5 mb-normal-spacing z-30 rounded-10',
+  md: 'py-2.5 rounded-10',
   sm: 'py-2 px-4 rounded-5 border-border bg-fill w-fit text-dark border-[1px] disabled:text-light hover:bg-sub',
 };
 
@@ -35,7 +35,7 @@ export default function Button({
       name={name}
       type={type || 'button'}
       className={cn(
-        'hover:bg-point-hover bg-point disabled:bg-sub disabled:text-border flex-shrink-0 cursor-pointer text-white transition duration-300',
+        'hover:bg-point-hover bg-point text-md disabled:bg-sub disabled:text-border flex-shrink-0 cursor-pointer font-medium text-white transition duration-300',
         halfWidth ? 'flex-1' : 'w-full',
         shadow && 'box-shadow-button',
         className,
