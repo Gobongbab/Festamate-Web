@@ -2,7 +2,7 @@ import React, { type Dispatch, type SetStateAction, useState } from 'react';
 
 import { useAtomValue } from 'jotai';
 
-import { Input } from '@/shared/ui';
+import { Button, Input } from '@/shared/ui';
 import { getFormattedPhone } from '@/shared/utils';
 import { useCertifyPhoneNumber } from '@/widgets/signup/api';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
@@ -43,16 +43,14 @@ export default function PhoneForm({ setProcess }: PhoneFormProps) {
           />
         </div>
       </div>
-
       <div className='flex items-center justify-center'>
-        <button
+        <Button
           name='phone-number-auth'
-          className='disabled:text-light bg-fill border-border rounded-5 hover:bg-sub w-fit cursor-pointer border-[1px] p-2 px-6 transition duration-150'
+          size='sm'
           onClick={handleClick}
           disabled={!(value.length === 13)}
-        >
-          인증번호 전송
-        </button>
+          label='인증번호 전송'
+        />
       </div>
     </div>
   );

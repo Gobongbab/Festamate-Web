@@ -7,9 +7,9 @@ import {
   StudentCertifyForm,
   GenderForm,
   PhoneCertifyForm,
+  PhoneForm,
   SignupComplete,
 } from '@/widgets/signup/ui';
-import PhoneForm from './PhoneForm';
 
 export default function SignupContainer() {
   const [process, setProcess] = useState<number>(0);

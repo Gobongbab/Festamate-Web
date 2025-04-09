@@ -2,11 +2,11 @@ import React from 'react';
 
 import { useFlow } from '@/app/stackflow';
 
-import { Card } from '@/shared/ui';
+import { Button, Card } from '@/shared/ui';
 import { PathItem, RoomListItem } from '@/shared/types';
 import { cn } from '@/shared/utils';
 import { REQUEST, useRoomList } from '@/shared/api';
-import { PATH } from '../constants';
+import { PATH } from '@/shared/constants';
 
 interface GroupCarouselProps {
   label: string;
@@ -61,20 +61,19 @@ export default function GroupCarousel({
           </>
         )}
         {covered && (
-          <div className='absolute inset-0 z-60 grid size-full place-items-center bg-black/1 backdrop-blur-sm'>
+          <div className='absolute inset-0 z-20 grid size-full place-items-center bg-black/1 backdrop-blur-sm'>
             <div className='flex flex-col items-center gap-2'>
               <p className='text-center text-white'>
                 간편 로그인을 통해 로그인하고,
                 <br />
                 추천 모임방을 확인하세요!
               </p>
-              <button
+              <Button
                 name='next-step'
-                className='bg-fill/80 border-border rounded-5 w-fit cursor-pointer border-[1px] p-2 px-4'
+                size='sm'
                 onClick={() => push(PATH.LOGIN, {})}
-              >
-                로그인 하러가기
-              </button>
+                label='로그인 하러가기'
+              />
             </div>
           </div>
         )}
