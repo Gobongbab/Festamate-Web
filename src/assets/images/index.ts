@@ -1,5 +1,5 @@
-import SignupSuccessBg from './signup-success.png';
-import StudentIdSample from './studentId-sample.png';
-import BoothInfoBg from './booth-info-bg.jpg';
+import SignupSuccessBg from './signup-success.webp';
+import StudentIdSample from './student-id-sample.webp';
+import BoothInfoBg from './booth-info-bg.webp';
 
 export { SignupSuccessBg, StudentIdSample, BoothInfoBg };
