@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useFlow } from '@/app/stackflow';
 
-import { Button, Card } from '@/shared/ui';
+import { Button, Card, CardSkeleton } from '@/shared/ui';
 import { PathItem, RoomListItem } from '@/shared/types';
 import { cn } from '@/shared/utils';
 import { REQUEST, useRoomList } from '@/shared/api';
@@ -22,8 +22,9 @@ export default function GroupCarousel({
   covered = false,
   request,
 }: GroupCarouselProps) {
-  const { data, isError } = useRoomList(request);
+  const { data, isError, isLoading } = useRoomList(request);
   const { push } = useFlow();
+  const skeleton = Array.from({ length: 4 });
 
   let rooms;
 
@@ -65,6 +66,8 @@ export default function GroupCarousel({
               )}
             </>
           )}
+          {isLoading &&
+            skeleton.map((_, i) => <CardSkeleton key={`card-skeleton-${i}`} />)}
           {isError && (
             <div className='grid h-30 w-full items-center'>
               <div className='flex flex-col items-center justify-center gap-3'>
@@ -84,13 +87,13 @@ const CoveredMockup = () => {
 
   return (
     <div className='flex w-full flex-col gap-y-3'>
-      <div className='scrollbar-hide h-card-height relative flex items-center gap-x-3 overflow-hidden'>
+      <div className='scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3 overflow-hidden'>
         {COVERED_ROOM_DATA.map(room => (
           <Card {...room} />
         ))}
         <div className='absolute inset-0 z-20 grid size-full place-items-center backdrop-blur-xs'>
           <div className='flex flex-col items-center gap-2'>
-            <p className='text-center text-white'>
+            <p className='text-dark text-white'>
               간편 로그인을 통해 로그인하고,
               <br />
               추천 모임방을 확인하세요!
