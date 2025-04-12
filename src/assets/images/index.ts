@@ -1,5 +1,6 @@
 import SignupSuccessBg from './signup-success.webp';
 import StudentIdSample from './student-id-sample.webp';
 import BoothInfoBg from './booth-info-bg.webp';
+import Error from './error.webp';
 
-export { SignupSuccessBg, StudentIdSample, BoothInfoBg };
+export { SignupSuccessBg, StudentIdSample, BoothInfoBg, Error };

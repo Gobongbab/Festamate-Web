@@ -7,6 +7,8 @@ import { PathItem, RoomListItem } from '@/shared/types';
 import { cn } from '@/shared/utils';
 import { REQUEST, useRoomList } from '@/shared/api';
 import { PATH } from '@/shared/constants';
+import { COVERED_ROOM_DATA } from '@/mock';
+import { Error } from '@/assets/images';
 
 interface GroupCarouselProps {
   label: string;
@@ -20,7 +22,7 @@ export default function GroupCarousel({
   covered = false,
   request,
 }: GroupCarouselProps) {
-  const { data } = useRoomList(request);
+  const { data, isError } = useRoomList(request);
   const { push } = useFlow();
 
   let rooms;
@@ -43,41 +45,65 @@ export default function GroupCarousel({
           <u>더보기</u>
         </button>
       </div>
-      <div
-        className={cn(
-          'scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3',
-          covered ? 'overflow-hidden' : 'overflow-x-scroll',
-        )}
-      >
-        {data && (
-          <>
-            {rooms.length === 0 ? (
-              <div className='grid h-30 w-full place-items-center'>
-                {label}이 없어요!
+      {covered ? (
+        <CoveredMockup />
+      ) : (
+        <div
+          className={cn(
+            'scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3',
+            covered ? 'overflow-hidden' : 'overflow-x-scroll',
+          )}
+        >
+          {data && (
+            <>
+              {rooms.length === 0 ? (
+                <div className='grid h-30 w-full place-items-center'>
+                  {label}이 없어요!
+                </div>
+              ) : (
+                rooms.map(room => <Card key={room.id} {...room} />)
+              )}
+            </>
+          )}
+          {isError && (
+            <div className='grid h-30 w-full items-center'>
+              <div className='flex flex-col items-center justify-center gap-3'>
+                <img src={Error} className='size-14' />
+                <span> {label}을 불러오던 도중 오류가 발생했어요!</span>
               </div>
-            ) : (
-              rooms.map(room => <Card key={room.id} {...room} />)
-            )}
-          </>
-        )}
-        {covered && (
-          <div className='absolute inset-0 z-20 grid size-full place-items-center bg-black/1 backdrop-blur-sm'>
-            <div className='flex flex-col items-center gap-2'>
-              <p className='text-center text-white'>
-                간편 로그인을 통해 로그인하고,
-                <br />
-                추천 모임방을 확인하세요!
-              </p>
-              <Button
-                name='next-step'
-                size='sm'
-                onClick={() => push(PATH.LOGIN, {})}
-                label='로그인 하러가기'
-              />
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
+
+const CoveredMockup = () => {
+  const { push } = useFlow();
+
+  return (
+    <div className='flex w-full flex-col gap-y-3'>
+      <div className='scrollbar-hide h-card-height relative flex items-center gap-x-3 overflow-hidden'>
+        {COVERED_ROOM_DATA.map(room => (
+          <Card {...room} />
+        ))}
+        <div className='absolute inset-0 z-20 grid size-full place-items-center backdrop-blur-xs'>
+          <div className='flex flex-col items-center gap-2'>
+            <p className='text-center text-white'>
+              간편 로그인을 통해 로그인하고,
+              <br />
+              추천 모임방을 확인하세요!
+            </p>
+            <Button
+              name='next-step'
+              size='sm'
+              onClick={() => push(PATH.LOGIN, {})}
+              label='로그인 하러가기'
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

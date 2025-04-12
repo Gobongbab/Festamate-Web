@@ -4,6 +4,7 @@ import { ListItem, ListSkeleton } from '@/shared/ui';
 import { PathItem } from '../types';
 import { useFlow } from '@/app/stackflow';
 import { useRoomList } from '@/shared/api';
+import { Error } from '@/assets/images';
 
 interface GroupListProps {
   label: string;
@@ -14,7 +15,7 @@ interface GroupListProps {
 const GROUP_LIST_SKELETON_COUNT = 6;
 
 export default function GroupList({ label, to, request }: GroupListProps) {
-  const { data, isLoading } = useRoomList(request);
+  const { data, isLoading, isError } = useRoomList(request);
   const { push } = useFlow();
 
   const rooms = data ? data.content : [];
@@ -42,6 +43,14 @@ export default function GroupList({ label, to, request }: GroupListProps) {
           </>
         )}
         {isLoading && <GroupListSkeleton />}
+        {isError && (
+          <div className='grid h-30 items-center'>
+            <div className='flex flex-col items-center justify-center gap-3'>
+              <img src={Error} className='size-14' />
+              <span> {label}을 불러오던 도중 오류가 발생했어요!</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
