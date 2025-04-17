@@ -6,7 +6,6 @@ import { Button, Card, CardSkeleton } from '@/shared/ui';
 import { PathItem, RoomListItem } from '@/shared/types';
 import { cn } from '@/shared/utils';
 import { REQUEST, useRoomList } from '@/shared/api';
-import { PATH } from '@/shared/constants';
 import { COVERED_ROOM_DATA } from '@/mock';
 import { Error } from '@/assets/images';
 
@@ -83,8 +82,6 @@ export default function GroupCarousel({
 }
 
 const CoveredMockup = () => {
-  const { push } = useFlow();
-
   return (
     <div className='flex w-full flex-col gap-y-3'>
       <div className='scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3 overflow-hidden'>
@@ -101,7 +98,7 @@ const CoveredMockup = () => {
             <Button
               name='next-step'
               size='sm'
-              onClick={() => push(PATH.LOGIN, {})}
+              onClick={() => {}}
               label='로그인 하러가기'
             />
           </div>

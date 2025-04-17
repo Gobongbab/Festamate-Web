@@ -6,8 +6,6 @@ export const PATH = {
   RESULT: 'ResultScreen',
   LIST: 'ListScreen',
   ROOM: 'RoomScreen',
-  LOGIN: 'LoginScreen',
-  SIGNUP: 'SignupScreen',
 } as const;
 
 export const RAW_PATH = {
