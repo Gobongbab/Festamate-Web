@@ -23,14 +23,14 @@ export default function StudentCertifyForm({
   const [image, setImage] = useState<string>('');
   const [file, setFile] = useState<File | undefined>(undefined);
 
-  const { access_token } = useAtomValue(KakaoAccessTokenAtom);
+  const { kakaoAccessToken } = useAtomValue(KakaoAccessTokenAtom);
   const { mutate, isSuccess, isError, isPending, isIdle, data } =
     useCertifyStudent();
 
   const handleClick = () => {
     const formData = new FormData();
     formData.append('file', file!);
-    mutate({ formData: formData, token: access_token });
+    mutate({ formData: formData, kakaoAccessToken: kakaoAccessToken });
   };
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {

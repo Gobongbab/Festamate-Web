@@ -13,13 +13,19 @@ import {
 
 export default function SignupContainer() {
   const [process, setProcess] = useState<number>(0);
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+
   const { title, width } = SIGNUP_PROCESS[process];
   const renderForm = () => {
     switch (process) {
       case 0:
-        return <PhoneForm setProcess={setProcess} />;
+        return (
+          <PhoneForm setProcess={setProcess} setPhoneNumber={setPhoneNumber} />
+        );
       case 1:
-        return <PhoneCertifyForm setProcess={setProcess} />;
+        return (
+          <PhoneCertifyForm setProcess={setProcess} phoneNumber={phoneNumber} />
+        );
       case 2:
         return <GenderForm setProcess={setProcess} />;
       case 3:
