@@ -1,7 +1,10 @@
 export const REQUEST = {
   ROOM: '/rooms',
   ROOM_PARTICIPATED: '/rooms/participate',
-  LOGIN: '/auth/kakao',
+  KAKAO: '/auth/kakao',
+  LOGIN: '/auth/login',
+  SIGNUP: '/auth/register/profile',
+  CERTIFY_CODE: '/auth/phone/verify',
   CERTIFY_PHONE: '/auth/phone/send',
   CERTIFY_STUDENT: '/check/student-card',
 };
