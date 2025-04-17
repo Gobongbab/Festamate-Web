@@ -31,7 +31,11 @@ export default function CreateContainer() {
     };
     const token = getCookie();
     console.log(postData);
-    await post<Room>(REQUEST.ROOM, postData, await token);
+    await post<Room>({
+      request: REQUEST.ROOM,
+      data: postData,
+      headers: { Authorization: `Bearer ${token}` },
+    });
   };
 
   const MODE = [
