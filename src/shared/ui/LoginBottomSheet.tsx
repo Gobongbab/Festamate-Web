@@ -2,8 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui';
-import { useFlow } from '@/app/stackflow';
-import { PATH } from '../constants';
+import { KakaoIcon } from '@/assets/icons';
 
 interface LoginBottomSheetProps {
   isOpen: boolean;
@@ -17,18 +16,11 @@ export default function LoginBottomSheet({
   setIsOpen,
 }: LoginBottomSheetProps) {
   const [visible, setVisible] = useState(false);
-  const { push } = useFlow();
 
   const handleClick = () => {
     setIsOpen(false);
     setVisible(false);
-    push(PATH.LOGIN, {});
-  };
-
-  const handleJoinClick = () => {
-    setIsOpen(false);
-    setVisible(false);
-    push(PATH.SIGNUP, {});
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}`;
   };
 
   useEffect(() => {
@@ -68,21 +60,17 @@ export default function LoginBottomSheet({
           </button>
         </div>
         <Button
-          className='mt-6'
-          shadow={false}
-          label='로그인'
           onClick={handleClick}
+          size='md'
+          className='text-dark bg-kakao hover:bg-kakao mt-6 h-fit py-3 font-medium'
+          label={
+            <div className='flex w-full items-center justify-center gap-x-4 py-1'>
+              <img src={KakaoIcon} className='size-6' />
+              <span>카카오톡 간편 로그인</span>
+            </div>
+          }
+          shadow={false}
         />
-        <div className='flex items-baseline justify-between'>
-          <span className='text-lg font-medium'>계정이 없나요?</span>
-          <button
-            className='text-md cursor-pointer focus:outline-none'
-            name='close-bottom-sheet'
-            onClick={handleJoinClick}
-          >
-            <u>회원가입 하러가기</u>
-          </button>
-        </div>
       </div>
     </>
   );
