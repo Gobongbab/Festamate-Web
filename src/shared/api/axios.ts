@@ -1,57 +1,57 @@
-import axios, { AxiosHeaders, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-interface GetRequestParams<TParams = unknown, THeaders = unknown> {
+interface PostRequestParams<TData> {
   request: string;
-  headers?: THeaders;
-  params?: TParams;
+  headers?: { [key: string]: string };
+  data: TData;
+}
+
+interface GetRequestParams<TParams> {
+  request: string;
+  headers?: { [key: string]: string };
+  params: TParams;
 }
 
 const instance = axios.create({
   baseURL: 'https://festamate.shop/api',
 });
 
-export const get = async <TResponse>({
-  request,
-  headers,
-  params,
-}: GetRequestParams): Promise<AxiosResponse<TResponse>> => {
+export async function get<TResponse, TParams = unknown>(
+  config: GetRequestParams<TParams>,
+): Promise<AxiosResponse<TResponse>> {
+  const { request, headers, params } = config;
   try {
-    const response = await instance.get<TResponse>(`${request}`, {
+    const response = await instance.get<TResponse>(request, {
       params: params,
-      headers: headers as AxiosHeaders,
+      headers: headers || undefined,
     });
     return response;
   } catch (error: unknown) {
     console.log(error);
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message);
-    }
-    throw new Error('Unknown error occurred');
+    if (axios.isAxiosError(error)) throw new Error(error.message);
+    else throw new Error('에러가 발생했습니다');
   }
-};
+}
 
-export const post = async <TData, THeaders = unknown>(
-  request: string,
-  data: TData,
-  token?: string,
-  headers?: THeaders,
-) => {
+export async function post<TData, TResponse = unknown>(
+  config: PostRequestParams<TData>,
+): Promise<AxiosResponse<TResponse>> {
+  const { request, data, headers } = config;
   try {
-    const response = token
-      ? await instance.post(`${request}`, data, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            ...headers,
-          },
-        })
-      : await instance.post(`${request}`, data, { headers: { ...headers } });
+    const response = await instance.post<
+      TResponse,
+      AxiosResponse<TResponse>,
+      TData
+    >(request, data, {
+      headers: headers || undefined,
+    });
     return response;
-  } catch (error) {
+  } catch (error: unknown) {
     console.log(error);
-    const e = error as { message: string };
-    throw new Error(e.message);
+    if (axios.isAxiosError(error)) throw new Error(error.message);
+    else throw new Error('에러가 발생했습니다');
   }
-};
+}
 
 export const del = async (request: string) => {
   try {
