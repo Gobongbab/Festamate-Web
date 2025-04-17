@@ -9,3 +9,9 @@ export const PATH = {
   LOGIN: 'LoginScreen',
   SIGNUP: 'SignupScreen',
 } as const;
+
+export const RAW_PATH = {
+  HOME: '/',
+  SIGNUP: '/signup',
+  AUTH: '/auth',
+};
