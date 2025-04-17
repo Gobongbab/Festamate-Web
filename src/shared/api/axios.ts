@@ -9,7 +9,7 @@ interface PostRequestParams<TData> {
 interface GetRequestParams<TParams> {
   request: string;
   headers?: { [key: string]: string };
-  params: TParams;
+  params?: TParams;
 }
 
 const instance = axios.create({
