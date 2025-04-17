@@ -42,7 +42,7 @@ export default function LoginBottomSheet({
 
       <div
         className={cn(
-          'rounded-t-10 fixed bottom-0 left-0 z-400 flex h-60 h-fit w-full flex-col bg-white p-6 pt-8 pb-12 shadow-lg transition-transform duration-300',
+          'rounded-t-10 fixed bottom-0 left-0 z-400 flex h-60 h-fit w-full flex-col bg-white p-6 pt-8 pb-18 shadow-lg transition-transform duration-300',
           isOpen ? 'translate-y-0' : 'translate-y-full',
           visible ? 'box-shadow-bottom-sheet block' : 'none',
         )}
