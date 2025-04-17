@@ -14,14 +14,14 @@ export default function PhoneForm({
   setPhoneNumber,
 }: PhoneFormProps) {
   const [value, setValue] = useState<string>('');
-  const { mutate, isSuccess, isError } = useSubmitPhoneNumber();
+  const { mutate, isError, isPending } = useSubmitPhoneNumber();
 
   const handleClick = () => {
     let phoneNumber = '';
     setPhoneNumber(value);
     value.split('-').forEach(v => (phoneNumber += v));
     mutate({ phoneNumber: phoneNumber });
-    if (isSuccess) setProcess(prev => prev + 1);
+    if (!isError && !isPending) setProcess(prev => prev + 1);
   };
 
   return (
@@ -49,8 +49,16 @@ export default function PhoneForm({
           name='phone-number-auth'
           size='sm'
           onClick={handleClick}
-          disabled={!(value.length === 13)}
-          label={isError ? <>다시 시도</> : <>인증번호 전송</>}
+          disabled={!(value.length === 13) || isPending}
+          label={
+            isPending ? (
+              <>전송 중이에요..</>
+            ) : isError ? (
+              <>다시 시도</>
+            ) : (
+              <>인증번호 전송</>
+            )
+          }
         />
       </div>
     </div>
