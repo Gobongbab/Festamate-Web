@@ -1,6 +1,5 @@
 import React, {
   ChangeEvent,
-  useEffect,
   useState,
   type Dispatch,
   type SetStateAction,
@@ -11,14 +10,19 @@ import { useAtomValue } from 'jotai';
 import { StudentIdSample } from '@/assets/images';
 import { cn } from '@/shared/utils';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
-import { useCertifyStudent } from '@/widgets/signup/api';
+import { useCertifyStudent, useSignup } from '@/widgets/signup/api';
+import { Gender } from '@/shared/types';
 
 interface StudentCertifyFormProps {
   setProcess: Dispatch<SetStateAction<number>>;
+  phoneNumber: string;
+  gender: Gender;
 }
 
 export default function StudentCertifyForm({
   setProcess,
+  phoneNumber,
+  gender,
 }: StudentCertifyFormProps) {
   const [image, setImage] = useState<string>('');
   const [file, setFile] = useState<File | undefined>(undefined);
@@ -26,11 +30,25 @@ export default function StudentCertifyForm({
   const { kakaoAccessToken } = useAtomValue(KakaoAccessTokenAtom);
   const { mutate, isSuccess, isError, isPending, isIdle, data } =
     useCertifyStudent();
+  const signup = useSignup().mutate;
 
   const handleClick = () => {
     const formData = new FormData();
     formData.append('file', file!);
     mutate({ formData: formData, kakaoAccessToken: kakaoAccessToken });
+    if (isSuccess && !isError && data) {
+      const { name, studentId, studentDepartment } = data.result;
+      const signupInfo = {
+        name: name,
+        studentId: studentId,
+        phoneNumber: phoneNumber,
+        gender: gender,
+        major: studentDepartment,
+        kakaoAccessToken: kakaoAccessToken,
+      };
+      signup(signupInfo);
+      setProcess(prev => prev + 1);
+    }
   };
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,12 +65,6 @@ export default function StudentCertifyForm({
       setFile(undefined);
     }
   };
-
-  useEffect(() => {
-    console.log(data);
-    if (isSuccess) setProcess(prev => prev + 1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isSuccess]);
 
   return (
     <>
@@ -83,7 +95,6 @@ export default function StudentCertifyForm({
           <p className='text-positive mt-2 text-sm'>사진 업로드 완료!</p>
         )}
       </label>
-
       <button
         name='phone-number-auth'
         className='disabled:text-light bg-fill border-border rounded-5 hover:bg-sub w-fit cursor-pointer border-[1px] p-2 px-6 transition duration-150'

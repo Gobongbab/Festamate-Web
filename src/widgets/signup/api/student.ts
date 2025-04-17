@@ -6,11 +6,21 @@ interface StudentCertificationProps {
   kakaoAccessToken: string;
 }
 
+interface StudentCertificationResponse {
+  isSuccess: boolean;
+  message: string;
+  result: {
+    name: string;
+    studentDepartment: string;
+    studentId: string;
+  };
+}
+
 const submitStudentCertification = async ({
   formData,
   kakaoAccessToken,
 }: StudentCertificationProps) => {
-  const response = await post<FormData>({
+  const response = await post<FormData, StudentCertificationResponse>({
     request: REQUEST.CERTIFY_STUDENT,
     data: formData,
     headers: {
