@@ -86,7 +86,7 @@ const CoveredMockup = () => {
     <div className='flex w-full flex-col gap-y-3'>
       <div className='scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3 overflow-hidden'>
         {COVERED_ROOM_DATA.map(room => (
-          <Card {...room} />
+          <Card {...room} key={room.id} />
         ))}
         <div className='absolute inset-0 z-20 grid size-full place-items-center backdrop-blur-xs'>
           <div className='flex flex-col items-center gap-2'>
