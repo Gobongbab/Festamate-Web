@@ -1,5 +1,7 @@
 import { post, REQUEST } from '@/shared/api';
+import { userAtom } from '@/shared/atom';
 import { useMutation } from '@tanstack/react-query';
+import { useSetAtom } from 'jotai';
 
 interface KakaoTokenRequest {
   code: string;
@@ -18,6 +20,15 @@ interface KakaoLoginRequest {
   kakaoAccessToken: string;
 }
 
+interface KakaoLoginResponse {
+  isSuccess: boolean;
+  message: string;
+  result: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}
+
 const submitKakaoToken = async (code: string) => {
   const response = await post<KakaoTokenRequest, KakaoTokenResponse>({
     request: REQUEST.KAKAO,
@@ -27,11 +38,11 @@ const submitKakaoToken = async (code: string) => {
 };
 
 const submitKakaoLogin = async (kakaoAccessToken: string) => {
-  const response = await post<KakaoLoginRequest>({
+  const response = await post<KakaoLoginRequest, KakaoLoginResponse>({
     request: REQUEST.LOGIN,
     data: { kakaoAccessToken: kakaoAccessToken },
   });
-  console.log(response);
+  return response.data;
 };
 
 export const useKakaoToken = () => {
@@ -42,8 +53,10 @@ export const useKakaoToken = () => {
 };
 
 export const useKakaoLogin = () => {
-  return useMutation<unknown, unknown, KakaoLoginRequest>({
+  const setUserAtom = useSetAtom(userAtom);
+
+  return useMutation<KakaoLoginResponse, unknown, KakaoLoginRequest>({
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
-    onSuccess: data => data,
+    onSuccess: data => setUserAtom(data.result),
   });
 };
