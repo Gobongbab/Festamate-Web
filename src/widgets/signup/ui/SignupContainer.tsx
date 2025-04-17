@@ -10,20 +10,34 @@ import {
   PhoneForm,
   SignupComplete,
 } from '@/widgets/signup/ui';
+import { Gender } from '@/shared/types';
 
 export default function SignupContainer() {
   const [process, setProcess] = useState<number>(0);
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [gender, setGender] = useState<Gender>('MALE');
+
   const { title, width } = SIGNUP_PROCESS[process];
   const renderForm = () => {
     switch (process) {
       case 0:
-        return <PhoneForm setProcess={setProcess} />;
+        return (
+          <PhoneForm setProcess={setProcess} setPhoneNumber={setPhoneNumber} />
+        );
       case 1:
-        return <PhoneCertifyForm setProcess={setProcess} />;
+        return (
+          <PhoneCertifyForm setProcess={setProcess} phoneNumber={phoneNumber} />
+        );
       case 2:
-        return <GenderForm setProcess={setProcess} />;
+        return <GenderForm setProcess={setProcess} setGender={setGender} />;
       case 3:
-        return <StudentCertifyForm setProcess={setProcess} />;
+        return (
+          <StudentCertifyForm
+            setProcess={setProcess}
+            phoneNumber={phoneNumber}
+            gender={gender}
+          />
+        );
     }
   };
 

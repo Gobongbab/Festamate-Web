@@ -1,15 +1,18 @@
 import './index.css';
 import '@/app/fcm';
 import '@stackflow/plugin-basic-ui/index.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { Provider } from 'jotai';
+import { getToken } from 'firebase/messaging';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Stack } from '@/app/stackflow';
-import { getToken } from 'firebase/messaging';
 import { messaging } from '@/app/fcm';
 import { AuthScreen } from '@/screen/auth/ui';
+import { SignupScreen } from '@/screen/signup/ui';
+import { RAW_PATH } from '@/shared/constants';
 
 async function handleAllowNotification() {
   const permission = await Notification.requestPermission();
@@ -47,14 +50,17 @@ const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: RAW_PATH.HOME,
     element: <Stack />,
   },
-  { path: '/auth', element: <AuthScreen /> },
+  { path: RAW_PATH.AUTH, element: <AuthScreen /> },
+  { path: RAW_PATH.SIGNUP, element: <SignupScreen /> },
 ]);
 
 createRoot(document.getElementById('root')!).render(
-  <QueryClientProvider client={queryClient}>
-    <RouterProvider router={router} />
-  </QueryClientProvider>,
+  <Provider>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  </Provider>,
 );

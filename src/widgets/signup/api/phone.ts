@@ -1,27 +1,33 @@
-import { post, REQUEST } from '@/shared/api';
 import { useMutation } from '@tanstack/react-query';
+import { post, REQUEST } from '@/shared/api';
 
-interface CertifyPhoneNumberRequest {
+interface SubmitPhoneNumberRequest {
   phoneNumber: string;
 }
 
-const certifyPhoneNumber = async ({
-  phone,
-  token,
-}: {
-  phone: string;
-  token: string;
-}) => {
-  const response = await post<CertifyPhoneNumberRequest>(
-    REQUEST.CERTIFY_PHONE,
-    {
-      phoneNumber: phone,
-    },
-    token,
-  );
-  return response.data;
+interface SubmitCodeRequest {
+  phoneNumber: string;
+  code: string;
+}
+
+const submitPhoneNumber = async ({ phoneNumber }: SubmitPhoneNumberRequest) => {
+  await post<SubmitPhoneNumberRequest>({
+    request: REQUEST.CERTIFY_PHONE,
+    data: { phoneNumber: phoneNumber },
+  });
 };
 
-export const useCertifyPhoneNumber = () => {
-  return useMutation({ mutationFn: certifyPhoneNumber });
+const submitCode = async ({ phoneNumber, code }: SubmitCodeRequest) => {
+  await post<SubmitCodeRequest>({
+    request: REQUEST.CERTIFY_CODE,
+    data: { phoneNumber: phoneNumber, code: code },
+  });
+};
+
+export const useSubmitPhoneNumber = () => {
+  return useMutation({ mutationFn: submitPhoneNumber });
+};
+
+export const useSubmitCode = () => {
+  return useMutation({ mutationFn: submitCode });
 };
