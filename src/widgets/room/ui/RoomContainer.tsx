@@ -30,10 +30,10 @@ export default function RoomContainer(props: RoomListItem) {
         {!isLoading && data && (
           <>
             <FormItem title='모임을 연 멤버'>
-              {data?.participants.map(m => <UserItem {...m} key={m.id} />)}
+              {data?.hostParticipants.map(m => <UserItem {...m} key={m.id} />)}
             </FormItem>
             <FormItem title='모임에 참여한 멤버'>
-              {data?.participants.map(m => {
+              {data?.guestParticipants.map(m => {
                 if (!m.isHost) return <UserItem {...m} key={m.id} />;
               })}
             </FormItem>

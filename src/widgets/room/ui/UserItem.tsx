@@ -8,7 +8,7 @@ export default function UserItem({
   nickname,
   studentId,
   gender,
-  department,
+  major,
 }: RoomParticipant) {
   const male = gender === 'MALE';
 
@@ -36,7 +36,7 @@ export default function UserItem({
           </span>
         </div>
         <div className='flex w-fit items-center gap-x-1'>
-          <span>{department}</span>·<span>{studentId}학번 재학생</span>
+          <span>{major}</span>·<span>{studentId}학번 재학생</span>
         </div>
       </div>
     </div>

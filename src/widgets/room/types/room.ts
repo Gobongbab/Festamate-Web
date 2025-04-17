@@ -14,6 +14,6 @@ export type RoomParticipant = {
   nickname: string;
   studentId: string;
   gender: 'MALE' | 'FEMALE';
-  department: string;
+  major: string;
   isHost: boolean;
 };

@@ -1,18 +1,10 @@
 import { get, REQUEST } from '@/shared/api';
-import { Room, RoomParticipant } from '@/shared/types';
+import { RoomDetail } from '@/shared/types';
 import { getCookie } from '@/shared/utils';
 import { useQuery } from '@tanstack/react-query';
 
 interface FetchRoomResponse {
-  result: Room & {
-    participants: RoomParticipant[];
-    images: [
-      {
-        name: string;
-        url: string;
-      },
-    ];
-  };
+  result: RoomDetail;
 }
 
 export const fetchRoomDetail = async ({ roomId }: { roomId: number }) => {
@@ -26,6 +18,6 @@ export const fetchRoomDetail = async ({ roomId }: { roomId: number }) => {
 export const useRoomDetail = (roomId: number) => {
   return useQuery({
     queryKey: [`room + ${roomId}`],
-    queryFn: async () => fetchRoomDetail({ roomId }),
+    queryFn: () => fetchRoomDetail({ roomId }),
   });
 };

@@ -1,7 +1,10 @@
 export type Room = {
   id: number;
   headCount: 2 | 4 | 6;
+  status: string;
   preferredGender: 'MALE' | 'FEMALE';
+  preferredStudentIdMin: string;
+  preferredStudentIdMax: string;
   meetingDateTime: string;
   title: string;
   content: string;
@@ -9,7 +12,8 @@ export type Room = {
 };
 
 export type RoomDetail = Room & {
-  participants: RoomParticipant[];
+  hostParticipants: RoomParticipant[];
+  guestParticipants: RoomParticipant[];
 };
 
 export type RoomParticipant = {
@@ -17,7 +21,7 @@ export type RoomParticipant = {
   nickname: string;
   studentId: string;
   gender: 'MALE' | 'FEMALE';
-  department: string;
+  major: string;
   isHost: boolean;
 };
 
