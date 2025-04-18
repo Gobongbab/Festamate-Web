@@ -1,8 +1,10 @@
+import { Gender } from '@/shared/types';
+
 export type Room = {
   id: number;
   headCount: 2 | 4 | 6;
   status: string;
-  preferredGender: 'MALE' | 'FEMALE';
+  preferredGender: Gender;
   preferredStudentIdMin: string;
   preferredStudentIdMax: string;
   meetingDateTime: string;
@@ -20,7 +22,7 @@ export type RoomParticipant = {
   id: number;
   nickname: string;
   studentId: string;
-  gender: 'MALE' | 'FEMALE';
+  gender: Gender;
   major: string;
   isHost: boolean;
 };
