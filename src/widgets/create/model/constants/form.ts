@@ -5,7 +5,7 @@ export const DETAIL_OPTION = {
     { id: 'people-6', value: 6, label: '6명 (3:3)' },
   ] as const,
   preferredGender: [
-    { id: 'male', value: '남성', label: '남자' },
-    { id: 'female', value: '여성', label: '여자' },
+    { id: 'male', value: 'MALE', label: '남자' } as const,
+    { id: 'female', value: 'FEMALE', label: '여자' } as const,
   ],
 };

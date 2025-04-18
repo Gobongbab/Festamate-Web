@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { cn, getCookie, getDate } from '@/shared/utils';
-import { post, REQUEST } from '@/shared/api';
+import { cn, getDate } from '@/shared/utils';
 import { Button } from '@/shared/ui';
 
 import {
@@ -16,43 +15,54 @@ import { Room } from '@/shared/types';
 
 export default function CreateContainer() {
   const [mode, setMode] = useState(0);
+  const [headCountRender, setHeadCountRender] = useState(2);
+  const [file, setFile] = useState<File | undefined>(undefined);
+
   const { register, watch, setValue } = useForm<Room>({
     defaultValues: {
       content: '',
+      preferredStudentIdMin: '25',
+      preferredStudentIdMax: '24',
       meetingDateTime: getDate(new Date(), 'YYYY-MM-DD HH:MM:') + '00',
     },
   });
 
-  const { title, content, preferredGender, headCount } = watch();
+  const { title, content, preferredGender, headCount, place } = watch();
   const handleSubmit = async () => {
     const postData = {
       ...watch(),
       headCount: Number(watch('headCount')) as 2 | 4 | 6,
     };
-    const token = getCookie();
-    console.log(postData);
-    await post<Room>({
-      request: REQUEST.ROOM,
-      data: postData,
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const formData = new FormData();
+    formData.append('imageFiles', file!);
+    console.log({ ...postData, ...formData });
+    // await post<Room>({
+    //   request: REQUEST.ROOM,
+    //   data: { ...postData, ...formData },
+    //   headers: { Authorization: `Bearer ${token}` },
+    // });
   };
 
   const MODE = [
     {
-      title: '1. 모임방 이름, 설명',
-      form: <GroupTitleForm register={register} watch={watch} />,
+      title: '모임방 기본 정보',
+      form: (
+        <GroupTitleForm register={register} watch={watch} setFile={setFile} />
+      ),
       button: '다음으로',
       isFormValid:
         title?.length >= TITLE_MIN_LENGTH &&
         content.length > 0 &&
-        title?.length < TITLE_MAX_LENGTH &&
-        content.length < CONTENT_MAX_LENGTH,
+        title?.length <= TITLE_MAX_LENGTH &&
+        content.length <= CONTENT_MAX_LENGTH &&
+        place?.length > 0,
     },
     {
-      title: '2. 모임방 세부 정보',
+      title: '모임방 세부 정보',
       form: (
         <GroupDetailForm
+          headCountRender={headCountRender}
+          setHeadCountRender={setHeadCountRender}
           register={register}
           watch={watch}
           setValue={setValue}
