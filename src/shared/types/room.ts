@@ -1,6 +1,6 @@
 import { Gender } from '@/shared/types';
 
-export type Room = {
+export type Room = Partial<FormData> & {
   id: number;
   headCount: 2 | 4 | 6;
   status: string;
