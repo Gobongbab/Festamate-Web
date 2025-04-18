@@ -49,7 +49,7 @@ export default function Input({
       {maxLength && typeof value === 'string' && (
         <div
           className={cn(
-            'text-light flex justify-end',
+            'text-light flex justify-end text-sm',
             enableMaxLengthEffect && 'text-important',
           )}
         >
