@@ -1,14 +1,24 @@
 import React from 'react';
+import { useSetAtom } from 'jotai';
 
 import { Button, FormItem, ListItem } from '@/shared/ui';
 import { RoomListItem } from '@/shared/types';
 
 import { UserItem } from '@/widgets/room/ui';
 import { useRoomDetail } from '@/widgets/room/api';
+import { fetchLoginStatus } from '@/shared/utils';
+import { bottomSheetAtom } from '@/shared/atom';
 
 export default function RoomContainer(props: RoomListItem) {
   const { id, content } = props;
   const { data, isLoading } = useRoomDetail(id);
+  const setIsOpen = useSetAtom(bottomSheetAtom);
+  const isLogin = fetchLoginStatus();
+
+  const handleJoin = () => {
+    if (isLogin) console.log('참여하기 모달이 열립니다.');
+    else setIsOpen(true);
+  };
 
   return (
     <div className='flex size-full flex-col justify-between'>
@@ -42,11 +52,17 @@ export default function RoomContainer(props: RoomListItem) {
         <div className='h-normal-spacing' />
       </div>
       <div className='z-30 flex h-fit w-full gap-x-3 text-lg font-semibold text-white'>
-        <Button name='room-participate' label='참여하기' halfWidth />
+        <Button
+          name='room-participate'
+          label='참여하기'
+          halfWidth
+          onClick={handleJoin}
+        />
         <Button
           name='room-participate-with-friend'
           label='친구와 함께 참여하기'
           halfWidth
+          onClick={handleJoin}
         />
       </div>
     </div>
