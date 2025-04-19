@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useState } from 'react';
-import { type UseFormWatch, type UseFormRegister } from 'react-hook-form';
+import React, { ChangeEvent } from 'react';
+import type { UseFormWatch, UseFormRegister } from 'react-hook-form';
 
 import { cn } from '@/shared/utils';
 
@@ -9,21 +9,20 @@ import {
   CONTENT_MAX_LENGTH,
   PLACE_MAX_LENGTH,
   TITLE_MAX_LENGTH,
+  useRoomCreateContext,
 } from '@/widgets/create/model';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
   watch: UseFormWatch<Room>;
-  setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
 }
 
 export default function GroupTitleForm({
   register,
   watch,
-  setFile,
 }: GroupTitleFormProps) {
+  const { setFile, image, setImage } = useRoomCreateContext();
   const { title, place, content } = watch();
-  const [image, setImage] = useState<string>('');
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -41,10 +40,10 @@ export default function GroupTitleForm({
   };
 
   return (
-    <div>
+    <div className='flex flex-col gap-y-2'>
       <FormItem
-        title='모임방 이미지'
-        description='모임방 표지가 될 이미지를 등록해주세요!'
+        title='모임방 표지 사진'
+        description='사진을 등록하지 않으면 기본 이미지로 자동 설정됩니다.'
         className='mb-3'
       >
         <label htmlFor='file'>

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 
 import {
   UseFormSetValue,
@@ -8,23 +8,19 @@ import {
 
 import { FormItem, Input, Radio } from '@/shared/ui';
 import { Room } from '@/shared/types';
-import { DETAIL_OPTION } from '../model';
 import { getDate } from '@/shared/utils';
+import { DETAIL_OPTION, useRoomCreateContext } from '@/widgets/create/model';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
   watch: UseFormWatch<Room>;
   setValue: UseFormSetValue<Room>;
-  setHeadCountRender: Dispatch<SetStateAction<number>>;
-  headCountRender: number;
 }
 
 export default function GroupDetailForm({
   register,
   watch,
   setValue,
-  setHeadCountRender,
-  headCountRender,
 }: GroupTitleFormProps) {
   const {
     preferredGender,
@@ -33,6 +29,8 @@ export default function GroupDetailForm({
     preferredStudentIdMin,
     preferredStudentIdMax,
   } = watch();
+  const { headCountRender, setHeadCountRender } = useRoomCreateContext();
+
   return (
     <>
       <FormItem
@@ -50,6 +48,7 @@ export default function GroupDetailForm({
           이상
           <Input
             className='w-14'
+            type='number'
             id='preferredStudentIdMax'
             value={preferredStudentIdMax.slice(0, 2)}
             {...register('preferredStudentIdMax', { required: true })}
