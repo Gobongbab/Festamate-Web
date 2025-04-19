@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { cn, getDate } from '@/shared/utils';
 import { Button } from '@/shared/ui';
 
-import { useRoomCreateContext, useRoomMode } from '@/widgets/create/model';
+import { useRoomCreateContext, useFormMode } from '@/widgets/create/model';
 import { Room } from '@/shared/types';
 
 export default function CreateContainer() {
@@ -20,7 +20,7 @@ export default function CreateContainer() {
     },
   });
 
-  const { MODE } = useRoomMode({ register, watch, setValue });
+  const { MODE } = useFormMode({ register, watch, setValue });
   const { form, isFormValid, button } = MODE[mode];
 
   const handleSubmit = async () => {
