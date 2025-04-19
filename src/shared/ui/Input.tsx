@@ -40,7 +40,8 @@ export default function Input({
           enableMaxLengthEffect && 'shake border-important',
         )}
         placeholder={placeholder}
-        type={type}
+        type={type === 'number' ? 'text' : type}
+        inputMode={type === 'number' ? 'numeric' : undefined}
         value={value}
         onChange={onChange}
         disabled={disabled}
