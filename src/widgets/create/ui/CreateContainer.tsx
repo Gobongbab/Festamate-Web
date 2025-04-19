@@ -7,6 +7,7 @@ import { Button } from '@/shared/ui';
 
 import { useRoomCreateContext, useFormMode } from '@/widgets/create/model';
 import { Room } from '@/shared/types';
+import { useFormSubmit } from '@/widgets/create/api';
 
 export default function CreateContainer() {
   const { mode, setMode, file } = useRoomCreateContext();
@@ -22,20 +23,17 @@ export default function CreateContainer() {
 
   const { MODE } = useFormMode({ register, watch, setValue });
   const { form, isFormValid, button } = MODE[mode];
+  const { mutate, isPending } = useFormSubmit();
 
   const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('imageFiles', file!);
     const postData = {
       ...watch(),
       headCount: Number(watch('headCount')) as 2 | 4 | 6,
+      ...formData,
     };
-    const formData = new FormData();
-    formData.append('imageFiles', file!);
-    console.log({ ...postData, ...formData });
-    // await post<Room>({
-    //   request: REQUEST.ROOM,
-    //   data: { ...postData, ...formData },
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
+    mutate({ ...postData });
   };
 
   return (
@@ -65,13 +63,13 @@ export default function CreateContainer() {
         name='group-form-submit'
         type='button'
         size='lg'
-        disabled={!isFormValid}
+        disabled={!isFormValid || isPending}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
-          if (mode === 0) setMode(prev => (prev === 0 ? 1 : 1));
+          if (mode === 0) setMode(1);
           else handleSubmit();
         }}
-        label={button}
+        label={isPending ? '방을 만드는 중..' : button}
       />
     </form>
   );
