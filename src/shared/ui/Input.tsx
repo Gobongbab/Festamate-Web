@@ -40,7 +40,8 @@ export default function Input({
           enableMaxLengthEffect && 'shake border-important',
         )}
         placeholder={placeholder}
-        type={type}
+        type={type === 'number' ? 'text' : type}
+        inputMode={type === 'number' ? 'numeric' : undefined}
         value={value}
         onChange={onChange}
         disabled={disabled}
@@ -49,7 +50,7 @@ export default function Input({
       {maxLength && typeof value === 'string' && (
         <div
           className={cn(
-            'text-light flex justify-end',
+            'text-light flex justify-end text-sm',
             enableMaxLengthEffect && 'text-important',
           )}
         >

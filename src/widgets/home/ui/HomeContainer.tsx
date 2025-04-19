@@ -4,6 +4,7 @@ import { GroupCarousel, GroupList } from '@/shared/ui';
 import { PATH } from '@/shared/constants';
 import { REQUEST } from '@/shared/api';
 import { BoothInfoBg } from '@/assets/images';
+import { fetchLoginStatus } from '@/shared/utils';
 
 export default function HomeContainer() {
   return (
@@ -14,7 +15,7 @@ export default function HomeContainer() {
         key='openedGroup'
         to={PATH.LIST}
         request={REQUEST.ROOM}
-        covered
+        covered={!fetchLoginStatus()}
       />
       <GroupList
         label='개설된 모임방'

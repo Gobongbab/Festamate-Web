@@ -1,9 +1,13 @@
 import React from 'react';
+import { useStack } from '@stackflow/react';
+import { useSetAtom } from 'jotai';
 
 import { useFlow } from '@/app/stackflow';
-import { useStack } from '@stackflow/react';
-import { DOCK, DOCK_ITEMS } from '@/shared/constants';
+
+import { DOCK, DOCK_ITEMS, PATH } from '@/shared/constants';
 import { DockItem, PathItem } from '@/shared/types';
+import { fetchLoginStatus } from '@/shared/utils';
+import { bottomSheetAtom } from '@/shared/atom';
 
 interface DockButtonProps {
   item: DockItem;
@@ -17,7 +21,8 @@ export default function Dock() {
     .filter(i => i.transitionState === 'enter-done')
     .map(i => i.name)
     .pop() as PathItem;
-  const render = current === 'HomeScreen' || current === 'UserScreen';
+  const render = current === PATH.HOME || current === PATH.USER;
+
   return (
     <>
       {render && (
@@ -33,8 +38,12 @@ export default function Dock() {
 
 const DockButton = ({ item, selected }: DockButtonProps) => {
   const { replace } = useFlow();
+  const isLogin = fetchLoginStatus();
+  const setIsOpen = useSetAtom(bottomSheetAtom);
+
   const onClick = () => {
-    replace(item, { animate: false }, { animate: false });
+    if (item === PATH.USER && !isLogin) setIsOpen(true);
+    else replace(item, { animate: false }, { animate: false });
   };
 
   return (

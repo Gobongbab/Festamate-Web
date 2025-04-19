@@ -1,69 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { cn, getCookie, getDate } from '@/shared/utils';
-import { post, REQUEST } from '@/shared/api';
+import { cn, getDate } from '@/shared/utils';
 import { Button } from '@/shared/ui';
 
-import {
-  CONTENT_MAX_LENGTH,
-  TITLE_MAX_LENGTH,
-  TITLE_MIN_LENGTH,
-} from '@/widgets/create/model';
-import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
+import { useRoomCreateContext, useFormMode } from '@/widgets/create/model';
 import { Room } from '@/shared/types';
+import { useFormSubmit } from '@/widgets/create/api';
 
 export default function CreateContainer() {
-  const [mode, setMode] = useState(0);
+  const { mode, setMode, file } = useRoomCreateContext();
+
   const { register, watch, setValue } = useForm<Room>({
     defaultValues: {
       content: '',
+      preferredStudentIdMin: '25',
+      preferredStudentIdMax: '24',
       meetingDateTime: getDate(new Date(), 'YYYY-MM-DD HH:MM:') + '00',
     },
   });
 
-  const { title, content, preferredGender, headCount } = watch();
+  const { MODE } = useFormMode({ register, watch, setValue });
+  const { form, isFormValid, button } = MODE[mode];
+  const { mutate, isPending } = useFormSubmit();
+
   const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('imageFiles', file!);
     const postData = {
       ...watch(),
       headCount: Number(watch('headCount')) as 2 | 4 | 6,
+      ...formData,
     };
-    const token = getCookie();
-    console.log(postData);
-    await post<Room>({
-      request: REQUEST.ROOM,
-      data: postData,
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    mutate({ ...postData });
   };
-
-  const MODE = [
-    {
-      title: '1. 모임방 이름, 설명',
-      form: <GroupTitleForm register={register} watch={watch} />,
-      button: '다음으로',
-      isFormValid:
-        title?.length >= TITLE_MIN_LENGTH &&
-        content.length > 0 &&
-        title?.length < TITLE_MAX_LENGTH &&
-        content.length < CONTENT_MAX_LENGTH,
-    },
-    {
-      title: '2. 모임방 세부 정보',
-      form: (
-        <GroupDetailForm
-          register={register}
-          watch={watch}
-          setValue={setValue}
-        />
-      ),
-      button: '생성하기',
-      isFormValid: preferredGender && headCount,
-    },
-  ];
-
-  const { form, isFormValid, button } = MODE[mode];
 
   return (
     <form className='flex size-full flex-col justify-between'>
@@ -91,14 +62,14 @@ export default function CreateContainer() {
       <Button
         name='group-form-submit'
         type='button'
-        className='disabled:bg-sub disabled:text-border box-shadow-buttonLg rounded-10 hover:bg-primary-hover mb-normal-spacing bg-point z-30 h-16 w-full flex-shrink-0 cursor-pointer text-lg font-semibold text-white transition duration-300'
-        disabled={!isFormValid}
+        size='lg'
+        disabled={!isFormValid || isPending}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
-          if (mode === 0) setMode(prev => (prev === 0 ? 1 : 1));
+          if (mode === 0) setMode(1);
           else handleSubmit();
         }}
-        label={button}
+        label={isPending ? '방을 만드는 중..' : button}
       />
     </form>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { MdAdd } from 'react-icons/md';
@@ -7,10 +7,13 @@ import { AppBar, Button, Dock, LoginBottomSheet } from '@/shared/ui';
 import { HomeContainer } from '@/widgets/home/ui';
 import { useFlow } from '@/app/stackflow';
 import { PATH } from '@/shared/constants';
+import { fetchLoginStatus } from '@/shared/utils';
+import { useSetAtom } from 'jotai';
+import { bottomSheetAtom } from '@/shared/atom';
 
 export default function HomeScreen() {
-  const hasToken = false;
-  const [isOpen, setIsOpen] = useState(false);
+  const hasToken = fetchLoginStatus();
+  const setIsOpen = useSetAtom(bottomSheetAtom);
   const { replace, push } = useFlow();
 
   const searchOnClick = () => replace(PATH.SEARCH, {});
@@ -38,11 +41,7 @@ export default function HomeScreen() {
           }
         />
       </AppScreen>
-      <LoginBottomSheet
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      <LoginBottomSheet />
       <Dock />
     </>
   );

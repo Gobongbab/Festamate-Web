@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   UseFormSetValue,
@@ -8,8 +8,8 @@ import {
 
 import { FormItem, Input, Radio } from '@/shared/ui';
 import { Room } from '@/shared/types';
-import { DETAIL_OPTION } from '../model';
 import { getDate } from '@/shared/utils';
+import { DETAIL_OPTION, useRoomCreateContext } from '@/widgets/create/model';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
@@ -22,11 +22,40 @@ export default function GroupDetailForm({
   watch,
   setValue,
 }: GroupTitleFormProps) {
-  const { preferredGender, headCount, meetingDateTime } = watch();
-  const [headCountRender, setHeadCountRender] = useState(2);
+  const {
+    preferredGender,
+    headCount,
+    meetingDateTime,
+    preferredStudentIdMin,
+    preferredStudentIdMax,
+  } = watch();
+  const { headCountRender, setHeadCountRender } = useRoomCreateContext();
 
   return (
     <>
+      <FormItem
+        title='희망 멤버 학번'
+        description='모임방에 들어올 구성원들의 학번을 지정해주세요.'
+      >
+        <div className='flex w-full items-center gap-2'>
+          <Input
+            className='w-14'
+            type='number'
+            id='preferredStudentIdMin'
+            value={preferredStudentIdMin.slice(0, 2)}
+            {...register('preferredStudentIdMin', { required: true })}
+          />
+          이상
+          <Input
+            className='w-14'
+            type='number'
+            id='preferredStudentIdMax'
+            value={preferredStudentIdMax.slice(0, 2)}
+            {...register('preferredStudentIdMax', { required: true })}
+          />
+          이하
+        </div>
+      </FormItem>
       <FormItem
         title='성별 선택'
         description='모임방에 들어올 구성원들의 성별을 선택해주세요.'

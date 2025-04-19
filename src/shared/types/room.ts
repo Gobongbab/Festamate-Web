@@ -1,7 +1,12 @@
-export type Room = {
+import { Gender } from '@/shared/types';
+
+export type Room = Partial<FormData> & {
   id: number;
   headCount: 2 | 4 | 6;
-  preferredGender: 'MALE' | 'FEMALE';
+  status: string;
+  preferredGender: Gender;
+  preferredStudentIdMin: string;
+  preferredStudentIdMax: string;
   meetingDateTime: string;
   title: string;
   content: string;
@@ -9,15 +14,16 @@ export type Room = {
 };
 
 export type RoomDetail = Room & {
-  participants: RoomParticipant[];
+  hostParticipants: RoomParticipant[];
+  guestParticipants: RoomParticipant[];
 };
 
 export type RoomParticipant = {
   id: number;
   nickname: string;
   studentId: string;
-  gender: 'MALE' | 'FEMALE';
-  department: string;
+  gender: Gender;
+  major: string;
   isHost: boolean;
 };
 

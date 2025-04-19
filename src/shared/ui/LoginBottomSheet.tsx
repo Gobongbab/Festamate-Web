@@ -1,26 +1,24 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAtom } from 'jotai';
 
 import { cn } from '@/shared/utils';
 import { Button } from '@/shared/ui';
 import { KakaoIcon } from '@/assets/icons';
+import { bottomSheetAtom } from '@/shared/atom';
 
-interface LoginBottomSheetProps {
-  isOpen: boolean;
-  onClose: () => void;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-export default function LoginBottomSheet({
-  isOpen,
-  onClose,
-  setIsOpen,
-}: LoginBottomSheetProps) {
+export default function LoginBottomSheet() {
   const [visible, setVisible] = useState(false);
+  const [isOpen, setIsOpen] = useAtom(bottomSheetAtom);
 
   const handleClick = () => {
     setIsOpen(false);
     setVisible(false);
     window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}`;
+  };
+
+  const onClose = () => {
+    setIsOpen(false);
+    setVisible(false);
   };
 
   useEffect(() => {
