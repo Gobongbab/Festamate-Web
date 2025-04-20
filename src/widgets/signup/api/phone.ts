@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import type { Dispatch, SetStateAction } from 'react';
 import { post, REQUEST } from '@/shared/api';
 
 interface SubmitPhoneNumberRequest {
@@ -8,6 +9,10 @@ interface SubmitPhoneNumberRequest {
 interface SubmitCodeRequest {
   phoneNumber: string;
   code: string;
+}
+
+interface SubmitCodeParams {
+  setProcess: Dispatch<SetStateAction<number>>;
 }
 
 const submitPhoneNumber = async ({ phoneNumber }: SubmitPhoneNumberRequest) => {
@@ -28,6 +33,9 @@ export const useSubmitPhoneNumber = () => {
   return useMutation({ mutationFn: submitPhoneNumber });
 };
 
-export const useSubmitCode = () => {
-  return useMutation({ mutationFn: submitCode });
+export const useSubmitCode = ({ setProcess }: SubmitCodeParams) => {
+  return useMutation({
+    mutationFn: submitCode,
+    onSuccess: () => setProcess(prev => prev + 1),
+  });
 };

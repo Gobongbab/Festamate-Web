@@ -13,14 +13,15 @@ export default function PhoneCertifyForm({
   setProcess,
 }: PhoneCertifyFormProps) {
   const [value, setValue] = useState<string>('');
-  const { mutate, isSuccess, isPending } = useSubmitCode();
+  const { mutate, isPending, isError } = useSubmitCode({
+    setProcess,
+  });
   const resend = useSubmitPhoneNumber().mutate;
 
   const handleClick = () => {
     let phoneNumberWithoutHypen = '';
     phoneNumber.split('-').forEach(v => (phoneNumberWithoutHypen += v));
     mutate({ phoneNumber: phoneNumberWithoutHypen, code: value });
-    if (isSuccess) setProcess(prev => prev + 1);
   };
 
   const resendClick = () => {
@@ -55,7 +56,13 @@ export default function PhoneCertifyForm({
           size='sm'
           onClick={handleClick}
           disabled={!(value.length > 3) || isPending}
-          label={isPending ? '인증 중..' : '인증번호 확인'}
+          label={
+            isPending
+              ? '인증 중..'
+              : isError
+                ? '번호 확인에 실패했어요. 다시 시도하기'
+                : '인증번호 확인'
+          }
         />
         <button
           name='resend-certifications'
