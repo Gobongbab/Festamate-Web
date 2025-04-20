@@ -1,7 +1,7 @@
 import { post, REQUEST } from '@/shared/api';
 import { useMutation } from '@tanstack/react-query';
 
-interface StudentCertificationResponse {
+export interface StudentCertificationResponse {
   isSuccess: boolean;
   message: string;
   result: {
@@ -19,6 +19,11 @@ const submitStudentCertification = async (formData: FormData) => {
   return response.data;
 };
 
-export const useCertifyStudent = () => {
-  return useMutation({ mutationFn: submitStudentCertification });
+export const useCertifyStudent = (
+  onSuccess: (data: StudentCertificationResponse) => void,
+) => {
+  return useMutation({
+    mutationFn: submitStudentCertification,
+    onSuccess: onSuccess,
+  });
 };

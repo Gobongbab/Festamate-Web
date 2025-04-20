@@ -10,7 +10,11 @@ import { useAtomValue } from 'jotai';
 import { StudentIdSample } from '@/assets/images';
 import { cn } from '@/shared/utils';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
-import { useCertifyStudent, useSignup } from '@/widgets/signup/api';
+import {
+  StudentCertificationResponse,
+  useCertifyStudent,
+  useSignup,
+} from '@/widgets/signup/api';
 import { Gender } from '@/shared/types';
 
 interface StudentCertifyFormProps {
@@ -28,27 +32,28 @@ export default function StudentCertifyForm({
   const [file, setFile] = useState<File | undefined>(undefined);
 
   const { kakaoAccessToken } = useAtomValue(KakaoAccessTokenAtom);
-  const { mutate, isSuccess, isError, isPending, isIdle, data } =
-    useCertifyStudent();
-  const signup = useSignup().mutate;
+  const signup = useSignup({ setProcess }).mutate;
+
+  const handleSignup = (data: StudentCertificationResponse) => {
+    const { name, studentId, studentDepartment } = data.result;
+    const signupInfo = {
+      name: name,
+      studentId: studentId,
+      phoneNumber: phoneNumber,
+      gender: gender,
+      major: studentDepartment,
+      kakaoAccessToken: kakaoAccessToken,
+    };
+    signup(signupInfo);
+  };
+
+  const { mutate, isSuccess, isError, isPending, isIdle } =
+    useCertifyStudent(handleSignup);
 
   const handleClick = async () => {
     const formData = new FormData();
     formData.append('file', file!);
     mutate(formData);
-    if (isSuccess && !isError && data) {
-      const { name, studentId, studentDepartment } = data.result;
-      const signupInfo = {
-        name: name,
-        studentId: studentId,
-        phoneNumber: phoneNumber,
-        gender: gender,
-        major: studentDepartment,
-        kakaoAccessToken: kakaoAccessToken,
-      };
-      signup(signupInfo);
-      setProcess(prev => prev + 1);
-    }
   };
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +91,7 @@ export default function StudentCertifyForm({
           style={{ backgroundImage: `url(${image ?? ''})` }}
         >
           {image === '' && (
-            <button className='-z-10 cursor-pointer focus:outline-none'>
+            <button className='text-light -z-10 cursor-pointer font-light focus:outline-none'>
               경기대 전자출결 앱 내부의 학생증 사진을 올려주세요!
             </button>
           )}
