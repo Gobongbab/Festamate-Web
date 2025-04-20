@@ -4,6 +4,7 @@ import { useSetAtom } from 'jotai';
 import { post, REQUEST } from '@/shared/api';
 import { userAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
+import { getPath } from '@/shared/utils';
 
 interface KakaoTokenRequest {
   code: string;
@@ -61,7 +62,9 @@ export const useKakaoLogin = () => {
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
     onSuccess: data => {
       setUserAtom(data.result);
-      window.history.replaceState(null, '', RAW_PATH.HOME);
+      window.location.replace(
+        `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.HOME)}`,
+      );
     },
   });
 };

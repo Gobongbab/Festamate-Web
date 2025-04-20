@@ -13,7 +13,9 @@ export default function LoginBottomSheet() {
   const handleClick = () => {
     setIsOpen(false);
     setVisible(false);
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}`;
+    window.location.replace(
+      `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${import.meta.env.VITE_KAKAO_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}`,
+    );
   };
 
   const onClose = () => {

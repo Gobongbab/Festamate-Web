@@ -5,6 +5,7 @@ import { useKakaoLogin, useKakaoToken } from '@/screen/auth/api';
 import { Loader } from '@/assets/images';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
+import { getPath } from '@/shared/utils';
 
 export default function AuthScreen() {
   const setKakaoToken = useSetAtom(KakaoAccessTokenAtom);
@@ -24,7 +25,10 @@ export default function AuthScreen() {
       const kakaoAccessToken = data.result.kakaoAccessToken;
       setKakaoToken({ kakaoAccessToken });
       if (data.result.member) login({ kakaoAccessToken });
-      else window.history.replaceState(null, '', RAW_PATH.SIGNUP);
+      else
+        window.location.replace(
+          `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.SIGNUP)}`,
+        );
     }
   }, [isSuccess, data, login, setKakaoToken]);
 
