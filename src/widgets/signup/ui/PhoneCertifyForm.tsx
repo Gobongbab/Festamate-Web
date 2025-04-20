@@ -17,7 +17,9 @@ export default function PhoneCertifyForm({
   const resend = useSubmitPhoneNumber().mutate;
 
   const handleClick = () => {
-    mutate({ phoneNumber: phoneNumber, code: value });
+    let phoneNumberWithoutHypen = '';
+    phoneNumber.split('-').forEach(v => (phoneNumberWithoutHypen += v));
+    mutate({ phoneNumber: phoneNumberWithoutHypen, code: value });
     if (isSuccess) setProcess(prev => prev + 1);
   };
 
