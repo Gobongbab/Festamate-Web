@@ -5,6 +5,7 @@ import { useSetAtom } from 'jotai';
 import { useKakaoLogin, useKakaoToken } from '@/screen/auth/api';
 import { Loader } from '@/assets/images';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
+import { RAW_PATH } from '@/shared/constants';
 
 export default function AuthScreen() {
   const navigate = useNavigate();
@@ -24,10 +25,8 @@ export default function AuthScreen() {
     if (isSuccess && data) {
       const kakaoAccessToken = data.result.kakaoAccessToken;
       setKakaoToken({ kakaoAccessToken });
-      if (data.result.member) {
-        login({ kakaoAccessToken });
-        navigate('/');
-      } else navigate('/signup');
+      if (data.result.member) login({ kakaoAccessToken });
+      else navigate(RAW_PATH.SIGNUP);
     }
   }, [isSuccess, data, navigate, login, setKakaoToken]);
 
