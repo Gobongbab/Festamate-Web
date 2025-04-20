@@ -1,8 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { SignupContainer } from '@/widgets/signup/ui';
 import { RAW_PATH } from '@/shared/constants';
+import { getPath } from '@/shared/utils';
 
 export default function SignupScreen() {
   return (
@@ -16,13 +16,15 @@ export default function SignupScreen() {
 }
 
 const SignupHeader = () => {
-  const navigate = useNavigate();
-
   return (
     <div className='container-width border-app-bar-border relative m-auto grid h-[64px] w-full place-items-center border-b-[0.5px]'>
       <button
         className='absolute left-6 h-full w-12 cursor-pointer focus:outline-none'
-        onClick={() => navigate(RAW_PATH.HOME)}
+        onClick={() =>
+          window.location.replace(
+            `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.HOME)}`,
+          )
+        }
       >
         홈으로
       </button>

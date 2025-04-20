@@ -3,11 +3,13 @@ import React from 'react';
 import { SignupSuccessBg } from '@/assets/images';
 import { Button } from '@/shared/ui';
 import { RAW_PATH } from '@/shared/constants';
+import { getPath } from '@/shared/utils';
 
 export default function SignupComplete() {
   const handleHomeClick = () =>
-    window.history.replaceState(null, '', RAW_PATH.HOME);
-
+    window.location.replace(
+      `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.HOME)}`,
+    );
   return (
     <div
       className='grid h-screen w-full place-items-center bg-cover bg-center'
