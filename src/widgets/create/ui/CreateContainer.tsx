@@ -28,12 +28,13 @@ export default function CreateContainer() {
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('imageFiles', file!);
-    const postData = {
+    const postData = JSON.stringify({
       ...watch(),
       headCount: Number(watch('headCount')) as 2 | 4 | 6,
-      ...formData,
-    };
-    mutate({ ...postData });
+    });
+    const blob = new Blob([postData], { type: 'application/json' });
+    formData.append('request', blob);
+    mutate(formData);
   };
 
   return (
