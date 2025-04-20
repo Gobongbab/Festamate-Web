@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
-import { useNavigate } from 'react-router-dom';
 
 import { post, REQUEST } from '@/shared/api';
 import { userAtom } from '@/shared/atom';
@@ -57,13 +56,12 @@ export const useKakaoToken = () => {
 
 export const useKakaoLogin = () => {
   const setUserAtom = useSetAtom(userAtom);
-  const navigate = useNavigate();
 
   return useMutation<KakaoLoginResponse, unknown, KakaoLoginRequest>({
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
     onSuccess: data => {
       setUserAtom(data.result);
-      navigate(RAW_PATH.HOME);
+      window.history.replaceState(null, '', RAW_PATH.HOME);
     },
   });
 };

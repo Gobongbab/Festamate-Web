@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 
 import { useKakaoLogin, useKakaoToken } from '@/screen/auth/api';
@@ -8,7 +7,6 @@ import { KakaoAccessTokenAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
 
 export default function AuthScreen() {
-  const navigate = useNavigate();
   const setKakaoToken = useSetAtom(KakaoAccessTokenAtom);
 
   const params = new URLSearchParams(location.search);
@@ -26,9 +24,9 @@ export default function AuthScreen() {
       const kakaoAccessToken = data.result.kakaoAccessToken;
       setKakaoToken({ kakaoAccessToken });
       if (data.result.member) login({ kakaoAccessToken });
-      else navigate(RAW_PATH.SIGNUP);
+      else window.history.replaceState(null, '', RAW_PATH.SIGNUP);
     }
-  }, [isSuccess, data, navigate, login, setKakaoToken]);
+  }, [isSuccess, data, login, setKakaoToken]);
 
   return (
     <div className='container-mobile grid h-screen place-items-center'>
@@ -41,7 +39,10 @@ export default function AuthScreen() {
       {isError && (
         <div className='flex flex-col text-lg'>
           로그인에 실패했어요.
-          <button className='focus:outline-none' onClick={() => navigate('/')}>
+          <button
+            className='focus:outline-none'
+            onClick={() => window.history.replaceState(null, '', RAW_PATH.HOME)}
+          >
             홈으로 돌아가기
           </button>
         </div>
