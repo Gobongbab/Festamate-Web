@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { useFlow } from '@/app/stackflow';
 import { SignupSuccessBg } from '@/assets/images';
 import { Button } from '@/shared/ui';
+import { RAW_PATH } from '@/shared/constants';
 
 export default function SignupComplete() {
-  const { pop } = useFlow();
-  const handleHomeClick = () => pop();
+  const handleHomeClick = () =>
+    window.history.replaceState(null, '', RAW_PATH.HOME);
 
   return (
     <div
-      className='grid size-full place-items-center bg-cover bg-center'
+      className='grid h-screen w-full place-items-center bg-cover bg-center'
       style={{ backgroundImage: `url(${SignupSuccessBg})` }}
     >
       <div className='flex w-[80%] flex-col items-start gap-2'>
