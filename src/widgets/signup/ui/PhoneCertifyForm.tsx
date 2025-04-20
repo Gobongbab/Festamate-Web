@@ -13,7 +13,7 @@ export default function PhoneCertifyForm({
   setProcess,
 }: PhoneCertifyFormProps) {
   const [value, setValue] = useState<string>('');
-  const { mutate, isSuccess } = useSubmitCode();
+  const { mutate, isSuccess, isPending } = useSubmitCode();
   const resend = useSubmitPhoneNumber().mutate;
 
   const handleClick = () => {
@@ -54,8 +54,8 @@ export default function PhoneCertifyForm({
           name='check-certifications'
           size='sm'
           onClick={handleClick}
-          disabled={!(value.length > 3)}
-          label='인증번호 확인'
+          disabled={!(value.length > 3) || isPending}
+          label={isPending ? '인증 중..' : '인증번호 확인'}
         />
         <button
           name='resend-certifications'
