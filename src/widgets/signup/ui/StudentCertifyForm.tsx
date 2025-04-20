@@ -32,10 +32,10 @@ export default function StudentCertifyForm({
     useCertifyStudent();
   const signup = useSignup().mutate;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const formData = new FormData();
     formData.append('file', file!);
-    mutate({ formData: formData, kakaoAccessToken: kakaoAccessToken });
+    mutate(formData);
     if (isSuccess && !isError && data) {
       const { name, studentId, studentDepartment } = data.result;
       const signupInfo = {

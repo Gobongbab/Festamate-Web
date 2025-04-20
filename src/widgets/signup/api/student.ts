@@ -1,11 +1,6 @@
 import { post, REQUEST } from '@/shared/api';
 import { useMutation } from '@tanstack/react-query';
 
-interface StudentCertificationProps {
-  formData: FormData;
-  kakaoAccessToken: string;
-}
-
 interface StudentCertificationResponse {
   isSuccess: boolean;
   message: string;
@@ -16,16 +11,10 @@ interface StudentCertificationResponse {
   };
 }
 
-const submitStudentCertification = async ({
-  formData,
-  kakaoAccessToken,
-}: StudentCertificationProps) => {
+const submitStudentCertification = async (formData: FormData) => {
   const response = await post<FormData, StudentCertificationResponse>({
     request: REQUEST.CERTIFY_STUDENT,
     data: formData,
-    headers: {
-      Authorization: `Bearer ${kakaoAccessToken}}`,
-    },
   });
   return response.data;
 };
