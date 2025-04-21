@@ -1,36 +1,18 @@
 import React, { useEffect } from 'react';
-import { useSetAtom } from 'jotai';
 
-import { useKakaoLogin, useKakaoToken } from '@/screen/auth/api';
+import { useKakaoToken } from '@/screen/auth/api';
 import { Loader } from '@/assets/images';
-import { KakaoAccessTokenAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
-import { getPath } from '@/shared/utils';
 
 export default function AuthScreen() {
-  const setKakaoToken = useSetAtom(KakaoAccessTokenAtom);
-
   const params = new URLSearchParams(location.search);
   const code = params.get('code');
 
-  const { mutate, isPending, isError, data, isSuccess } = useKakaoToken();
-  const login = useKakaoLogin().mutate;
+  const { mutate, isPending, isError } = useKakaoToken();
 
   useEffect(() => {
     if (code) mutate({ code });
   }, [code, mutate]);
-
-  useEffect(() => {
-    if (isSuccess && data) {
-      const kakaoAccessToken = data.result.kakaoAccessToken;
-      setKakaoToken({ kakaoAccessToken });
-      if (data.result.member) login({ kakaoAccessToken });
-      else
-        window.location.replace(
-          `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.SIGNUP)}`,
-        );
-    }
-  }, [isSuccess, data, login, setKakaoToken]);
 
   return (
     <div className='container-mobile grid h-screen place-items-center'>
