@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Button, FormItem, ListItem } from '@/shared/ui';
+import { Button, FormItem } from '@/shared/ui';
 import { RoomListItem } from '@/shared/types';
 
-import { UserItem } from '@/widgets/room/ui';
+import { RoomHeader, UserItem } from '@/widgets/room/ui';
 import { useRoomDetail } from '@/widgets/room/api';
 import { fetchLoginStatus } from '@/shared/utils';
 import { useBottomSheet } from '@/shared/hook';
@@ -23,8 +23,8 @@ export default function RoomContainer(props: RoomListItem) {
   return (
     <div className='flex size-full flex-col justify-between'>
       <div className='scrollbar-hide flex flex-col gap-y-6 overflow-scroll'>
-        <ListItem {...props} header />
-        <div className='border-sub flex h-fit w-full border-b-2 pb-6'>
+        <RoomHeader {...props} />
+        <div className='border-sub flex h-fit w-full border-y-1 py-6'>
           {content}
         </div>
         {isLoading && (
@@ -39,19 +39,29 @@ export default function RoomContainer(props: RoomListItem) {
         )}
         {!isLoading && data && (
           <>
-            <FormItem title='모임을 연 멤버'>
-              {data?.hostParticipants.map(m => <UserItem {...m} key={m.id} />)}
+            <FormItem
+              title='모임을 연 멤버'
+              className='border-sub border-b-1 pb-6'
+            >
+              {data.hostParticipants.map(m => (
+                <UserItem {...m} key={m.id} />
+              ))}
             </FormItem>
             <FormItem title='모임에 참여한 멤버'>
-              {data?.guestParticipants.map(m => {
+              {data.guestParticipants.map(m => {
                 if (!m.isHost) return <UserItem {...m} key={m.id} />;
               })}
+              {data.guestParticipants.length === 0 && (
+                <div className='text-light grid h-20 w-full place-items-center font-light'>
+                  아직 참여한 멤버가 없어요!
+                </div>
+              )}
             </FormItem>
           </>
         )}
         <div className='h-normal-spacing' />
       </div>
-      <div className='z-30 flex h-fit w-full gap-x-3 text-lg font-semibold text-white'>
+      <div className='border-t-app-bar-border z-30 flex h-fit w-full gap-x-3 border-[0.5px] pt-3 text-lg font-semibold text-white'>
         <Button
           name='room-participate'
           label='참여하기'
