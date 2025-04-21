@@ -1,8 +1,9 @@
-import { atom } from 'jotai';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 import { AsyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
 
-export const KakaoAccessTokenAtom = atom({ kakaoAccessToken: '' });
+export const KakaoAccessTokenAtom = atomWithStorage('kakaoAccessToken', {
+  kakaoAccessToken: '',
+});
 
 type Token = {
   accessToken: string;
