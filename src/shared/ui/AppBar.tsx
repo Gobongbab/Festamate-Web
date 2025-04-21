@@ -1,5 +1,6 @@
 import { FiSearch } from 'react-icons/fi';
 import { IoChevronBackSharp } from 'react-icons/io5';
+import { HiOutlineDotsVertical } from 'react-icons/hi';
 
 import Input from './Input';
 
@@ -45,4 +46,14 @@ export const SearchAppBar = (
   ),
   ...baseStyle,
   backgroundColor: '#fff',
+});
+
+export const RoomAppBar = (menuOnClick: () => void) => ({
+  renderRight: () => (
+    <button onClick={menuOnClick} name='menu'>
+      <HiOutlineDotsVertical size={22} />
+    </button>
+  ),
+  closeButton: { renderIcon: () => <></> },
+  ...baseStyle,
 });
