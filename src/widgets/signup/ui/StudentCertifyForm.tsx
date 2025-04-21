@@ -10,11 +10,7 @@ import { useAtomValue } from 'jotai';
 import { StudentIdSample } from '@/assets/images';
 import { cn } from '@/shared/utils';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
-import {
-  StudentCertificationResponse,
-  useCertifyStudent,
-  useSignup,
-} from '@/widgets/signup/api';
+import { useCertifyStudent, useSignup } from '@/widgets/signup/api';
 import { Gender } from '@/shared/types';
 
 interface StudentCertifyFormProps {
@@ -33,27 +29,28 @@ export default function StudentCertifyForm({
 
   const { kakaoAccessToken } = useAtomValue(KakaoAccessTokenAtom);
   const signup = useSignup({ setProcess }).mutate;
+  const isSignupPending = useSignup({ setProcess }).isPending;
+  const isSignupSuccess = useSignup({ setProcess }).isSuccess;
 
-  const handleSignup = (data: StudentCertificationResponse) => {
-    const { name, studentId, studentDepartment } = data.result;
-    const signupInfo = {
-      name: name,
-      studentId: studentId,
-      phoneNumber: phoneNumber,
-      gender: gender,
-      major: studentDepartment,
-      kakaoAccessToken: kakaoAccessToken,
-    };
-    signup(signupInfo);
-  };
 
-  const { mutate, isSuccess, isError, isPending, isIdle } =
-    useCertifyStudent(handleSignup);
+  const { mutateAsync, isSuccess, isError, isPending, isIdle } =
+    useCertifyStudent();
 
   const handleClick = async () => {
     const formData = new FormData();
     formData.append('file', file!);
-    mutate(formData);
+    mutateAsync(formData).then(data => {
+      const { name, studentId, studentDepartment } = data.result;
+      const signupInfo = {
+        name: name,
+        studentId: studentId,
+        phoneNumber: phoneNumber,
+        gender: gender,
+        major: studentDepartment,
+        kakaoAccessToken: kakaoAccessToken,
+      };
+      signup(signupInfo);
+    });
   };
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -108,8 +105,8 @@ export default function StudentCertifyForm({
       >
         {isIdle && '학적 인증하기'}
         {isError && '다시 시도하기'}
-        {isPending && '인증 중'}
-        {isSuccess && '인증 성공!'}
+        {isPending || isSignupPending && '인증 중'}
+        {isSuccess && isSignupSuccess && '인증 성공!'}
       </button>
     </>
   );
