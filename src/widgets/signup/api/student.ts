@@ -19,11 +19,8 @@ const submitStudentCertification = async (formData: FormData) => {
   return response.data;
 };
 
-export const useCertifyStudent = (
-  onSuccess: (data: StudentCertificationResponse) => void,
-) => {
+export const useCertifyStudent = () => {
   return useMutation({
     mutationFn: submitStudentCertification,
-    onSuccess: onSuccess,
   });
 };
