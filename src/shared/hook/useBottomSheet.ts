@@ -9,10 +9,24 @@ export default function useBottomSheet() {
 
   const bottomSheetState = (key: BottomSheetItem) =>
     bottomSheet[key] || { isOpen: false };
-  const openBottomSheet = (key: BottomSheetItem) =>
-    setBottomSheet({ key, isOpen: true });
-  const closeBottomSheet = (key: BottomSheetItem) =>
-    setBottomSheet({ key, isOpen: false });
+  const openBottomSheet = (key: BottomSheetItem) => {
+    setBottomSheet({ key, isOpen: true, isVisible: false });
+    setTimeout(
+      () => setBottomSheet({ key, isOpen: true, isVisible: true }),
+      100,
+    );
+  };
+  const closeBottomSheet = (key: BottomSheetItem) => {
+    setBottomSheet({ key, isOpen: true, isVisible: false });
+    setTimeout(
+      () => setBottomSheet({ key, isOpen: false, isVisible: false }),
+      300,
+    );
+  };
 
-  return { bottomSheetState, openBottomSheet, closeBottomSheet };
+  return {
+    bottomSheetState,
+    openBottomSheet,
+    closeBottomSheet,
+  };
 }
