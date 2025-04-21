@@ -11,5 +11,6 @@ export { default as GroupCarousel } from './GroupCarousel';
 export { default as GroupList } from './GroupList';
 export { default as Button } from './Button';
 export { default as LoginBottomSheet } from './LoginBottomSheet';
+export { default as BottomSheet } from './BottomSheet';
 
 export * from './AppBar';

@@ -1,13 +1,12 @@
 import React from 'react';
 import { useStack } from '@stackflow/react';
-import { useSetAtom } from 'jotai';
 
 import { useFlow } from '@/app/stackflow';
 
-import { DOCK, DOCK_ITEMS, PATH } from '@/shared/constants';
+import { BOTTOM_SHEET, DOCK, DOCK_ITEMS, PATH } from '@/shared/constants';
 import { DockItem, PathItem } from '@/shared/types';
 import { fetchLoginStatus } from '@/shared/utils';
-import { bottomSheetAtom } from '@/shared/atom';
+import { useBottomSheet } from '@/shared/hook';
 
 interface DockButtonProps {
   item: DockItem;
@@ -38,11 +37,11 @@ export default function Dock() {
 
 const DockButton = ({ item, selected }: DockButtonProps) => {
   const { replace } = useFlow();
+  const { openBottomSheet } = useBottomSheet();
   const isLogin = fetchLoginStatus();
-  const setIsOpen = useSetAtom(bottomSheetAtom);
 
   const onClick = () => {
-    if (item === PATH.USER && !isLogin) setIsOpen(true);
+    if (item === PATH.USER && !isLogin) openBottomSheet(BOTTOM_SHEET.LOGIN);
     else replace(item, { animate: false }, { animate: false });
   };
 

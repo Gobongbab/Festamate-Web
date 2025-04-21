@@ -26,31 +26,55 @@ export default function StudentCertifyForm({
 }: StudentCertifyFormProps) {
   const [image, setImage] = useState<string>('');
   const [file, setFile] = useState<File | undefined>(undefined);
+  const [certifyError, setCertifyError] = useState<string>('');
+  const [processStatus, setProcessStatus] = useState<
+    'idle' | 'certifying' | 'signing' | 'complete'
+  >('idle');
 
   const { kakaoAccessToken } = useAtomValue(KakaoAccessTokenAtom);
-  const signup = useSignup({ setProcess }).mutate;
-  const isSignupPending = useSignup({ setProcess }).isPending;
-  const isSignupSuccess = useSignup({ setProcess }).isSuccess;
-
-
-  const { mutateAsync, isSuccess, isError, isPending, isIdle } =
+  const { mutate: signup } = useSignup({ setProcess });
+  const { mutateAsync: certifyStudent, isError: isCertifyError } =
     useCertifyStudent();
 
   const handleClick = async () => {
-    const formData = new FormData();
-    formData.append('file', file!);
-    mutateAsync(formData).then(data => {
+    if (!file) return;
+
+    setCertifyError('');
+    setProcessStatus('certifying');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const data = await certifyStudent(formData);
       const { name, studentId, studentDepartment } = data.result;
+
+      setProcessStatus('signing');
+
       const signupInfo = {
-        name: name,
-        studentId: studentId,
-        phoneNumber: phoneNumber,
-        gender: gender,
+        name,
+        studentId,
+        phoneNumber,
+        gender,
         major: studentDepartment,
-        kakaoAccessToken: kakaoAccessToken,
+        kakaoAccessToken,
       };
-      signup(signupInfo);
-    });
+
+      signup(signupInfo, {
+        onSuccess: () => {
+          setProcessStatus('complete');
+        },
+        onError: () => {
+          setCertifyError('회원가입 중 오류가 발생했어요.');
+          setProcessStatus('idle');
+        },
+      });
+    } catch {
+      setCertifyError(
+        '학적 인증 중 오류가 발생했어요. 사진을 다시 확인해주세요.',
+      );
+      setProcessStatus('idle');
+    }
   };
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,10 +86,33 @@ export default function StudentCertifyForm({
         setImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+      setCertifyError('');
     } else {
       setImage('');
       setFile(undefined);
     }
+  };
+
+  const getButtonText = () => {
+    switch (processStatus) {
+      case 'certifying':
+        return '인증 중..';
+      case 'signing':
+        return '가입 중..';
+      case 'complete':
+        return '인증 성공';
+      default:
+        return isCertifyError ? '다시 시도하기' : '학적 인증하기';
+    }
+  };
+
+  const isButtonDisabled = () => {
+    return (
+      image === '' ||
+      processStatus === 'certifying' ||
+      processStatus === 'signing' ||
+      processStatus === 'complete'
+    );
   };
 
   return (
@@ -82,6 +129,7 @@ export default function StudentCertifyForm({
           accept='image/*'
           onChange={handleImageInputChange}
           className='hidden'
+          disabled={processStatus !== 'idle'}
         />
         <div
           className='border-border rounded-5 grid h-20 w-full place-items-center border-[1px] bg-cover bg-center'
@@ -93,20 +141,26 @@ export default function StudentCertifyForm({
             </button>
           )}
         </div>
-        {image !== '' && (
+        {image !== '' && !certifyError && (
           <p className='text-positive mt-2 text-sm'>사진 업로드 완료!</p>
+        )}
+        {certifyError && (
+          <p className='text-important mt-2 text-sm'>{certifyError}</p>
         )}
       </label>
       <button
         name='phone-number-auth'
-        className='disabled:text-light bg-fill border-border rounded-5 hover:bg-sub w-fit cursor-pointer border-[1px] p-2 px-6 transition duration-150'
+        className={cn(
+          'border-border rounded-5 w-fit cursor-pointer border-[1px] p-2 px-6 transition duration-150',
+          processStatus === 'complete'
+            ? 'bg-green-500 text-white'
+            : 'bg-fill hover:bg-sub',
+          isButtonDisabled() && 'text-light cursor-not-allowed',
+        )}
         onClick={handleClick}
-        disabled={image === '' || isPending || isSuccess}
+        disabled={isButtonDisabled()}
       >
-        {isIdle && '학적 인증하기'}
-        {isError && '다시 시도하기'}
-        {isPending || isSignupPending && '인증 중'}
-        {isSuccess && isSignupSuccess && '인증 성공!'}
+        {getButtonText()}
       </button>
     </>
   );

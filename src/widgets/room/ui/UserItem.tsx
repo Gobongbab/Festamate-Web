@@ -3,6 +3,7 @@ import React from 'react';
 import { cn } from '@/shared/utils';
 
 import { RoomParticipant } from '@/widgets/room/types';
+import { IoMdFemale, IoMdMale } from 'react-icons/io';
 
 export default function UserItem({
   nickname,
@@ -23,17 +24,17 @@ export default function UserItem({
           }}
         />
       </div>
-      <div className='flex size-full flex-col gap-y-1'>
+      <div className='flex size-full flex-col'>
         <div className='flex w-fit items-center gap-x-2'>
-          <span className='text-lg font-semibold'>{nickname}</span>
           <span
             className={cn(
-              'rounded-5 grid w-fit place-items-center border-[0.5px] p-1 px-2 text-[10px]',
-              male ? 'border-male bg-male/20' : 'border-female bg-female/20',
+              'rounded-5 grid w-fit place-items-center',
+              male ? 'text-male' : 'text-female',
             )}
           >
-            {male ? '남성' : '여성'}
+            {male ? <IoMdMale size={16} /> : <IoMdFemale size={16} />}
           </span>
+          <span className='text-lg font-semibold'>{nickname}</span>
         </div>
         <div className='flex w-fit items-center gap-x-1'>
           <span>{major}</span>·<span>{studentId}학번 재학생</span>

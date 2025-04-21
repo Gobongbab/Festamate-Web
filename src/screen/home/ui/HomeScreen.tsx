@@ -3,23 +3,24 @@ import React from 'react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { MdAdd } from 'react-icons/md';
 
-import { AppBar, Button, Dock, LoginBottomSheet } from '@/shared/ui';
-import { HomeContainer } from '@/widgets/home/ui';
 import { useFlow } from '@/app/stackflow';
-import { PATH } from '@/shared/constants';
+
+import { AppBar, Button, Dock, LoginBottomSheet } from '@/shared/ui';
+import { BOTTOM_SHEET, PATH } from '@/shared/constants';
 import { fetchLoginStatus } from '@/shared/utils';
-import { useSetAtom } from 'jotai';
-import { bottomSheetAtom } from '@/shared/atom';
+import { useBottomSheet } from '@/shared/hook';
+
+import { HomeContainer } from '@/widgets/home/ui';
 
 export default function HomeScreen() {
-  const hasToken = fetchLoginStatus();
-  const setIsOpen = useSetAtom(bottomSheetAtom);
+  const { openBottomSheet } = useBottomSheet();
   const { replace, push } = useFlow();
+  const isLogin = fetchLoginStatus();
 
   const searchOnClick = () => replace(PATH.SEARCH, {});
   const createOnClick = () => {
-    if (hasToken) push(PATH.CREATE, {});
-    else setIsOpen(true);
+    if (isLogin) push(PATH.CREATE, {});
+    else openBottomSheet(BOTTOM_SHEET.LOGIN);
   };
 
   return (
