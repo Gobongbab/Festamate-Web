@@ -1,15 +1,15 @@
 import React from 'react';
-import { useSetAtom } from 'jotai';
 
 import { useFlow } from '@/app/stackflow';
 import { Button, Card, CardSkeleton } from '@/shared/ui';
 import { PathItem, RoomListItem } from '@/shared/types';
 import { cn } from '@/shared/utils';
 import { REQUEST, useRoomList } from '@/shared/api';
-import { bottomSheetAtom } from '@/shared/atom';
 
 import { COVERED_ROOM_DATA } from '@/mock';
 import { Error } from '@/assets/images';
+import { useBottomSheet } from '../hook';
+import { BOTTOM_SHEET } from '../constants';
 
 interface GroupCarouselProps {
   label: string;
@@ -84,7 +84,7 @@ export default function GroupCarousel({
 }
 
 const CoveredMockup = () => {
-  const setIsOpen = useSetAtom(bottomSheetAtom);
+  const { openBottomSheet } = useBottomSheet();
 
   return (
     <div className='flex w-full flex-col gap-y-3'>
@@ -102,7 +102,7 @@ const CoveredMockup = () => {
             <Button
               name='next-step'
               size='sm'
-              onClick={() => setIsOpen(true)}
+              onClick={() => openBottomSheet(BOTTOM_SHEET.LOGIN)}
               label='로그인 하러가기'
             />
           </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSetAtom } from 'jotai';
 
 import { Button, FormItem, ListItem } from '@/shared/ui';
 import { RoomListItem } from '@/shared/types';
@@ -7,17 +6,18 @@ import { RoomListItem } from '@/shared/types';
 import { UserItem } from '@/widgets/room/ui';
 import { useRoomDetail } from '@/widgets/room/api';
 import { fetchLoginStatus } from '@/shared/utils';
-import { bottomSheetAtom } from '@/shared/atom';
+import { useBottomSheet } from '@/shared/hook';
+import { BOTTOM_SHEET } from '@/shared/constants';
 
 export default function RoomContainer(props: RoomListItem) {
   const { id, content } = props;
   const { data, isLoading } = useRoomDetail(id);
-  const setIsOpen = useSetAtom(bottomSheetAtom);
+  const { openBottomSheet } = useBottomSheet();
   const isLogin = fetchLoginStatus();
 
   const handleJoin = () => {
     if (isLogin) console.log('참여하기 모달이 열립니다.');
-    else setIsOpen(true);
+    else openBottomSheet(BOTTOM_SHEET.LOGIN);
   };
 
   return (
