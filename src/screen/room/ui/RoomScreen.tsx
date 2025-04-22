@@ -32,14 +32,14 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
-  const { maxParticipants, currentParticipants, id } = params;
+  const { maxParticipants, id } = params;
 
   useEffect(() => {
     setIsLogin(fetchLoginStatus());
   }, []);
 
-  const availableFriendCnt = maxParticipants - currentParticipants - 1;
-  const isAvailableWithFriend = availableFriendCnt >= 1;
+  const availableFriendCnt = maxParticipants / 2 - 1;
+  const isAvailableWithFriend = maxParticipants !== 2;
 
   const handleMenuClick = () => openBottomSheet(BOTTOM_SHEET.MENU);
 
@@ -65,20 +65,19 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     if (isLogin && status.status === 'pending') {
       return (
         <>
-          <Button
-            name='room-participate'
-            label=' '
-            halfWidth={isAvailableWithFriend}
-            onClick={() => {}}
-            className='skeleton'
-          />
-          {isAvailableWithFriend && (
+          {isAvailableWithFriend ? (
             <Button
               name='room-participate-with-friend'
-              label=' '
-              halfWidth
-              onClick={() => {}}
-              className='skeleton'
+              label='친구와 함께 참여하기'
+              onClick={handleJoinWithFriend}
+              className='mb-normal-spacing'
+            />
+          ) : (
+            <Button
+              name='room-participate'
+              label='참여하기'
+              onClick={handleJoin}
+              className='mb-normal-spacing'
             />
           )}
         </>
@@ -119,19 +118,18 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
     return (
       <>
-        <Button
-          name='room-participate'
-          label='참여하기'
-          halfWidth={isAvailableWithFriend}
-          onClick={handleJoin}
-          className='mb-normal-spacing'
-        />
-        {isAvailableWithFriend && (
+        {isAvailableWithFriend ? (
           <Button
             name='room-participate-with-friend'
             label='친구와 함께 참여하기'
-            halfWidth
             onClick={handleJoinWithFriend}
+            className='mb-normal-spacing'
+          />
+        ) : (
+          <Button
+            name='room-participate'
+            label='참여하기'
+            onClick={handleJoin}
             className='mb-normal-spacing'
           />
         )}
