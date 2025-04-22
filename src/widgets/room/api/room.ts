@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { get, REQUEST } from '@/shared/api';
-import { userGet } from '@/shared/api/user';
+import { get, userGet, REQUEST } from '@/shared/api';
 import { RoomDetail } from '@/shared/types';
 import { getPath } from '@/shared/utils';
 

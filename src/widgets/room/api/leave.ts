@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { REQUEST } from '@/shared/api';
-import { userPost } from '@/shared/api/user';
+import { REQUEST, userPost } from '@/shared/api';
 
 import { useUserRoomDetail } from '@/widgets/room/api';
 

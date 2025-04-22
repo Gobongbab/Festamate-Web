@@ -1,9 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { REQUEST, useRoomList } from '@/shared/api';
-import { userPost } from '@/shared/api/user';
-
 import { useFlow } from '@/app/stackflow';
+
+import { REQUEST, useRoomList, userPost } from '@/shared/api';
 
 const submitRoomCreation = async (data: FormData) => {
   await userPost<FormData>({
