@@ -71,6 +71,7 @@ export default function CreateContainer() {
           else handleSubmit();
         }}
         label={isPending ? '방을 만드는 중..' : button}
+        className='mb-normal-spacing'
       />
     </form>
   );

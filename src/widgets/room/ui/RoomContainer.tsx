@@ -1,30 +1,14 @@
 import React from 'react';
 
-import { Button, FormItem } from '@/shared/ui';
+import { FormItem } from '@/shared/ui';
 import { RoomListItem } from '@/shared/types';
 
 import { RoomHeader, UserItem } from '@/widgets/room/ui';
 import { useRoomDetail } from '@/widgets/room/api';
-import { fetchLoginStatus } from '@/shared/utils';
-import { useBottomSheet, useModal } from '@/shared/hook';
-import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 
 export default function RoomContainer(props: RoomListItem) {
-  const { id, content, maxParticipants } = props;
+  const { id, content } = props;
   const { data, isLoading } = useRoomDetail(id);
-  const { openBottomSheet } = useBottomSheet();
-  const { openModal } = useModal();
-  const isLogin = fetchLoginStatus();
-  const isOneToOne = maxParticipants === 2;
-
-  const handleJoin = () => {
-    if (isLogin) openModal(MODAL.JOIN);
-    else openBottomSheet(BOTTOM_SHEET.LOGIN);
-  };
-  const handleJoinWithFriend = () => {
-    if (isLogin) openModal(MODAL.JOIN_WITH_FRIEND);
-    else openBottomSheet(BOTTOM_SHEET.LOGIN);
-  };
 
   return (
     <div className='flex size-full flex-col justify-between'>
@@ -66,22 +50,6 @@ export default function RoomContainer(props: RoomListItem) {
           </>
         )}
         <div className='h-normal-spacing' />
-      </div>
-      <div className='border-t-app-bar-border z-30 flex h-fit w-full gap-x-3 border-[0.5px] pt-3 text-lg font-semibold text-white'>
-        <Button
-          name='room-participate'
-          label='참여하기'
-          halfWidth={!isOneToOne}
-          onClick={handleJoin}
-        />
-        {!isOneToOne && (
-          <Button
-            name='room-participate-with-friend'
-            label='친구와 함께 참여하기'
-            halfWidth
-            onClick={handleJoinWithFriend}
-          />
-        )}
       </div>
     </div>
   );
