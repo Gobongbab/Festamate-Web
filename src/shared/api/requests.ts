@@ -2,7 +2,7 @@ export const REQUEST = {
   ROOM: '/rooms',
   ROOM_JOIN: '/rooms/{roomId}/participations',
   ROOM_LEAVE: '/rooms/{roomId}/leave',
-  ROOM_PARTICIPATED: '/rooms/participate',
+  ROOM_PARTICIPATED: '/rooms/participations',
   KAKAO: '/auth/kakao',
   LOGIN: '/auth/login',
   SIGNUP: '/auth/register/profile',
