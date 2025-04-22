@@ -9,11 +9,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   halfWidth?: boolean;
   shadow?: boolean;
+  noMargins?: boolean;
   size?: Size;
 }
 
 const SIZE: Record<Size, string> = {
-  lg: 'py-3.5 mb-normal-spacing z-30 rounded-10',
+  lg: 'py-3.5 z-30 rounded-10',
   md: 'py-2.5 rounded-10',
   sm: 'py-2 px-4 rounded-5 border-border bg-fill w-fit text-dark border-[1px] disabled:text-light hover:bg-sub',
 };
@@ -25,6 +26,7 @@ export default function Button({
   name,
   type,
   halfWidth = false,
+  noMargins = false,
   shadow = false,
   className,
   size = 'lg',
@@ -36,6 +38,7 @@ export default function Button({
       type={type || 'button'}
       className={cn(
         'hover:bg-point-hover bg-point text-md disabled:bg-sub disabled:text-border flex-shrink-0 cursor-pointer font-medium text-white transition duration-300',
+        noMargins && size === 'lg' ? 'm-0' : 'mb-normal-spacing',
         halfWidth ? 'flex-1' : 'w-full',
         shadow && 'box-shadow-button',
         className,

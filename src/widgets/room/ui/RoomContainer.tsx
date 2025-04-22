@@ -6,17 +6,23 @@ import { RoomListItem } from '@/shared/types';
 import { RoomHeader, UserItem } from '@/widgets/room/ui';
 import { useRoomDetail } from '@/widgets/room/api';
 import { fetchLoginStatus } from '@/shared/utils';
-import { useBottomSheet } from '@/shared/hook';
-import { BOTTOM_SHEET } from '@/shared/constants';
+import { useBottomSheet, useModal } from '@/shared/hook';
+import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 
 export default function RoomContainer(props: RoomListItem) {
-  const { id, content } = props;
+  const { id, content, maxParticipants } = props;
   const { data, isLoading } = useRoomDetail(id);
   const { openBottomSheet } = useBottomSheet();
+  const { openModal } = useModal();
   const isLogin = fetchLoginStatus();
+  const isOneToOne = maxParticipants === 2;
 
   const handleJoin = () => {
-    if (isLogin) console.log('참여하기 모달이 열립니다.');
+    if (isLogin) openModal(MODAL.JOIN);
+    else openBottomSheet(BOTTOM_SHEET.LOGIN);
+  };
+  const handleJoinWithFriend = () => {
+    if (isLogin) openModal(MODAL.JOIN_WITH_FRIEND);
     else openBottomSheet(BOTTOM_SHEET.LOGIN);
   };
 
@@ -65,15 +71,17 @@ export default function RoomContainer(props: RoomListItem) {
         <Button
           name='room-participate'
           label='참여하기'
-          halfWidth
+          halfWidth={!isOneToOne}
           onClick={handleJoin}
         />
-        <Button
-          name='room-participate-with-friend'
-          label='친구와 함께 참여하기'
-          halfWidth
-          onClick={handleJoin}
-        />
+        {!isOneToOne && (
+          <Button
+            name='room-participate-with-friend'
+            label='친구와 함께 참여하기'
+            halfWidth
+            onClick={handleJoinWithFriend}
+          />
+        )}
       </div>
     </div>
   );

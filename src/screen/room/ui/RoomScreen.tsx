@@ -1,7 +1,12 @@
 import { ActivityComponentType } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { RoomAppBar } from '@/shared/ui';
-import { MenuBottomSheet, RoomContainer } from '@/widgets/room/ui';
+import {
+  MenuBottomSheet,
+  RoomContainer,
+  RoomJoinFriendModal,
+  RoomJoinModal,
+} from '@/widgets/room/ui';
 import { RoomListItem } from '@/shared/types';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET } from '@/shared/constants';
@@ -22,6 +27,8 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
         </div>
       </AppScreen>
       <MenuBottomSheet />
+      <RoomJoinModal />
+      <RoomJoinFriendModal />
     </>
   );
 };
