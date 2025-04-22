@@ -3,7 +3,7 @@ import axios, { AxiosHeaders, AxiosResponse } from 'axios';
 interface PostRequestParams<TData> {
   request: string;
   headers?: AxiosHeaders;
-  data: TData;
+  data?: TData;
 }
 
 interface GetRequestParams<TParams> {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useKakaoToken } from '@/screen/auth/api';
 import { Loader } from '@/assets/images';
-import { RAW_PATH } from '@/shared/constants';
+import { Button } from '@/shared/ui';
 
 export default function AuthScreen() {
   const params = new URLSearchParams(location.search);
@@ -23,14 +23,16 @@ export default function AuthScreen() {
         </div>
       )}
       {isError && (
-        <div className='flex flex-col text-lg'>
-          로그인에 실패했어요.
-          <button
+        <div className='flex w-full flex-col items-center justify-center gap-2 text-lg'>
+          <span>로그인에 실패했어요.</span>
+          <Button
+            size='sm'
             className='focus:outline-none'
-            onClick={() => window.history.replaceState(null, '', RAW_PATH.HOME)}
-          >
-            홈으로 돌아가기
-          </button>
+            onClick={() =>
+              window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`)
+            }
+            label='홈으로 돌아가기'
+          />
         </div>
       )}
     </div>

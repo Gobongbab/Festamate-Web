@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
-import { Button, FormItem } from '@/shared/ui';
-import { RoomListItem } from '@/shared/types';
+import { FormItem } from '@/shared/ui';
+import { RoomAuthority, RoomListItem } from '@/shared/types';
 
 import { RoomHeader, UserItem } from '@/widgets/room/ui';
-import { useRoomDetail } from '@/widgets/room/api';
+import { useRoomDetail, useUserRoomDetail } from '@/widgets/room/api';
 import { fetchLoginStatus } from '@/shared/utils';
-import { useBottomSheet } from '@/shared/hook';
-import { BOTTOM_SHEET } from '@/shared/constants';
 
-export default function RoomContainer(props: RoomListItem) {
-  const { id, content } = props;
-  const { data, isLoading } = useRoomDetail(id);
-  const { openBottomSheet } = useBottomSheet();
-  const isLogin = fetchLoginStatus();
+type RoomContainerProps = RoomListItem & {
+  setStatus: Dispatch<
+    SetStateAction<{
+      status: 'pending' | 'success';
+      data: RoomAuthority | null;
+    }>
+  >;
+};
 
-  const handleJoin = () => {
-    if (isLogin) console.log('참여하기 모달이 열립니다.');
-    else openBottomSheet(BOTTOM_SHEET.LOGIN);
-  };
+export default function RoomContainer(props: RoomContainerProps) {
+  const { id, content, setStatus } = props;
+  const isLoggedIn = fetchLoginStatus();
+  const roomDetail = isLoggedIn ? useUserRoomDetail : useRoomDetail;
+  const { data, isLoading } = roomDetail(id);
+
+  useEffect(() => {
+    if (isLoading) setStatus(prev => ({ ...prev, status: 'pending' }));
+    if (data)
+      setStatus(() => ({ data: data.roomAuthority, status: 'success' }));
+  }, [data, isLoading, setStatus]);
 
   return (
     <div className='flex size-full flex-col justify-between'>
@@ -60,20 +68,6 @@ export default function RoomContainer(props: RoomListItem) {
           </>
         )}
         <div className='h-normal-spacing' />
-      </div>
-      <div className='border-t-app-bar-border z-30 flex h-fit w-full gap-x-3 border-[0.5px] pt-3 text-lg font-semibold text-white'>
-        <Button
-          name='room-participate'
-          label='참여하기'
-          halfWidth
-          onClick={handleJoin}
-        />
-        <Button
-          name='room-participate-with-friend'
-          label='친구와 함께 참여하기'
-          halfWidth
-          onClick={handleJoin}
-        />
       </div>
     </div>
   );

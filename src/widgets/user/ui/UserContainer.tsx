@@ -3,13 +3,14 @@ import React from 'react';
 import { FormItem, GroupCarousel } from '@/shared/ui';
 import { PATH } from '@/shared/constants';
 import { REQUEST } from '@/shared/api';
+import { logout } from '@/widgets/user/utils';
 
 export default function UserContainer() {
   return (
     <>
       <Profile />
       <GroupCarousel
-        label='내가 만든 모임방'
+        label='참여한 모임방'
         to={PATH.LIST}
         request={REQUEST.ROOM_PARTICIPATED}
       />
@@ -36,7 +37,11 @@ export default function UserContainer() {
         <button className='flex w-full justify-start focus:outline-none'>
           이용 약관
         </button>
-        <button className='mb-dock-height flex w-full justify-start focus:outline-none'>
+        <button
+          name='logout'
+          className='mb-dock-height text-important flex w-full justify-start focus:outline-none'
+          onClick={() => logout()}
+        >
           로그아웃
         </button>
       </FormItem>

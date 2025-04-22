@@ -60,7 +60,7 @@ export const useKakaoToken = () => {
       if (data.result.member) mutate({ kakaoAccessToken });
       else
         window.location.replace(
-          `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.SIGNUP)}`,
+          `${import.meta.env.VITE_PRODUCTION_URL + RAW_PATH.SIGNUP}`,
         );
     },
   });

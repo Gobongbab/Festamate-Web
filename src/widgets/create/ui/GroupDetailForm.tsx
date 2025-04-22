@@ -24,12 +24,13 @@ export default function GroupDetailForm({
 }: GroupTitleFormProps) {
   const {
     preferredGender,
-    headCount,
+    maxParticipants,
     meetingDateTime,
     preferredStudentIdMin,
     preferredStudentIdMax,
   } = watch();
-  const { headCountRender, setHeadCountRender } = useRoomCreateContext();
+  const { maxParticipantsRender, setMaxParticipantsRender } =
+    useRoomCreateContext();
 
   return (
     <>
@@ -75,21 +76,21 @@ export default function GroupDetailForm({
         title='인원 선택'
         description='1:1은 2명, 2:2는 4명, 3:3은 6명을 선택해주세요.'
       >
-        {DETAIL_OPTION.headCount.map(({ id, value, label }) => (
+        {DETAIL_OPTION.maxParticipants.map(({ id, value, label }) => (
           <Radio
             key={id}
             id={id}
             value={value}
             label={label}
-            checked={Number(headCount) === value}
+            checked={Number(maxParticipants) === value}
             onChange={() => {
-              setHeadCountRender(value);
-              setValue('headCount', value);
+              setMaxParticipantsRender(value);
+              setValue('maxParticipants', value);
             }}
           />
         ))}
       </FormItem>
-      {headCountRender !== 2 && (
+      {maxParticipantsRender !== 2 && (
         <FormItem
           title='친구'
           description={
@@ -101,7 +102,7 @@ export default function GroupDetailForm({
           className='flex flex-col gap-2'
         >
           <FriendInput />
-          {headCountRender === 6 && <FriendInput />}
+          {maxParticipantsRender === 6 && <FriendInput />}
         </FormItem>
       )}
       <FormItem

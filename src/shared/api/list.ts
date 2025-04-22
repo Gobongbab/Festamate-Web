@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { get } from '@/shared/api';
 import { RoomListItem } from '@/shared/types';
-import { getCookie } from '@/shared/utils';
+import { userGet } from '@/shared/api';
 
 interface FetchRoomListResponse {
   result: {
@@ -36,9 +35,8 @@ interface FetchRoomListResponse {
 }
 
 const fetchRoomList = async (request: string) => {
-  const response = await get<FetchRoomListResponse>({
+  const response = await userGet<FetchRoomListResponse>({
     request: request,
-    headers: { Authorization: `Bearer ${getCookie()}` },
   });
   return response.data.result;
 };

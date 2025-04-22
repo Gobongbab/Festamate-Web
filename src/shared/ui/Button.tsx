@@ -9,11 +9,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   halfWidth?: boolean;
   shadow?: boolean;
+  noMargins?: boolean;
   size?: Size;
 }
 
 const SIZE: Record<Size, string> = {
-  lg: 'py-3.5 mb-normal-spacing z-30 rounded-10',
+  lg: 'py-3.5 z-30 rounded-10',
   md: 'py-2.5 rounded-10',
   sm: 'py-2 px-4 rounded-5 border-border bg-fill w-fit text-dark border-[1px] disabled:text-light hover:bg-sub',
 };

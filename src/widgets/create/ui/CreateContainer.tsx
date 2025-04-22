@@ -30,7 +30,7 @@ export default function CreateContainer() {
     formData.append('imageFiles', file!);
     const postData = JSON.stringify({
       ...watch(),
-      headCount: Number(watch('headCount')) as 2 | 4 | 6,
+      maxParticipants: Number(watch('maxParticipants')) as 2 | 4 | 6,
     });
     const blob = new Blob([postData], { type: 'application/json' });
     formData.append('request', blob);
@@ -71,6 +71,7 @@ export default function CreateContainer() {
           else handleSubmit();
         }}
         label={isPending ? '방을 만드는 중..' : button}
+        className='mb-normal-spacing'
       />
     </form>
   );

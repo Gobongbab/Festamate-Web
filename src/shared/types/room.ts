@@ -2,7 +2,7 @@ import { Gender } from '@/shared/types';
 
 export type Room = Partial<FormData> & {
   id: number;
-  headCount: 2 | 4 | 6;
+  maxParticipants: 2 | 4 | 6;
   status: string;
   preferredGender: Gender;
   preferredStudentIdMin: string;
@@ -13,7 +13,14 @@ export type Room = Partial<FormData> & {
   place: string;
 };
 
-export type RoomDetail = Room & {
+export type RoomAuthority =
+  | 'HOST'
+  | 'PARTICIPANT'
+  | 'NON_PARTICIPANT'
+  | 'NON_MEMBER';
+
+export type RoomDetail = RoomListItem & {
+  roomAuthority: RoomAuthority;
   hostParticipants: RoomParticipant[];
   guestParticipants: RoomParticipant[];
 };
@@ -27,8 +34,7 @@ export type RoomParticipant = {
   isHost: boolean;
 };
 
-export type RoomListItem = Omit<Room, 'headCount'> & {
-  maxParticipants: number;
+export type RoomListItem = Room & {
   currentParticipants: number;
   thumbnail: {
     name: string;
