@@ -1,5 +1,6 @@
 export const REQUEST = {
   ROOM: '/rooms',
+  ROOM_JOIN: '/rooms/{roomId}/participations',
   ROOM_PARTICIPATED: '/rooms/participate',
   KAKAO: '/auth/kakao',
   LOGIN: '/auth/login',

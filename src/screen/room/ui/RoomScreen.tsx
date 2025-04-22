@@ -19,7 +19,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 }) => {
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
-  const { maxParticipants, currentParticipants } = params;
+  const { maxParticipants, currentParticipants, id } = params;
 
   const isLogin = fetchLoginStatus();
   const availableFriendCnt = maxParticipants - currentParticipants - 1;
@@ -62,8 +62,11 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
         )}
       </div>
       <MenuBottomSheet />
-      <RoomJoinModal />
-      <RoomJoinFriendModal availableFriendCnt={availableFriendCnt} />
+      <RoomJoinModal roomId={id} />
+      <RoomJoinFriendModal
+        availableFriendCnt={availableFriendCnt}
+        roomId={id}
+      />
     </>
   );
 };

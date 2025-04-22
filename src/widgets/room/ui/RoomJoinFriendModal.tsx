@@ -4,16 +4,23 @@ import { MODAL } from '@/shared/constants';
 import { Button, Input, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
 
+import { useSubmitRoomJoin } from '@/widgets/room/api';
+
 interface RoomJoinFriendModalProps {
   availableFriendCnt: number;
+  roomId: number;
 }
 
 export default function RoomJoinFriendModal({
   availableFriendCnt,
+  roomId,
 }: RoomJoinFriendModalProps) {
   const { closeModal, modalState } = useModal();
+  const { mutate } = useSubmitRoomJoin(roomId);
   const { isOpen } = modalState(MODAL.JOIN_WITH_FRIEND);
+
   const onClose = () => closeModal(MODAL.JOIN_WITH_FRIEND);
+  const onJoin = () => mutate(roomId);
 
   return (
     <>
@@ -42,6 +49,7 @@ export default function RoomJoinFriendModal({
               label='함께 참여하기'
               className='m-0'
               size='md'
+              onClick={onJoin}
               disabled
             />
           </div>
