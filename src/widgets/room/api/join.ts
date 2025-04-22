@@ -5,7 +5,7 @@ import { userPost } from '@/shared/api/user';
 import { useModal } from '@/shared/hook';
 import { MODAL } from '@/shared/constants';
 
-import { useRoomDetail } from '@/widgets/room/api';
+import { useUserRoomDetail } from '@/widgets/room/api';
 
 interface SubmitRoomJoinRequest {
   friendPhoneNumbers: string[];
@@ -22,7 +22,7 @@ const submitRoomJoin = async (
 };
 
 export const useSubmitRoomJoin = (roomId: number) => {
-  const { refetch } = useRoomDetail(roomId);
+  const { refetch } = useUserRoomDetail(roomId);
   const { closeModal } = useModal();
 
   return useMutation({

@@ -24,14 +24,14 @@ const fetchRoomDetail = async ({ roomId }: { roomId: number }) => {
 
 export const useUserRoomDetail = (roomId: number) => {
   return useQuery({
-    queryKey: [`room + ${roomId}`],
+    queryKey: ['roomDetail', roomId],
     queryFn: () => fetchUserRoomDetail({ roomId }),
   });
 };
 
 export const useRoomDetail = (roomId: number) => {
   return useQuery({
-    queryKey: [`room + ${roomId}`],
+    queryKey: ['roomDetail', roomId],
     queryFn: () => fetchRoomDetail({ roomId }),
   });
 };

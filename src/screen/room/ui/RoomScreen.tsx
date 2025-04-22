@@ -12,6 +12,7 @@ import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 import { fetchLoginStatus } from '@/shared/utils';
+import { useLeaveRoom } from '@/widgets/room/api';
 
 // 사용자 상태를 위한 타입 정의
 type RoomStatus = {
@@ -30,9 +31,10 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   });
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
+  const { maxParticipants, id } = params;
+  const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
-  const { maxParticipants, id } = params;
 
   useEffect(() => {
     setIsLogin(fetchLoginStatus());
@@ -57,9 +59,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     console.log('이동 to 채팅방:', id);
   };
 
-  const handleLeaveRoom = () => {
-    console.log('방 나가기:', id);
-  };
+  const handleLeaveRoom = () => leave(id);
 
   const renderActionButtons = () => {
     if (isLogin && status.status === 'pending') {
