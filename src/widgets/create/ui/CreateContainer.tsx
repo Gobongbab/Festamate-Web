@@ -30,7 +30,7 @@ export default function CreateContainer() {
     formData.append('imageFiles', file!);
     const postData = JSON.stringify({
       ...watch(),
-      headCount: Number(watch('headCount')) as 2 | 4 | 6,
+      maxParticipants: Number(watch('maxParticipants')) as 2 | 4 | 6,
     });
     const blob = new Blob([postData], { type: 'application/json' });
     formData.append('request', blob);

@@ -10,7 +10,7 @@ export const COVERED_ROOM_DATA = [
     content:
       '날씨 좋을 때 한강에서 돗자리 깔고 놀 사람 구해요! 간단한 간식이랑 음료는 제가 준비할게요 :)',
     place: '여의도 한강공원',
-    maxParticipants: 5,
+    maxParticipants: 4,
     currentParticipants: 2,
     thumbnail: {
       name: 'picnic.jpg',

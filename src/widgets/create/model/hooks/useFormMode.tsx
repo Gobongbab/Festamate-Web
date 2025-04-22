@@ -26,7 +26,7 @@ export default function useFormMode({
   watch,
   setValue,
 }: RoomModeProps) {
-  const { title, content, preferredGender, headCount, place } = watch();
+  const { title, content, preferredGender, maxParticipants, place } = watch();
 
   const MODE = [
     {
@@ -50,7 +50,7 @@ export default function useFormMode({
         />
       ),
       button: '생성하기',
-      isFormValid: preferredGender && headCount,
+      isFormValid: preferredGender && maxParticipants,
     },
   ];
 
