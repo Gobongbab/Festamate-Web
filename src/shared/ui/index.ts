@@ -12,5 +12,6 @@ export { default as GroupList } from './GroupList';
 export { default as Button } from './Button';
 export { default as LoginBottomSheet } from './LoginBottomSheet';
 export { default as BottomSheet } from './BottomSheet';
+export { default as Modal } from './Modal';
 
 export * from './AppBar';
