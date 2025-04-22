@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 import { FormItem } from '@/shared/ui';
-import { RoomListItem } from '@/shared/types';
+import { RoomAuthority, RoomListItem } from '@/shared/types';
 
 import { RoomHeader, UserItem } from '@/widgets/room/ui';
-import { useRoomDetail } from '@/widgets/room/api';
+import { useRoomDetail, useUserRoomDetail } from '@/widgets/room/api';
+import { fetchLoginStatus } from '@/shared/utils';
 
-export default function RoomContainer(props: RoomListItem) {
-  const { id, content } = props;
-  const { data, isLoading } = useRoomDetail(id);
+type RoomContainerProps = RoomListItem & {
+  setStatus: Dispatch<
+    SetStateAction<{
+      status: 'pending' | 'success';
+      data: RoomAuthority | null;
+    }>
+  >;
+};
+
+export default function RoomContainer(props: RoomContainerProps) {
+  const { id, content, setStatus } = props;
+  const isLoggedIn = fetchLoginStatus();
+  const roomDetail = isLoggedIn ? useUserRoomDetail : useRoomDetail;
+  const { data, isLoading } = roomDetail(id);
+
+  useEffect(() => {
+    if (isLoading) setStatus(prev => ({ ...prev, status: 'pending' }));
+    if (data)
+      setStatus(() => ({ data: data.roomAuthority, status: 'success' }));
+  }, [data, isLoading, setStatus]);
 
   return (
     <div className='flex size-full flex-col justify-between'>

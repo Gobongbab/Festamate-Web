@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { ActivityComponentType } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { Button, RoomAppBar } from '@/shared/ui';
@@ -7,23 +8,38 @@ import {
   RoomJoinFriendModal,
   RoomJoinModal,
 } from '@/widgets/room/ui';
-import { RoomListItem } from '@/shared/types';
+import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 import { fetchLoginStatus } from '@/shared/utils';
+
+// 사용자 상태를 위한 타입 정의
+type RoomStatus = {
+  status: 'pending' | 'success';
+  data: RoomAuthority | null;
+};
 
 const RoomScreen: ActivityComponentType<RoomListItem> = ({
   params,
 }: {
   params: RoomListItem;
 }) => {
+  const [status, setStatus] = useState<RoomStatus>({
+    status: 'pending',
+    data: null,
+  });
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
   const { maxParticipants, currentParticipants, id } = params;
 
-  const isLogin = fetchLoginStatus();
+  useEffect(() => {
+    setIsLogin(fetchLoginStatus());
+  }, []);
+
   const availableFriendCnt = maxParticipants - currentParticipants - 1;
-  const isAvailableWithFriend = maxParticipants - currentParticipants - 1 >= 1;
+  const isAvailableWithFriend = availableFriendCnt >= 1;
 
   const handleMenuClick = () => openBottomSheet(BOTTOM_SHEET.MENU);
 
@@ -31,19 +47,78 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     if (isLogin) openModal(MODAL.JOIN);
     else openBottomSheet(BOTTOM_SHEET.LOGIN);
   };
+
   const handleJoinWithFriend = () => {
     if (isLogin) openModal(MODAL.JOIN_WITH_FRIEND);
     else openBottomSheet(BOTTOM_SHEET.LOGIN);
   };
 
-  return (
-    <>
-      <AppScreen appBar={RoomAppBar(handleMenuClick)}>
-        <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
-          <RoomContainer {...params} />
-        </div>
-      </AppScreen>
-      <div className='border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white'>
+  const handleMoveToChat = () => {
+    console.log('이동 to 채팅방:', id);
+  };
+
+  const handleLeaveRoom = () => {
+    console.log('방 나가기:', id);
+  };
+
+  const renderActionButtons = () => {
+    if (isLogin && status.status === 'pending') {
+      return (
+        <>
+          <Button
+            name='room-participate'
+            label=' '
+            halfWidth={isAvailableWithFriend}
+            onClick={() => {}}
+            className='skeleton'
+          />
+          {isAvailableWithFriend && (
+            <Button
+              name='room-participate-with-friend'
+              label=' '
+              halfWidth
+              onClick={() => {}}
+              className='skeleton'
+            />
+          )}
+        </>
+      );
+    }
+
+    if (isLogin && status.data === 'HOST') {
+      return (
+        <Button
+          name='room-chat'
+          label='채팅방 이동'
+          onClick={handleMoveToChat}
+          className='mb-normal-spacing'
+        />
+      );
+    }
+
+    if (isLogin && status.data === 'PARTICIPANT') {
+      return (
+        <>
+          <Button
+            name='room-chat'
+            label='채팅방 이동'
+            halfWidth
+            onClick={handleMoveToChat}
+            className='mb-normal-spacing'
+          />
+          <Button
+            name='room-leave'
+            label='방 나가기'
+            halfWidth
+            onClick={handleLeaveRoom}
+            className='mb-normal-spacing'
+          />
+        </>
+      );
+    }
+
+    return (
+      <>
         <Button
           name='room-participate'
           label='참여하기'
@@ -60,6 +135,19 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
             className='mb-normal-spacing'
           />
         )}
+      </>
+    );
+  };
+
+  return (
+    <>
+      <AppScreen appBar={RoomAppBar(handleMenuClick)}>
+        <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
+          <RoomContainer {...params} setStatus={setStatus} />
+        </div>
+      </AppScreen>
+      <div className='border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white'>
+        {renderActionButtons()}
       </div>
       <MenuBottomSheet />
       <RoomJoinModal roomId={id} />
