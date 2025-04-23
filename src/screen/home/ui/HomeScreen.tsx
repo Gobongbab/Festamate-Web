@@ -11,11 +11,14 @@ import { fetchLoginStatus } from '@/shared/utils';
 import { useBottomSheet } from '@/shared/hook';
 
 import { HomeContainer } from '@/widgets/home/ui';
+import { useStack } from '@stackflow/react';
 
 export default function HomeScreen() {
   const { openBottomSheet } = useBottomSheet();
   const { replace, push } = useFlow();
   const isLogin = fetchLoginStatus();
+  const stack = useStack();
+  const isLoading = stack.globalTransitionState === 'loading';
 
   const searchOnClick = () => replace(PATH.SEARCH, {});
   const createOnClick = () => {
@@ -43,7 +46,7 @@ export default function HomeScreen() {
         />
       </AppScreen>
       <LoginBottomSheet />
-      <Dock />
+      <Dock isLoading={isLoading} />
     </>
   );
 }

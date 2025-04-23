@@ -5,15 +5,19 @@ import { useFlow } from '@/app/stackflow';
 
 import { BOTTOM_SHEET, DOCK, DOCK_ITEMS, PATH } from '@/shared/constants';
 import { DockItem, PathItem } from '@/shared/types';
-import { fetchLoginStatus } from '@/shared/utils';
+import { cn, fetchLoginStatus } from '@/shared/utils';
 import { useBottomSheet } from '@/shared/hook';
+
+interface DockProps {
+  isLoading?: boolean;
+}
 
 interface DockButtonProps {
   item: DockItem;
   selected: boolean;
 }
 
-export default function Dock() {
+export default function Dock(isLoading: DockProps) {
   const stack = useStack();
   const info = stack.activities;
   const current = info
@@ -25,7 +29,12 @@ export default function Dock() {
   return (
     <>
       {render && (
-        <div className='dock box-shadow-dock container-mobile h-dock-height p-normal-spacing fixed right-0 bottom-0 left-0 z-60 flex items-center justify-between border-none'>
+        <div
+          className={cn(
+            'dock box-shadow-dock container-mobile h-dock-height p-normal-spacing fixed right-0 bottom-0 left-0 z-60 flex items-center justify-between border-none',
+            isLoading ? 'translate-y-0' : 'translate-y-full',
+          )}
+        >
           {DOCK_ITEMS.map(item => (
             <DockButton key={item} item={item} selected={current === item} />
           ))}

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { ActivityComponentType } from '@stackflow/react';
+
+import { ActivityComponentType, useStack } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
+
 import { Button, RoomAppBar } from '@/shared/ui';
 import {
   MenuBottomSheet,
@@ -12,7 +14,7 @@ import {
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
-import { fetchLoginStatus } from '@/shared/utils';
+import { cn, fetchLoginStatus } from '@/shared/utils';
 import { useLeaveRoom } from '@/widgets/room/api';
 
 // 사용자 상태를 위한 타입 정의
@@ -30,8 +32,8 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     status: 'pending',
     data: null,
   });
+  const stack = useStack();
   const [isLogin, setIsLogin] = useState<boolean>(false);
-
   const { maxParticipants, id, status: roomStatus } = params;
   const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
@@ -43,6 +45,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
   const availableFriendCnt = maxParticipants / 2 - 1;
   const isAvailableWithFriend = maxParticipants !== 2;
+  const isLoading = stack.globalTransitionState === 'loading';
 
   const handleMenuClick = () => {
     if (status.status === 'success') openBottomSheet(BOTTOM_SHEET.MENU);
@@ -155,7 +158,12 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
           <RoomContainer {...params} setStatus={setStatus} />
         </div>
       </AppScreen>
-      <div className='border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white'>
+      <div
+        className={cn(
+          'border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white transition-transform duration-300',
+          isLoading ? 'translate-y-full' : 'translate-y-0',
+        )}
+      >
         {renderActionButtons()}
       </div>
       <MenuBottomSheet roomAuthority={status.data} roomStatus={roomStatus} />
