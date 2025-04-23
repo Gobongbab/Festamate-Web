@@ -12,12 +12,14 @@ const fetchUserInfo = async () => {
   const response = await userGet<UserInfoResponse>({
     request: REQUEST.USER_INFO,
   });
-  return response.data;
+  return response.data.result;
 };
 
 export const useFetchUserInfo = () => {
   return useMutation({
     mutationFn: fetchUserInfo,
-    onSuccess: () => {},
+    onSuccess: data => {
+      localStorage.setItem('user', JSON.stringify(data));
+    },
   });
 };
