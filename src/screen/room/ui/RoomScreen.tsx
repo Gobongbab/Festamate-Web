@@ -43,7 +43,9 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   const availableFriendCnt = maxParticipants / 2 - 1;
   const isAvailableWithFriend = maxParticipants !== 2;
 
-  const handleMenuClick = () => openBottomSheet(BOTTOM_SHEET.MENU);
+  const handleMenuClick = () => {
+    if (status.status === 'success') openBottomSheet(BOTTOM_SHEET.MENU);
+  };
 
   const handleJoin = () => {
     if (isLogin) openModal(MODAL.JOIN);
@@ -147,7 +149,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
       <div className='border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white'>
         {renderActionButtons()}
       </div>
-      <MenuBottomSheet />
+      <MenuBottomSheet roomAuthority={status.data} roomId={id} />
       <RoomJoinModal roomId={id} />
       <RoomJoinFriendModal
         availableFriendCnt={availableFriendCnt}
