@@ -3,14 +3,16 @@ import React from 'react';
 import { BottomSheet, Button } from '@/shared/ui';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 import { useBottomSheet, useModal } from '@/shared/hook';
-import { RoomAuthority } from '@/shared/types';
+import { RoomAuthority, RoomStatus } from '@/shared/types';
 
 interface MenuBottomSheetProps {
   roomAuthority: RoomAuthority | null;
+  roomStatus: RoomStatus;
 }
 
 export default function MenuBottomSheet({
   roomAuthority,
+  roomStatus,
 }: MenuBottomSheetProps) {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
   const { openModal } = useModal();
@@ -18,7 +20,8 @@ export default function MenuBottomSheet({
 
   const handleDelete = () => {
     closeBottomSheet(BOTTOM_SHEET.MENU);
-    openModal(MODAL.ROOM_DELETE);
+    if (roomStatus === 'MATCHING') openModal(MODAL.ROOM_DELETE);
+    else openModal(MODAL.ROOM_DELETE_DENIAL);
   };
 
   const renderMenu = (roomAuthority: RoomAuthority) => {
