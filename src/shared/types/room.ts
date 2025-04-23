@@ -1,9 +1,17 @@
 import { Gender } from '@/shared/types';
 
+export type RoomStatus = 'MATCHING' | 'MATCHED' | 'CLOSED';
+
+export type RoomAuthority =
+  | 'HOST'
+  | 'PARTICIPANT'
+  | 'NON_PARTICIPANT'
+  | 'NON_MEMBER';
+
 export type Room = Partial<FormData> & {
   id: number;
   maxParticipants: 2 | 4 | 6;
-  status: string;
+  status: RoomStatus;
   preferredGender: Gender;
   preferredStudentIdMin: string;
   preferredStudentIdMax: string;
@@ -12,12 +20,6 @@ export type Room = Partial<FormData> & {
   content: string;
   place: string;
 };
-
-export type RoomAuthority =
-  | 'HOST'
-  | 'PARTICIPANT'
-  | 'NON_PARTICIPANT'
-  | 'NON_MEMBER';
 
 export type RoomDetail = RoomListItem & {
   roomAuthority: RoomAuthority;

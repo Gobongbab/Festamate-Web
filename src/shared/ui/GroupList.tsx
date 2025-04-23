@@ -21,7 +21,7 @@ export default function GroupList({ label, to, request }: GroupListProps) {
   const rooms = data ? data.content : [];
 
   return (
-    <div className='flex w-full flex-col gap-y-3'>
+    <div className='flex w-full flex-col'>
       <div className='flex items-baseline justify-between gap-x-2'>
         <span className='text-lg font-semibold'>{label}</span>
         <button
@@ -32,7 +32,7 @@ export default function GroupList({ label, to, request }: GroupListProps) {
           <u>더보기</u>
         </button>
       </div>
-      <div className='flex flex-col items-center gap-1.5'>
+      <div className='mb-3 flex flex-col items-center gap-1.5'>
         {data && (
           <>
             {rooms.length === 0 ? (

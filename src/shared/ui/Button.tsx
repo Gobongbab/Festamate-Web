@@ -36,7 +36,7 @@ export default function Button({
       name={name}
       type={type || 'button'}
       className={cn(
-        'hover:bg-point-hover bg-point text-md disabled:bg-sub disabled:text-border flex-shrink-0 cursor-pointer font-medium text-white transition duration-300',
+        'hover:bg-point-hover bg-point text-md disabled:bg-sub flex-shrink-0 cursor-pointer font-medium text-white transition duration-300 disabled:text-gray-300',
         halfWidth ? 'flex-1' : 'w-full',
         shadow && 'box-shadow-button',
         className,

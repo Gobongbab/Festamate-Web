@@ -1,17 +1,20 @@
 import { useState, useEffect } from 'react';
-import { ActivityComponentType } from '@stackflow/react';
+
+import { ActivityComponentType, useStack } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
+
 import { Button, RoomAppBar } from '@/shared/ui';
 import {
   MenuBottomSheet,
   RoomContainer,
+  RoomDeleteModal,
   RoomJoinFriendModal,
   RoomJoinModal,
 } from '@/widgets/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
-import { fetchLoginStatus } from '@/shared/utils';
+import { cn, fetchLoginStatus } from '@/shared/utils';
 import { useLeaveRoom } from '@/widgets/room/api';
 
 // 사용자 상태를 위한 타입 정의
@@ -29,9 +32,9 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     status: 'pending',
     data: null,
   });
+  const stack = useStack();
   const [isLogin, setIsLogin] = useState<boolean>(false);
-
-  const { maxParticipants, id } = params;
+  const { maxParticipants, id, status: roomStatus } = params;
   const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
@@ -42,8 +45,11 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
   const availableFriendCnt = maxParticipants / 2 - 1;
   const isAvailableWithFriend = maxParticipants !== 2;
+  const isLoading = stack.globalTransitionState === 'loading';
 
-  const handleMenuClick = () => openBottomSheet(BOTTOM_SHEET.MENU);
+  const handleMenuClick = () => {
+    if (status.status === 'success') openBottomSheet(BOTTOM_SHEET.MENU);
+  };
 
   const handleJoin = () => {
     if (isLogin) openModal(MODAL.JOIN);
@@ -118,18 +124,26 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
     return (
       <>
-        {isAvailableWithFriend ? (
-          <Button
-            name='room-participate-with-friend'
-            label='친구와 함께 참여하기'
-            onClick={handleJoinWithFriend}
-            className='mb-normal-spacing'
-          />
+        {roomStatus === 'MATCHING' ? (
+          isAvailableWithFriend ? (
+            <Button
+              name='room-participate-with-friend'
+              label='친구와 함께 참여하기'
+              onClick={handleJoinWithFriend}
+              className='mb-normal-spacing'
+            />
+          ) : (
+            <Button
+              name='room-participate'
+              label='참여하기'
+              onClick={handleJoin}
+              className='mb-normal-spacing'
+            />
+          )
         ) : (
           <Button
-            name='room-participate'
-            label='참여하기'
-            onClick={handleJoin}
+            label='매칭이 종료되었어요'
+            disabled
             className='mb-normal-spacing'
           />
         )}
@@ -144,10 +158,16 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
           <RoomContainer {...params} setStatus={setStatus} />
         </div>
       </AppScreen>
-      <div className='border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white'>
+      <div
+        className={cn(
+          'border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white transition-transform duration-300',
+          isLoading ? 'translate-y-full' : 'translate-y-0',
+        )}
+      >
         {renderActionButtons()}
       </div>
-      <MenuBottomSheet />
+      <MenuBottomSheet roomAuthority={status.data} roomStatus={roomStatus} />
+      <RoomDeleteModal roomId={id} />
       <RoomJoinModal roomId={id} />
       <RoomJoinFriendModal
         availableFriendCnt={availableFriendCnt}

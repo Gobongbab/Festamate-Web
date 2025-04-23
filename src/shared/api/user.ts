@@ -12,12 +12,6 @@ interface GetRequestParams<TParams> {
   params?: TParams;
 }
 
-interface PutRequestParams<TData> {
-  request: string;
-  headers?: AxiosHeaders;
-  data: TData;
-}
-
 const instance = axios.create({
   baseURL: 'https://www.festamate.shop/api',
 });
@@ -105,7 +99,7 @@ export async function userPost<TData, TResponse = unknown>(
 }
 
 export async function userPut<TData, TResponse = unknown>(
-  config: PutRequestParams<TData>,
+  config: PostRequestParams<TData>,
 ): Promise<AxiosResponse<TResponse>> {
   const { request, headers, data } = config;
   try {
@@ -114,6 +108,45 @@ export async function userPut<TData, TResponse = unknown>(
       AxiosResponse<TResponse>,
       TData
     >(request, data, { headers: headers || undefined });
+    return response;
+  } catch (error: unknown) {
+    console.log(error);
+    if (axios.isAxiosError(error)) throw new Error(error.message);
+    else throw new Error('에러가 발생했습니다');
+  }
+}
+
+export async function userDel<TResponse = unknown>(
+  config: Omit<PostRequestParams<unknown>, 'data'>,
+): Promise<AxiosResponse<TResponse>> {
+  const { request, headers } = config;
+  try {
+    const response = await instance.delete<TResponse, AxiosResponse<TResponse>>(
+      request,
+      {
+        headers: headers || undefined,
+      },
+    );
+    return response;
+  } catch (error: unknown) {
+    console.log(error);
+    if (axios.isAxiosError(error)) throw new Error(error.message);
+    else throw new Error('에러가 발생했습니다');
+  }
+}
+
+export async function userPatch<TData, TResponse = unknown>(
+  config: PostRequestParams<TData>,
+): Promise<AxiosResponse<TResponse>> {
+  const { request, headers, data } = config;
+  try {
+    const response = await instance.patch<
+      TResponse,
+      AxiosResponse<TResponse>,
+      TData
+    >(request, data, {
+      headers: headers || undefined,
+    });
     return response;
   } catch (error: unknown) {
     console.log(error);

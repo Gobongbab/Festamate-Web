@@ -5,7 +5,7 @@ import { GENDER, ROOM_STATUS } from '@/shared/constants';
 import { GoClockFill } from 'react-icons/go';
 import { RiUser3Fill } from 'react-icons/ri';
 import { IoLocationSharp } from 'react-icons/io5';
-import { getDate } from '@/shared/utils';
+import { cn, getDate } from '@/shared/utils';
 
 export default function RoomHeader(props: RoomListItem) {
   const {
@@ -34,10 +34,24 @@ export default function RoomHeader(props: RoomListItem) {
             {title}
           </p>
           <p className='flex items-center gap-2 text-sm text-white'>
-            <span className='border-border rounded-full border-1 bg-white/20 px-2 py-1'>
+            <span
+              className={cn(
+                'rounded-full border-1 px-2 py-1',
+                preferredGender === 'MALE'
+                  ? 'border-male bg-male/20'
+                  : 'border-female bg-female/20',
+              )}
+            >
               {GENDER[preferredGender]}
             </span>
-            <span className='border-border rounded-full border-1 bg-white/20 px-2 py-1'>
+            <span
+              className={cn(
+                'rounded-full border-1 bg-white/20 px-2 py-1',
+                status === 'MATCHING' && 'border-yellow-500',
+                status === 'MATCHED' && 'border-green-500',
+                status === 'CLOSED' && 'border-border',
+              )}
+            >
               {ROOM_STATUS[status]}
             </span>
           </p>
