@@ -5,13 +5,22 @@ import { PATH } from '@/shared/constants';
 import { REQUEST } from '@/shared/api';
 import { BoothInfoBg } from '@/assets/images';
 import { fetchLoginStatus } from '@/shared/utils';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/shared/atom';
 
 export default function HomeContainer() {
+  const isLogin = fetchLoginStatus();
+  const user = useAtomValue(userAtom);
+
   return (
     <>
       <BoothInfo />
       <GroupCarousel
-        label='추천 모임방'
+        label={
+          isLogin && user
+            ? `${user.nickname}님을 위한 추천 모임방`
+            : '추천 모임방'
+        }
         key='openedGroup'
         to={PATH.LIST}
         request={REQUEST.ROOM}

@@ -74,7 +74,6 @@ export const useKakaoLogin = () => {
     onSuccess: data => {
       setUserAtom(data.result);
       fetchUserInfo();
-      window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);
     },
     onError: () =>
       window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`),
