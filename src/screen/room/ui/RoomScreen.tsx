@@ -31,7 +31,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   });
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
-  const { maxParticipants, id } = params;
+  const { maxParticipants, id, status: roomStatus } = params;
   const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
@@ -120,18 +120,26 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
     return (
       <>
-        {isAvailableWithFriend ? (
-          <Button
-            name='room-participate-with-friend'
-            label='친구와 함께 참여하기'
-            onClick={handleJoinWithFriend}
-            className='mb-normal-spacing'
-          />
+        {roomStatus === 'MATCHING' ? (
+          isAvailableWithFriend ? (
+            <Button
+              name='room-participate-with-friend'
+              label='친구와 함께 참여하기'
+              onClick={handleJoinWithFriend}
+              className='mb-normal-spacing'
+            />
+          ) : (
+            <Button
+              name='room-participate'
+              label='참여하기'
+              onClick={handleJoin}
+              className='mb-normal-spacing'
+            />
+          )
         ) : (
           <Button
-            name='room-participate'
-            label='참여하기'
-            onClick={handleJoin}
+            label='매칭이 종료되었어요'
+            disabled
             className='mb-normal-spacing'
           />
         )}
