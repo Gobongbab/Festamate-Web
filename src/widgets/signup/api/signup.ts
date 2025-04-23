@@ -1,5 +1,5 @@
 import { post, REQUEST } from '@/shared/api';
-import { userAtom } from '@/shared/atom';
+import { userTokenAtom } from '@/shared/atom';
 import { Gender } from '@/shared/types';
 import { useMutation } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
@@ -36,7 +36,7 @@ const submitSignup = async (data: SubmitSignupRequest) => {
 };
 
 export const useSignup = ({ setProcess }: SignupProps) => {
-  const setUserAtom = useSetAtom(userAtom);
+  const setUserAtom = useSetAtom(userTokenAtom);
 
   return useMutation<SubmitSignupResponse, unknown, SubmitSignupRequest>({
     mutationFn: data => submitSignup(data),

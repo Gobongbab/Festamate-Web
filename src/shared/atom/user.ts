@@ -17,7 +17,7 @@ const initialUserState = {
 
 const sessionStorage = createJSONStorage(() => window.sessionStorage);
 
-export const userAtom = atomWithStorage<Token>(
+export const userTokenAtom = atomWithStorage<Token>(
   'userToken',
   initialUserState,
   sessionStorage as AsyncStorage<Token>,

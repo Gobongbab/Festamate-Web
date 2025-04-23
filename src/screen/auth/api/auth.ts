@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 
 import { post, REQUEST } from '@/shared/api';
-import { KakaoAccessTokenAtom, userAtom } from '@/shared/atom';
+import { KakaoAccessTokenAtom, userTokenAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
 import { getPath } from '@/shared/utils';
 
@@ -67,7 +67,7 @@ export const useKakaoToken = () => {
 };
 
 export const useKakaoLogin = () => {
-  const setUserAtom = useSetAtom(userAtom);
+  const setUserAtom = useSetAtom(userTokenAtom);
 
   return useMutation<KakaoLoginResponse, unknown, KakaoLoginRequest>({
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
