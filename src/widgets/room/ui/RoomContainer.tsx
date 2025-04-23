@@ -55,7 +55,7 @@ export default function RoomContainer(props: RoomContainerProps) {
                 <UserItem {...m} key={m.id} />
               ))}
             </FormItem>
-            <FormItem title='모임에 참여한 멤버' className='mb-24'>
+            <FormItem title='모임에 참여한 멤버' className='mb-bottom-spacing'>
               {data.guestParticipants.map(m => {
                 if (!m.isHost) return <UserItem {...m} key={m.id} />;
               })}
