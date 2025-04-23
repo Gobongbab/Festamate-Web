@@ -31,7 +31,7 @@ export default function Dock(isLoading: DockProps) {
       {render && (
         <div
           className={cn(
-            'dock box-shadow-dock container-mobile h-dock-height p-normal-spacing fixed right-0 bottom-0 left-0 z-60 flex items-center justify-between border-none',
+            'dock box-shadow-dock container-mobile h-dock-height p-normal-spacing fixed right-0 bottom-0 left-0 z-60 flex items-center justify-between border-none pb-10',
             isLoading ? 'translate-y-0' : 'translate-y-full',
           )}
         >
