@@ -4,3 +4,4 @@ export * from './room';
 export * from './gender';
 export * from './bottomSheet';
 export * from './modal';
+export * from './user';
