@@ -5,6 +5,7 @@ import { Button, RoomAppBar } from '@/shared/ui';
 import {
   MenuBottomSheet,
   RoomContainer,
+  RoomDeleteModal,
   RoomJoinFriendModal,
   RoomJoinModal,
 } from '@/widgets/room/ui';
@@ -157,7 +158,8 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
       <div className='border-t-app-bar-border fixed bottom-0 z-30 flex h-fit w-full gap-x-3 border-[0.5px] bg-white px-6 py-6 text-lg font-semibold text-white'>
         {renderActionButtons()}
       </div>
-      <MenuBottomSheet roomAuthority={status.data} roomId={id} />
+      <MenuBottomSheet roomAuthority={status.data} />
+      <RoomDeleteModal roomId={id} />
       <RoomJoinModal roomId={id} />
       <RoomJoinFriendModal
         availableFriendCnt={availableFriendCnt}

@@ -1,26 +1,25 @@
 import React from 'react';
 
 import { BottomSheet, Button } from '@/shared/ui';
-import { BOTTOM_SHEET } from '@/shared/constants';
-import { useBottomSheet } from '@/shared/hook';
+import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
+import { useBottomSheet, useModal } from '@/shared/hook';
 import { RoomAuthority } from '@/shared/types';
-
-import { useDeleteRoom } from '@/widgets/room/api';
 
 interface MenuBottomSheetProps {
   roomAuthority: RoomAuthority | null;
-  roomId: number;
 }
 
 export default function MenuBottomSheet({
   roomAuthority,
-  roomId,
 }: MenuBottomSheetProps) {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
+  const { openModal } = useModal();
   const { isOpen } = bottomSheetState(BOTTOM_SHEET.MENU);
-  const { mutate } = useDeleteRoom();
 
-  const handleDelete = () => mutate(roomId);
+  const handleDelete = () => {
+    closeBottomSheet(BOTTOM_SHEET.MENU);
+    openModal(MODAL.ROOM_DELETE);
+  };
 
   const renderMenu = (roomAuthority: RoomAuthority) => {
     if (roomAuthority === 'HOST') {
