@@ -55,7 +55,7 @@ export default function RoomContainer(props: RoomContainerProps) {
                 <UserItem {...m} key={m.id} />
               ))}
             </FormItem>
-            <FormItem title='모임에 참여한 멤버'>
+            <FormItem title='모임에 참여한 멤버' className='mb-24'>
               {data.guestParticipants.map(m => {
                 if (!m.isHost) return <UserItem {...m} key={m.id} />;
               })}
@@ -67,7 +67,6 @@ export default function RoomContainer(props: RoomContainerProps) {
             </FormItem>
           </>
         )}
-        <div className='h-normal-spacing' />
       </div>
     </div>
   );
