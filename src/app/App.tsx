@@ -15,8 +15,6 @@ import { userAtom } from '@/shared/atom';
 export default function App() {
   const setUserAtom = useSetAtom(userAtom);
 
-  handleAllowNotification();
-
   useEffect(() => {
     const stored = localStorage.getItem('user');
     if (stored) {
@@ -27,6 +25,7 @@ export default function App() {
         console.error('유저 정보 파싱 실패', e);
       }
     }
+    handleAllowNotification();
   }, []);
 
   const router = createBrowserRouter([

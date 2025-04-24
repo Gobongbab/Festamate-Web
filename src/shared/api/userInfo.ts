@@ -9,7 +9,6 @@ interface UserInfoResponse {
 }
 
 const fetchUserInfo = async () => {
-  console.log('start~..');
   const response = await userGet<UserInfoResponse>({
     request: REQUEST.USER_INFO,
   });
@@ -19,9 +18,5 @@ const fetchUserInfo = async () => {
 export const useFetchUserInfo = () => {
   return useMutation({
     mutationFn: fetchUserInfo,
-    onSuccess: data => {
-      localStorage.setItem('user', JSON.stringify(data));
-      window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);
-    },
   });
 };

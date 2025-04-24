@@ -73,7 +73,12 @@ export const useKakaoLogin = () => {
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
     onSuccess: data => {
       setUserAtom(data.result);
-      fetchUserInfo();
+      fetchUserInfo(undefined, {
+        onSuccess: data => {
+          localStorage.setItem('user', JSON.stringify(data));
+          window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);
+        },
+      });
     },
     onError: () =>
       window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`),
