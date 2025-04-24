@@ -9,4 +9,6 @@ export const REQUEST = {
   CERTIFY_CODE: '/auth/phone/verify',
   CERTIFY_PHONE: '/auth/phone/send',
   CERTIFY_STUDENT: '/check/student-card',
+  USER_INFO: '/auth/members/profile',
+  UPDATE_USER: '/members/profile',
 };

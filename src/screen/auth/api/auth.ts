@@ -1,10 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 
-import { post, REQUEST } from '@/shared/api';
-import { KakaoAccessTokenAtom, userAtom } from '@/shared/atom';
+import { post, REQUEST, useFetchUserInfo } from '@/shared/api';
+import { KakaoAccessTokenAtom, userTokenAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
-import { getPath } from '@/shared/utils';
 
 interface KakaoTokenRequest {
   code: string;
@@ -67,15 +66,21 @@ export const useKakaoToken = () => {
 };
 
 export const useKakaoLogin = () => {
-  const setUserAtom = useSetAtom(userAtom);
+  const setUserAtom = useSetAtom(userTokenAtom);
+  const { mutate: fetchUserInfo } = useFetchUserInfo();
 
   return useMutation<KakaoLoginResponse, unknown, KakaoLoginRequest>({
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
     onSuccess: data => {
       setUserAtom(data.result);
-      window.location.replace(
-        `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.HOME)}`,
-      );
+      fetchUserInfo(undefined, {
+        onSuccess: data => {
+          localStorage.setItem('user', JSON.stringify(data));
+          window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);
+        },
+      });
     },
+    onError: () =>
+      window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`),
   });
 };

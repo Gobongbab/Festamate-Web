@@ -40,7 +40,7 @@ export default function RoomJoinFriendModal({
               noMargins
               label='더 생각해 볼래요'
               onClick={onClose}
-              className='bg-border text-dark m-0'
+              className='bg-sub hover:bg-border text-dark m-0'
               size='md'
             />
             <Button
