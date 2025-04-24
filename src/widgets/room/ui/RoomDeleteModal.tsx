@@ -32,7 +32,7 @@ export default function RoomDeleteModal({ roomId }: RoomDeleteModalProps) {
                   noMargins
                   name='deleteWithdraw'
                   label='더 생각해 볼래요'
-                  className='bg-border text-dark m-0'
+                  className='bg-sub hover:bg-border text-dark m-0'
                   size='md'
                   onClick={onClose}
                 />

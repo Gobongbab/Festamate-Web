@@ -36,7 +36,7 @@ export default function AlermSettingModal() {
             <Button
               label='닫기'
               onClick={onClose}
-              className='bg-border text-dark m-0'
+              className='text-dark bg-sub hover:bg-border m-0'
               size='md'
             />
           </div>

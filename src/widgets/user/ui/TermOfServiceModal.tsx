@@ -36,7 +36,7 @@ export default function TermOfServiceModal() {
             <Button
               label='닫기'
               onClick={onClose}
-              className='bg-border text-dark m-0'
+              className='bg-sub hover:bg-border text-dark m-0'
               size='md'
             />
           </div>
