@@ -1,13 +1,16 @@
 import React from 'react';
 
 import { FormItem, GroupCarousel } from '@/shared/ui';
-import { PATH } from '@/shared/constants';
+import { MODAL, PATH } from '@/shared/constants';
+import { useModal } from '@/shared/hook';
 import { REQUEST } from '@/shared/api';
 
 import { logout } from '@/widgets/user/utils';
 import { UserProfile } from '@/widgets/user/ui';
 
 export default function UserContainer() {
+  const { openModal } = useModal();
+
   return (
     <>
       <UserProfile />
@@ -35,8 +38,11 @@ export default function UserContainer() {
         </button>
       </FormItem>
       <div className='bg-sub h-[1px] w-full flex-shrink-0' />
-      <FormItem title='기타' childrenWrapper={false}>
-        <button className='flex w-full justify-start focus:outline-none'>
+      <FormItem title='기타'>
+        <button
+          className='flex w-full justify-start focus:outline-none'
+          onClick={() => openModal(MODAL.TERM_OF_SERVICE)}
+        >
           이용 약관
         </button>
         <button

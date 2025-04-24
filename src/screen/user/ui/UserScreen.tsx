@@ -1,6 +1,6 @@
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { NormalAppBar, Dock } from '@/shared/ui';
-import { UserContainer } from '@/widgets/user/ui';
+import { TermOfServiceModal, UserContainer } from '@/widgets/user/ui';
 
 export default function UserScreen() {
   return (
@@ -11,6 +11,7 @@ export default function UserScreen() {
         </div>
       </AppScreen>
       <Dock />
+      <TermOfServiceModal />
     </>
   );
 }
