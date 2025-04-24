@@ -4,4 +4,3 @@ export * from './getCookie';
 export * from './getFormattedPhone';
 export * from './fetchLoginStatus';
 export * from './getPath';
-export * from './fetchNotification';

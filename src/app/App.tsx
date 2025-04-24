@@ -6,13 +6,14 @@ import { Stack } from '@/app/stackflow';
 
 import { RAW_PATH } from '@/shared/constants';
 import { userAtom } from '@/shared/atom';
-import { handleAllowNotification } from '@/shared/utils';
 
 import { AuthScreen } from '@/screen/auth/ui';
 import { SignupScreen } from '@/screen/signup/ui';
+import { useAllowNotification } from '@/shared/hook';
 
 export default function App() {
   const setUserAtom = useSetAtom(userAtom);
+  const { handleAllowNotification } = useAllowNotification();
 
   useEffect(() => {
     const stored = localStorage.getItem('user');
