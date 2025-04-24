@@ -1,6 +1,7 @@
 import { atom } from 'jotai';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 import { AsyncStorage } from 'jotai/vanilla/utils/atomWithStorage';
+
 import { User } from '@/shared/types';
 
 export const KakaoAccessTokenAtom = atomWithStorage('kakaoAccessToken', {
@@ -26,3 +27,13 @@ export const userTokenAtom = atomWithStorage<Token>(
 );
 
 export const userAtom = atom<User | null>(null);
+
+export const userUpdateAtom = atom(
+  null,
+  (get, set, newUserInfo: Partial<User>) => {
+    const currentUser = get(userAtom);
+    if (currentUser) {
+      set(userAtom, { ...currentUser, ...newUserInfo });
+    }
+  },
+);

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { BsPencilFill } from 'react-icons/bs';
 
-import { userAtom } from '@/shared/atom';
+import { userAtom, userUpdateAtom } from '@/shared/atom';
 
 import { UserProfileForm } from '@/widgets/user/ui';
 import { useUpdateUserInfo } from '@/widgets/user/api';
@@ -12,14 +12,19 @@ export default function UserProfile() {
 
   const [update, setUpdate] = useState<boolean>(false);
   const [newNickname, setNewNickname] = useState<string>(nickname);
-  const { mutate } = useUpdateUserInfo();
   const slicedStudentId = studentId.slice(2, 4);
+
+  const updateUser = useSetAtom(userUpdateAtom);
+  const { mutate } = useUpdateUserInfo();
 
   const handleSave = () => {
     mutate(
       { nickname: newNickname },
       {
-        onSuccess: () => setUpdate(false),
+        onSuccess: () => {
+          updateUser({ nickname: newNickname });
+          setUpdate(false);
+        },
       },
     );
   };
