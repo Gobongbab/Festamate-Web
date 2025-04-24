@@ -16,7 +16,7 @@ export default function Modal({ children, modalKey, className }: ModalProps) {
   useOutsideClick(ref, () => closeModal(modalKey));
 
   return (
-    <div className='absolute inset-0 z-300 grid size-full place-items-center bg-black/20'>
+    <div className='pointer-events-auto absolute inset-0 z-300 grid size-full place-items-center bg-black/20'>
       <div
         className={cn(
           'rounded-10 z-400 flex w-[80%] max-w-[350px] flex-col gap-2 bg-white p-6',

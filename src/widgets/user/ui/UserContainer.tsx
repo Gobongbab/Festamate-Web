@@ -33,13 +33,18 @@ export default function UserContainer() {
       </FormItem>
       <div className='bg-sub h-[1px] w-full flex-shrink-0' />
       <FormItem title='앱 설정' childrenWrapper={false}>
-        <button className='flex w-full justify-start focus:outline-none'>
+        <button
+          name='alertSetting'
+          className='flex w-full justify-start focus:outline-none'
+          onClick={() => openModal(MODAL.ALERT_SETTING)}
+        >
           알림 설정
         </button>
       </FormItem>
       <div className='bg-sub h-[1px] w-full flex-shrink-0' />
       <FormItem title='기타'>
         <button
+          name='termOfService'
           className='flex w-full justify-start focus:outline-none'
           onClick={() => openModal(MODAL.TERM_OF_SERVICE)}
         >
