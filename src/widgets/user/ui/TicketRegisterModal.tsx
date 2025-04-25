@@ -4,9 +4,11 @@ import { MODAL } from '@/shared/constants';
 import { Button, Input, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
 import { useSubmitTicket } from '@/widgets/user/api';
+import { useFetchUserInfo } from '@/shared/api';
 
 export default function TermOfServiceModal() {
   const { closeModal, modalState } = useModal();
+  const { refetch } = useFetchUserInfo();
 
   const { mutate } = useSubmitTicket();
   const { isOpen } = modalState(MODAL.REGISTER_TICKET);
@@ -19,6 +21,7 @@ export default function TermOfServiceModal() {
   const onSubmit = () => {
     mutate(ticket, {
       onSuccess: () => {
+        refetch();
         closeModal(MODAL.REGISTER_TICKET);
       },
       onError: () => setError('등록되지 않은 쿠폰이에요'),
