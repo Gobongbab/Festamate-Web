@@ -1,6 +1,9 @@
 import { REQUEST, userGet } from '@/shared/api';
 import { User } from '@/shared/types';
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { useSetAtom } from 'jotai';
+import { userAtom } from '@/shared/atom';
+import { useEffect } from 'react';
 
 interface UserInfoResponse {
   isSuccess: boolean;
@@ -16,7 +19,18 @@ const fetchUserInfo = async () => {
 };
 
 export const useFetchUserInfo = () => {
-  return useMutation({
-    mutationFn: fetchUserInfo,
+  const setUserAtom = useSetAtom(userAtom);
+  const queryResult = useQuery<User, Error>({
+    queryKey: ['userInfo'],
+    queryFn: fetchUserInfo,
   });
+
+  useEffect(() => {
+    if (queryResult.data) {
+      setUserAtom(queryResult.data);
+      localStorage.setItem('user', JSON.stringify(queryResult.data));
+    }
+  }, [queryResult.data, setUserAtom]);
+
+  return queryResult;
 };

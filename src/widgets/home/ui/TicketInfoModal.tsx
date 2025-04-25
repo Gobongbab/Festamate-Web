@@ -17,7 +17,7 @@ export default function TicketInfoModal() {
             <p className='text-lg font-semibold'>Festamate! 티켓이란?</p>
             <p>
               Festamate! 티켓은 모임방을 개설하거나 참여할 때마다 하나씩
-              소모돼요. 모임방에는 참여했지만, 모임이 취소된 경우에는 티켓을
+              소모돼요. 모임방에 참여했더라도, 모임이 취소된 경우에는 티켓을
               돌려받을 수 있어요. 더 많은 티켓을 사용하고 싶다면, Festamate!
               부스로 찾아오세요!
             </p>

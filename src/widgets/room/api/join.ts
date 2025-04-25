@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { REQUEST, userPost } from '@/shared/api';
+import { REQUEST, useFetchUserInfo, userPost } from '@/shared/api';
 import { useModal } from '@/shared/hook';
 import { MODAL } from '@/shared/constants';
 
@@ -22,12 +22,14 @@ const submitRoomJoin = async (
 
 export const useSubmitRoomJoin = (roomId: number) => {
   const { refetch } = useUserRoomDetail(roomId);
+  const { refetch: fetchUserInfo } = useFetchUserInfo();
   const { closeModal } = useModal();
 
   return useMutation({
     mutationFn: submitRoomJoin,
     onSuccess: () => {
       refetch();
+      fetchUserInfo();
       closeModal(MODAL.JOIN);
     },
   });
