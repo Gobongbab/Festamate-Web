@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import { userAtom } from '@/shared/atom';
 import { useEffect } from 'react';
+import { fetchLoginStatus } from '../utils';
 
 interface UserInfoResponse {
   isSuccess: boolean;
@@ -23,6 +24,7 @@ export const useFetchUserInfo = () => {
   const queryResult = useQuery<User, Error>({
     queryKey: ['userInfo'],
     queryFn: fetchUserInfo,
+    enabled: fetchLoginStatus(),
   });
 
   useEffect(() => {
