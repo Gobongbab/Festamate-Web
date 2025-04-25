@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { MODAL } from '@/shared/constants';
 import { Button, Input, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
+import { useSubmitTicket } from '@/widgets/user/api';
 
 export default function TermOfServiceModal() {
   const { closeModal, modalState } = useModal();
-  const [ticket, setTicket] = useState<string>('');
+
+  const { mutate } = useSubmitTicket();
   const { isOpen } = modalState(MODAL.REGISTER_TICKET);
+
+  const [ticket, setTicket] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+
   const onClose = () => closeModal(MODAL.REGISTER_TICKET);
+
+  const onSubmit = () => {
+    mutate(ticket, {
+      onSuccess: () => {
+        closeModal(MODAL.REGISTER_TICKET);
+      },
+      onError: () => setError('등록되지 않은 쿠폰이에요'),
+    });
+  };
+
+  useEffect(() => {
+    setError(null);
+    setTicket('');
+  }, [isOpen]);
 
   return (
     <>
@@ -20,12 +40,13 @@ export default function TermOfServiceModal() {
             value={ticket}
             onChange={e => setTicket(e.target.value)}
           />
+          {error && <p className='text-important text-sm'>{error}</p>}
           <div className='mt-2 flex gap-3'>
             <Button
               halfWidth
               name='deleteWithdraw'
               label='취소'
-              className='bg-sub hover:bg-border text-dark m-0'
+              className='bg-sub hover:bg-border text-dark'
               size='md'
               onClick={onClose}
             />
@@ -33,8 +54,9 @@ export default function TermOfServiceModal() {
               halfWidth
               name='deleteConfirm'
               label='등록하기'
-              className='m-0'
               size='md'
+              disabled={ticket.length < 1}
+              onClick={onSubmit}
             />
           </div>
         </Modal>

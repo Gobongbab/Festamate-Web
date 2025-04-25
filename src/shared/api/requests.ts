@@ -11,4 +11,5 @@ export const REQUEST = {
   CERTIFY_STUDENT: '/check/student-card',
   USER_INFO: '/auth/members/profile',
   UPDATE_USER: '/members/profile',
+  REGISTER_TICKET: '/coupons',
 };
