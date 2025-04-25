@@ -23,7 +23,7 @@ export const AppBar = (
         <div className='border-border bg-fill flex items-center gap-2 rounded-full border-[1px] px-2 py-1 font-medium'>
           <button
             name='ticketInfo'
-            className='hover:text-point cursor-pointer'
+            className='hover:text-point cursor-pointer focus:outline-none'
             onClick={ticketOnClick}
           >
             <IoTicket size={16} />
