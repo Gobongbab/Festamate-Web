@@ -20,19 +20,29 @@ export default function UserContainer() {
         request={REQUEST.ROOM_PARTICIPATED}
       />
       <div className='bg-sub mt-normal-spacing h-[1px] w-full flex-shrink-0' />
-      <FormItem title='계정' childrenWrapper={false}>
+      <FormItem title='계정'>
         <button className='flex w-full justify-start focus:outline-none'>
           비밀번호 변경하기
         </button>
       </FormItem>
       <div className='bg-sub h-[1px] w-full flex-shrink-0' />
-      <FormItem title='커뮤니티' childrenWrapper={false}>
+      <FormItem title='티켓'>
+        <button
+          name='registerTicket'
+          className='flex w-full justify-start focus:outline-none'
+          onClick={() => openModal(MODAL.REGISTER_TICKET)}
+        >
+          티켓 등록하기
+        </button>
+      </FormItem>
+      <div className='bg-sub h-[1px] w-full flex-shrink-0' />
+      <FormItem title='커뮤니티'>
         <button className='flex w-full justify-start focus:outline-none'>
           제재 내역
         </button>
       </FormItem>
       <div className='bg-sub h-[1px] w-full flex-shrink-0' />
-      <FormItem title='앱 설정' childrenWrapper={false}>
+      <FormItem title='앱 설정'>
         <button
           name='alertSetting'
           className='flex w-full justify-start focus:outline-none'

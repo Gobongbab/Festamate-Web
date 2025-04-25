@@ -6,4 +6,5 @@ export const MODAL = {
   TERM_OF_SERVICE: 'termOfServiceModal',
   ALERT_SETTING: 'alertSettingModal',
   TICKET_INFO: 'ticketInfoModal',
+  REGISTER_TICKET: 'registerTicketModal',
 } as const;
