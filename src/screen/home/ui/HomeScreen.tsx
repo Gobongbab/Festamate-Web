@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAtomValue } from 'jotai';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { MdAdd } from 'react-icons/md';
@@ -6,21 +7,25 @@ import { MdAdd } from 'react-icons/md';
 import { useFlow } from '@/app/stackflow';
 
 import { AppBar, Button, Dock, LoginBottomSheet } from '@/shared/ui';
-import { BOTTOM_SHEET, PATH } from '@/shared/constants';
+import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
 import { fetchLoginStatus } from '@/shared/utils';
-import { useBottomSheet } from '@/shared/hook';
+import { useBottomSheet, useModal } from '@/shared/hook';
+import { userAtom } from '@/shared/atom';
 
-import { HomeContainer } from '@/widgets/home/ui';
+import { HomeContainer, TicketInfoModal } from '@/widgets/home/ui';
 import { useStack } from '@stackflow/react';
 
 export default function HomeScreen() {
   const { openBottomSheet } = useBottomSheet();
+  const { openModal } = useModal();
   const { replace, push } = useFlow();
   const isLogin = fetchLoginStatus();
   const stack = useStack();
+  const user = useAtomValue(userAtom);
   const isLoading = stack.globalTransitionState === 'loading';
 
   const searchOnClick = () => replace(PATH.SEARCH, {});
+  const ticketOnClick = () => openModal(MODAL.TICKET_INFO);
   const createOnClick = () => {
     if (isLogin) push(PATH.CREATE, {});
     else openBottomSheet(BOTTOM_SHEET.LOGIN);
@@ -28,7 +33,14 @@ export default function HomeScreen() {
 
   return (
     <>
-      <AppScreen appBar={AppBar(searchOnClick)}>
+      <AppScreen
+        appBar={AppBar(
+          searchOnClick,
+          user?.maximumTicket,
+          user?.remainingTicket,
+          ticketOnClick,
+        )}
+      >
         <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding pb-dock-height flex size-full flex-col overflow-scroll overflow-y-scroll'>
           <HomeContainer />
         </div>
@@ -45,6 +57,7 @@ export default function HomeScreen() {
           }
         />
       </AppScreen>
+      <TicketInfoModal />
       <LoginBottomSheet />
       <Dock isLoading={isLoading} />
     </>
