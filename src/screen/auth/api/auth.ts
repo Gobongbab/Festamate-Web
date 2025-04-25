@@ -4,6 +4,7 @@ import { useSetAtom } from 'jotai';
 import { post, REQUEST, useFetchUserInfo } from '@/shared/api';
 import { KakaoAccessTokenAtom, userTokenAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
+import { useEffect } from 'react';
 
 interface KakaoTokenRequest {
   code: string;
@@ -67,7 +68,12 @@ export const useKakaoToken = () => {
 
 export const useKakaoLogin = () => {
   const setUserAtom = useSetAtom(userTokenAtom);
-  const { refetch: fetchUserInfo } = useFetchUserInfo();
+  const { refetch: fetchUserInfo, isFetched } = useFetchUserInfo();
+
+  useEffect(() => {
+    if (isFetched)
+      window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);
+  }, [isFetched]);
 
   return useMutation<KakaoLoginResponse, unknown, KakaoLoginRequest>({
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
