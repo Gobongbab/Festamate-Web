@@ -6,7 +6,6 @@ interface FormItemProps {
   title: string;
   description?: string | ReactNode;
   children: ReactNode;
-  childrenWrapper?: boolean;
   className?: string;
 }
 

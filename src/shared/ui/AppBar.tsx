@@ -1,23 +1,47 @@
 import { FiSearch } from 'react-icons/fi';
-import { IoChevronBackSharp } from 'react-icons/io5';
+import { IoChevronBackSharp, IoTicket } from 'react-icons/io5';
+
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 
-import Input from './Input';
+import { Input } from '@/shared/ui';
+import { fetchLoginStatus } from '@/shared/utils';
 
 const baseStyle = { height: '64px', backgroundColor: '#fff' };
 
-export const AppBar = (searchOnClick: () => void) => ({
+export const AppBar = (
+  searchOnClick: () => void,
+  maximumTicket?: number,
+  remainingTicket?: number,
+  ticketOnClick?: () => void,
+) => ({
   renderLeft: () => (
     <span className='agbalumo-regular logo ml-2'>Festamate!</span>
   ),
   renderRight: () => (
-    <button
-      name='search'
-      className='mr-2 cursor-pointer'
-      onClick={searchOnClick}
-    >
-      <FiSearch size={24} />
-    </button>
+    <div className='flex items-center gap-3'>
+      {fetchLoginStatus() && (
+        <div className='border-border bg-fill flex items-center gap-2 rounded-full border-[1px] px-2 py-1 font-medium'>
+          <button
+            name='ticketInfo'
+            className='hover:text-point cursor-pointer focus:outline-none'
+            onClick={ticketOnClick}
+          >
+            <IoTicket size={16} />
+          </button>
+          <div className='flex items-center gap-1'>
+            <span className='text-point'>{remainingTicket}</span>/
+            <span>{maximumTicket}</span>
+          </div>
+        </div>
+      )}
+      <button
+        name='search'
+        className='mr-2 cursor-pointer'
+        onClick={searchOnClick}
+      >
+        <FiSearch size={24} />
+      </button>
+    </div>
   ),
   closeButton: { renderIcon: () => <></> },
   ...baseStyle,
@@ -54,6 +78,5 @@ export const RoomAppBar = (menuOnClick: () => void) => ({
       <HiOutlineDotsVertical size={22} />
     </button>
   ),
-  closeButton: { renderIcon: () => <></> },
   ...baseStyle,
 });

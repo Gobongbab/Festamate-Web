@@ -4,6 +4,7 @@ import {
   TermOfServiceModal,
   UserContainer,
   NotificationSettingModal,
+  TicketRegisterModal,
 } from '@/widgets/user/ui';
 
 export default function UserScreen() {
@@ -17,6 +18,7 @@ export default function UserScreen() {
       <Dock />
       <TermOfServiceModal />
       <NotificationSettingModal />
+      <TicketRegisterModal />
     </>
   );
 }
