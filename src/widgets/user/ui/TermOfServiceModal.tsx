@@ -31,15 +31,12 @@ export default function TermOfServiceModal() {
               ))}
             </div>
           </div>
-
-          <div className='mt-2 flex gap-3'>
-            <Button
-              label='닫기'
-              onClick={onClose}
-              className='bg-sub hover:bg-border text-dark m-0'
-              size='md'
-            />
-          </div>
+          <Button
+            label='닫기'
+            onClick={onClose}
+            className='bg-sub hover:bg-border text-dark mt-2'
+            size='md'
+          />
         </Modal>
       )}
     </>

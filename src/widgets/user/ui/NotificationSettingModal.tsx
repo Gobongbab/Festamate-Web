@@ -32,14 +32,12 @@ export default function AlermSettingModal() {
             className='my-2'
             checked={allowed}
           />
-          <div className='mt-2 flex gap-3'>
-            <Button
-              label='닫기'
-              onClick={onClose}
-              className='text-dark bg-sub hover:bg-border m-0'
-              size='md'
-            />
-          </div>
+          <Button
+            label='닫기'
+            onClick={onClose}
+            className='text-dark bg-sub hover:bg-border mt-2'
+            size='md'
+          />
         </Modal>
       )}
     </>
