@@ -24,7 +24,10 @@ export default function Dock(isLoading: DockProps) {
     .filter(i => i.transitionState === 'enter-done')
     .map(i => i.name)
     .pop() as PathItem;
-  const render = current === PATH.HOME || current === PATH.USER;
+  const render =
+    current === PATH.HOME ||
+    current === PATH.USER ||
+    current === PATH.CHAT_LIST;
 
   return (
     <>
