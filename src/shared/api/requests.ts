@@ -12,4 +12,5 @@ export const REQUEST = {
   USER_INFO: '/auth/members/profile',
   UPDATE_USER: '/members/profile',
   REGISTER_TICKET: '/coupons',
+  CHAT_ROOM: '/messages/chatRooms',
 };

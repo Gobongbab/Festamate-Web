@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useFlow } from '@/app/stackflow';
-import { StudentIdSample } from '@/assets/images';
 import { PATH } from '@/shared/constants';
 
 export default function ChatListContainer() {
@@ -21,10 +20,13 @@ const ChatRoomItem = () => {
     <button
       name={`chat`}
       className='hover:bg-sub active:bg-sub grid h-28 w-full cursor-pointer grid-cols-[1fr_4fr] gap-3 px-6 py-2 focus:outline-none'
-      onClick={() => push(PATH.CHAT, { chatId: 2 })}
+      onClick={() => push(PATH.CHAT, { chatRoomId: 47 })}
     >
       <div className='flex size-full items-center'>
-        <img src={StudentIdSample} className='rounded-10 size-18' />
+        <img
+          src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzXy3zN565cKcPizT-NFsxsUg_X4zzAyKUNg&s'
+          className='rounded-10 size-18'
+        />
       </div>
       <div className='flex h-full flex-col justify-center gap-y-2 overflow-hidden'>
         <div className='flex w-full items-end justify-between'>

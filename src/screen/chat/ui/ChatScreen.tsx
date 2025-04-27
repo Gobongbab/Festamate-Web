@@ -6,20 +6,16 @@ import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { RoomAppBar } from '@/shared/ui';
 import { ChatContainer, ChatInput } from '@/widgets/chat/ui';
 
-const ChatScreen: ActivityComponentType<{ chatId: number }> = ({
+const ChatScreen: ActivityComponentType<{ chatRoomId: number }> = ({
   params,
 }: {
-  params: { chatId: number };
+  params: { chatRoomId: number };
 }) => {
   return (
     <div className='fixed inset-0 overflow-hidden'>
-      <AppScreen
-        appBar={RoomAppBar(() => {
-          console.log(params.chatId);
-        })}
-      >
+      <AppScreen appBar={RoomAppBar(() => {})}>
         <div className='scrollbar-hide container-mobile p-normal-padding flex size-full flex-col gap-y-3 overflow-scroll overflow-y-scroll pt-0 pb-0'>
-          <ChatContainer />
+          <ChatContainer chatRoomId={params.chatRoomId} />
           <ChatInput />
         </div>
       </AppScreen>
