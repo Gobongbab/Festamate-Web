@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 
 import { ListItem, ListSkeleton } from '@/shared/ui';
 import { useInfiniteRooms } from '@/widgets/list/api';
@@ -18,19 +18,52 @@ export default function ListContainer() {
   const observer = useRef<IntersectionObserver | undefined>(undefined);
   const lastRoomRef = useCallback(
     (node: HTMLElement | null) => {
-      if (isLoading || isFetchingNextPage) return;
-      if (observer.current) observer.current.disconnect();
-
-      observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
+      if (!hasNextPage || isLoading || isFetchingNextPage) {
+        if (observer.current) {
+          observer.current.disconnect();
+          observer.current = undefined;
         }
-      });
+        return;
+      }
 
-      if (node) observer.current.observe(node);
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+
+      observer.current = new IntersectionObserver(
+        entries => {
+          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+            console.log('Fetching next page...', {
+              hasNextPage,
+              isFetchingNextPage,
+              currentPage: data?.pages.length,
+            });
+            fetchNextPage();
+          }
+        },
+        { threshold: 0.7 },
+      );
+
+      if (node) {
+        observer.current.observe(node);
+      }
     },
-    [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage],
+    [
+      isLoading,
+      isFetchingNextPage,
+      hasNextPage,
+      fetchNextPage,
+      data?.pages.length,
+    ],
   );
+
+  useEffect(() => {
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, []);
 
   const rooms = data ? data.pages.flatMap(page => page.content) : [];
 

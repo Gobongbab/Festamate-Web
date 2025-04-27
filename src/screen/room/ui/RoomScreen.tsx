@@ -13,9 +13,10 @@ import {
 } from '@/widgets/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
-import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
+import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
 import { cn, fetchLoginStatus } from '@/shared/utils';
 import { useLeaveRoom } from '@/widgets/room/api';
+import { useFlow } from '@/app/stackflow';
 
 // 사용자 상태를 위한 타입 정의
 type RoomStatus = {
@@ -38,6 +39,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
+  const { push } = useFlow();
 
   useEffect(() => {
     setIsLogin(fetchLoginStatus());
@@ -62,6 +64,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   };
 
   const handleMoveToChat = () => {
+    push(PATH.CHAT, { chatRoomId: id });
     console.log('이동 to 채팅방:', id);
   };
 
@@ -152,7 +155,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   };
 
   return (
-    <>
+    <div className='fixed inset-0 overflow-hidden'>
       <AppScreen appBar={RoomAppBar(handleMenuClick)}>
         <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
           <RoomContainer {...params} setStatus={setStatus} />
@@ -173,7 +176,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
         availableFriendCnt={availableFriendCnt}
         roomId={id}
       />
-    </>
+    </div>
   );
 };
 

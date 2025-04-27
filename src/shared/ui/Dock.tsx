@@ -24,7 +24,10 @@ export default function Dock(isLoading: DockProps) {
     .filter(i => i.transitionState === 'enter-done')
     .map(i => i.name)
     .pop() as PathItem;
-  const render = current === PATH.HOME || current === PATH.USER;
+  const render =
+    current === PATH.HOME ||
+    current === PATH.USER ||
+    current === PATH.CHAT_LIST;
 
   return (
     <>
@@ -50,7 +53,7 @@ const DockButton = ({ item, selected }: DockButtonProps) => {
   const isLogin = fetchLoginStatus();
 
   const onClick = () => {
-    if (item === PATH.USER && !isLogin) openBottomSheet(BOTTOM_SHEET.LOGIN);
+    if (item !== PATH.HOME && !isLogin) openBottomSheet(BOTTOM_SHEET.LOGIN);
     else replace(item, { animate: false }, { animate: false });
   };
 

@@ -9,7 +9,7 @@ import {
 
 export default function UserScreen() {
   return (
-    <>
+    <div className='fixed inset-0 overflow-hidden'>
       <AppScreen appBar={NormalAppBar('마이 페이지')}>
         <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding pb-dock-height flex size-full flex-col overflow-scroll overflow-y-scroll'>
           <UserContainer />
@@ -19,6 +19,6 @@ export default function UserScreen() {
       <TermOfServiceModal />
       <NotificationSettingModal />
       <TicketRegisterModal />
-    </>
+    </div>
   );
 }
