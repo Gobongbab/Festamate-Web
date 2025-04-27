@@ -152,7 +152,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   };
 
   return (
-    <>
+    <div className='fixed inset-0 overflow-hidden'>
       <AppScreen appBar={RoomAppBar(handleMenuClick)}>
         <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
           <RoomContainer {...params} setStatus={setStatus} />
@@ -173,7 +173,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
         availableFriendCnt={availableFriendCnt}
         roomId={id}
       />
-    </>
+    </div>
   );
 };
 
