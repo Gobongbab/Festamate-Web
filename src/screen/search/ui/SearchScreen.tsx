@@ -13,10 +13,12 @@ export default function SearchScreen() {
   const searchOnClick = () => replace(PATH.RESULT, {}, { animate: false });
 
   return (
-    <AppScreen appBar={SearchAppBar(closeOnClick, searchOnClick)}>
-      <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
-        <SearchContainer />
-      </div>
-    </AppScreen>
+    <div className='fixed inset-0 overflow-hidden'>
+      <AppScreen appBar={SearchAppBar(closeOnClick, searchOnClick)}>
+        <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
+          <SearchContainer />
+        </div>
+      </AppScreen>
+    </div>
   );
 }
