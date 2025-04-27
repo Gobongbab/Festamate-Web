@@ -15,7 +15,7 @@ const ListScreen: ActivityComponentType<ListScreenParams> = ({
   return (
     <div className='fixed inset-0 overflow-hidden'>
       <AppScreen appBar={NormalAppBar(params.title)}>
-        <div className='scrollbar-hide container-mobile p-normal-padding pb-dock-height flex size-full flex-col gap-y-1.5 overflow-y-scroll'>
+        <div className='scrollbar-hide container-mobile p-normal-padding pb-dock-height flex size-full flex-col gap-y-1.5 overflow-y-scroll pt-0'>
           <ListContainer />
         </div>
       </AppScreen>

@@ -32,7 +32,7 @@ const ListItem = forwardRef<HTMLButtonElement, RoomListItem & ListItemProps>(
       <button
         name='listitem'
         className={cn(
-          'rounded-10 grid h-30 w-full cursor-pointer grid-cols-[1fr_3fr] gap-3 py-3 focus:outline-none',
+          'rounded-10 grid h-30 w-full flex-shrink-0 cursor-pointer grid-cols-[1fr_3fr] gap-3 py-3 focus:outline-none',
         )}
         onClick={handleClick}
         ref={ref}

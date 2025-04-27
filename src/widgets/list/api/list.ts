@@ -2,7 +2,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { get, REQUEST } from '@/shared/api';
 import { RoomListItem } from '@/shared/types';
-import { getCookie } from '@/shared/utils';
 
 interface FetchRoomListResponse {
   result: {
@@ -39,7 +38,6 @@ const fetchRooms = async ({ pageParam = 0 }) => {
   const response = await get<FetchRoomListResponse>({
     request: REQUEST.ROOM,
     params: { page: pageParam, size: 20 },
-    headers: { Authorization: `Bearer ${getCookie()}` },
   });
   return response.data.result;
 };
@@ -51,8 +49,8 @@ export const useInfiniteRooms = () => {
       fetchRooms({ pageParam }),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
-      if (lastPage.last) return undefined;
-      return lastPage.totalPages + 1;
+      if (lastPage.last || lastPage.empty) return undefined;
+      return lastPage.pageable.pageNumber + 1;
     },
   });
 };
