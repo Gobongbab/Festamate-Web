@@ -7,7 +7,7 @@ import { cn } from '@/shared/utils';
 import { REQUEST, useRoomList } from '@/shared/api';
 
 import { COVERED_ROOM_DATA } from '@/mock';
-import { Error } from '@/assets/images';
+import { Error, Festa } from '@/assets/images';
 import { useBottomSheet } from '../hook';
 import { BOTTOM_SHEET } from '../constants';
 
@@ -92,19 +92,23 @@ const CoveredMockup = () => {
         {COVERED_ROOM_DATA.map(room => (
           <Card {...room} key={room.id} />
         ))}
-        <div className='absolute inset-0 z-20 grid size-full place-items-center backdrop-blur-xs'>
-          <div className='flex flex-col items-center gap-2'>
-            <p className='text-dark text-white'>
-              간편 로그인을 통해 로그인하고,
-              <br />
-              추천 모임방을 확인하세요!
-            </p>
-            <Button
-              name='next-step'
-              size='sm'
-              onClick={() => openBottomSheet(BOTTOM_SHEET.LOGIN)}
-              label='로그인 하러가기'
-            />
+        <div className='absolute inset-0 z-20 flex size-full items-center justify-center gap-3 bg-white/30 backdrop-blur-xs'>
+          <img src={Festa} className='fixed -bottom-18 -left-12 size-60' />
+          <div>
+            <div className='rounded-5 ml-36 flex flex-col items-center gap-2'>
+              <p className='text-dark font-medium'>
+                간편 로그인을 통해 로그인하고,
+                <br />
+                추천 모임방을 확인하세요!
+              </p>
+              <Button
+                name='next-step'
+                size='md'
+                className='active:bg-point-hover'
+                onClick={() => openBottomSheet(BOTTOM_SHEET.LOGIN)}
+                label='로그인 하러가기'
+              />
+            </div>
           </div>
         </div>
       </div>
