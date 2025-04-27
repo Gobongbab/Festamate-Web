@@ -4,7 +4,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 import { Dock, NormalAppBar } from '@/shared/ui';
 
-export default function HomeScreen() {
+export default function ChatScreen() {
   return (
     <>
       <AppScreen appBar={NormalAppBar('채팅')}>

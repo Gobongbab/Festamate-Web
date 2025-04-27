@@ -18,7 +18,7 @@ export const DOCK = {
     icon: <RiHome9Line size={20} />,
     selectedIcon: <RiHome9Fill size={20} />,
   },
-  [PATH.CHAT]: {
+  [PATH.CHAT_LIST]: {
     title: '채팅',
     icon: <IoChatbubbleEllipsesOutline size={20} />,
     selectedIcon: <IoChatbubbleEllipsesSharp size={20} />,
