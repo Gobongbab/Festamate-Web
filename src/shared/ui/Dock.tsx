@@ -50,7 +50,7 @@ const DockButton = ({ item, selected }: DockButtonProps) => {
   const isLogin = fetchLoginStatus();
 
   const onClick = () => {
-    if (item === PATH.USER && !isLogin) openBottomSheet(BOTTOM_SHEET.LOGIN);
+    if (item !== PATH.HOME && !isLogin) openBottomSheet(BOTTOM_SHEET.LOGIN);
     else replace(item, { animate: false }, { animate: false });
   };
 
