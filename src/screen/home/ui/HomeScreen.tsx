@@ -32,7 +32,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <>
+    <div className='fixed inset-0 overflow-hidden'>
       <AppScreen
         appBar={AppBar(
           searchOnClick,
@@ -60,6 +60,6 @@ export default function HomeScreen() {
       <TicketInfoModal />
       <LoginBottomSheet />
       <Dock isLoading={isLoading} />
-    </>
+    </div>
   );
 }
