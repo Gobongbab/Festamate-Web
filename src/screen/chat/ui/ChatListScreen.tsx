@@ -6,7 +6,7 @@ import { Dock, NormalAppBar } from '@/shared/ui';
 import { useStack } from '@stackflow/react';
 import { ChatListContainer } from '@/widgets/chat/ui';
 
-export default function ChatScreen() {
+export default function ChatListScreen() {
   const stack = useStack();
   const isLoading = stack.globalTransitionState === 'loading';
 
