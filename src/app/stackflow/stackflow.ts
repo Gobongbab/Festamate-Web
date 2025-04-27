@@ -9,7 +9,7 @@ import { SearchScreen } from '@/screen/search/ui';
 import { ResultScreen } from '@/screen/result/ui';
 import { ListScreen } from '@/screen/list/ui';
 import { RoomScreen } from '@/screen/room/ui';
-import { ChatListScreen } from '@/screen/chat/ui';
+import { ChatListScreen, ChatScreen } from '@/screen/chat/ui';
 
 export const { Stack, useFlow } = stackflow({
   transitionDuration: 350,
@@ -22,6 +22,7 @@ export const { Stack, useFlow } = stackflow({
     ListScreen,
     RoomScreen,
     ChatListScreen,
+    ChatScreen,
   },
   plugins: [
     basicRendererPlugin(),
