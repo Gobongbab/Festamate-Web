@@ -22,7 +22,7 @@ export default function useWebSocket({
       webSocketFactory: () => socket,
       onConnect: () => {
         console.log('connected');
-        client.current?.subscribe(`/topic/chat/${chatRoomId}`, message => {
+        client.current?.subscribe(`/topic/chatRooms/${chatRoomId}`, message => {
           onMessage(JSON.parse(message.body));
         });
       },

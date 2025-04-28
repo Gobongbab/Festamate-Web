@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Button, Input } from '@/shared/ui';
 
@@ -9,8 +9,7 @@ interface ChatInputProps {
 export default function ChatInput({ onSendMessage }: ChatInputProps) {
   const [message, setMessage] = useState<string>('');
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (message.trim()) {
       onSendMessage(message.trim());
       setMessage('');
@@ -18,7 +17,7 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
   };
 
   return (
-    <form
+    <div
       onSubmit={handleSubmit}
       className='border-app-bar-border fixed right-0 bottom-0 left-0 grid h-fit grid-cols-[5fr_1fr] gap-2 border-t-[1px] bg-white px-6 pt-3 pb-12'
     >
@@ -28,7 +27,12 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
         className='bg-sub h-10 w-full border-none'
         placeholder='메시지 입력'
       />
-      <Button size='sm' label='전송' className='h-10 w-full' />
-    </form>
+      <Button
+        size='sm'
+        label='전송'
+        className='h-10 w-full'
+        onClick={handleSubmit}
+      />
+    </div>
   );
 }
