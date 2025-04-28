@@ -22,6 +22,7 @@ export async function get<TResponse, TParams = unknown>(
   const { request, headers, params } = config;
   try {
     const response = await instance.get<TResponse>(request, {
+      withCredentials: true,
       params: params,
       headers: headers || undefined,
     });
@@ -43,6 +44,7 @@ export async function post<TData, TResponse = unknown>(
       AxiosResponse<TResponse>,
       TData
     >(request, data, {
+      withCredentials: true,
       headers: headers || undefined,
     });
     return response;
