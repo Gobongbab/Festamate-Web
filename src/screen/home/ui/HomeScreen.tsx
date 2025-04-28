@@ -52,7 +52,7 @@ export default function HomeScreen() {
           onClick={createOnClick}
           label={
             <>
-              <MdAdd size={14} /> <span>모임방 만들기</span>
+              <MdAdd size={14} /> <span>모임 만들기</span>
             </>
           }
         />

@@ -36,7 +36,7 @@ export default function GroupDetailForm({
     <>
       <FormItem
         title='희망 멤버 학번'
-        description='모임방에 들어올 구성원들의 학번을 지정해주세요.'
+        description='모임에 들어올 구성원들의 학번을 지정해주세요.'
       >
         <div className='flex w-full items-center gap-2'>
           <Input
@@ -59,7 +59,7 @@ export default function GroupDetailForm({
       </FormItem>
       <FormItem
         title='성별 선택'
-        description='모임방에 들어올 구성원들의 성별을 선택해주세요.'
+        description='모임에 들어올 구성원들의 성별을 선택해주세요.'
       >
         {DETAIL_OPTION.preferredGender.map(({ id, value, label }) => (
           <Radio
@@ -95,7 +95,7 @@ export default function GroupDetailForm({
           title='친구'
           description={
             <>
-              <p>모임방을 함께 생성하는 친구의 전화번호를 입력해주세요.</p>
+              <p>모임을 함께 생성하는 친구의 전화번호를 입력해주세요.</p>
               <p>친구도 Festamate!에 가입된 상태여야 해요!</p>
             </>
           }

@@ -42,7 +42,7 @@ export default function GroupTitleForm({
   return (
     <div className='flex flex-col gap-y-2'>
       <FormItem
-        title='모임방 표지 사진'
+        title='모임 표지 사진'
         description='사진을 등록하지 않으면 기본 이미지로 자동 설정됩니다.'
         className='mb-3'
       >
@@ -65,8 +65,8 @@ export default function GroupTitleForm({
         </label>
       </FormItem>
       <FormItem
-        title='모임방 이름'
-        description='모임방 이름은 꼭 5자 이상으로 작성해주세요!'
+        title='모임 이름'
+        description='모임 이름은 꼭 5자 이상으로 작성해주세요!'
       >
         <Input
           id='title'
@@ -85,7 +85,7 @@ export default function GroupTitleForm({
           {...register('place', { required: true })}
         />
       </FormItem>
-      <FormItem title='모임방 설명' className='mb-normal-spacing'>
+      <FormItem title='모임 설명' className='mb-normal-spacing'>
         <textarea
           id='content'
           placeholder='설명을 입력해주세요.'

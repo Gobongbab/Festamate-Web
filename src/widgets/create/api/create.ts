@@ -23,6 +23,6 @@ export const useFormSubmit = () => {
       fetchUserInfo();
       pop();
     },
-    onError: () => alert('모임방 생성에 실패했어요.'),
+    onError: () => alert('모임 생성에 실패했어요.'),
   });
 };

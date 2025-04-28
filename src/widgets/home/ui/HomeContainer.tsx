@@ -16,9 +16,7 @@ export default function HomeContainer() {
       <BoothInfo />
       <GroupCarousel
         label={
-          isLogin && user
-            ? `${user.nickname}님을 위한 추천 모임방`
-            : '추천 모임방'
+          isLogin && user ? `${user.nickname}님을 위한 추천 모임` : '추천 모임'
         }
         key='openedGroup'
         to={PATH.LIST}
@@ -26,7 +24,7 @@ export default function HomeContainer() {
         covered={!fetchLoginStatus()}
       />
       <GroupList
-        label='개설된 모임방'
+        label='개설된 모임'
         key='popularGroup'
         request={REQUEST.ROOM}
         to={PATH.LIST}

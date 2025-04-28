@@ -30,7 +30,7 @@ export default function GroupCarousel({
   let rooms;
 
   if (request === REQUEST.ROOM_PARTICIPATED)
-    /**내가 참여한 모임방의 응답은 content 없이 바로 주어져 다음과 같이 작성하였습니다 */
+    /**내가 참여한 모임의 응답은 content 없이 바로 주어져 다음과 같이 작성하였습니다 */
     rooms = (data as unknown as RoomListItem[]) || [];
   else rooms = data ? data.content : [];
 
@@ -99,7 +99,7 @@ const CoveredMockup = () => {
               <p className='text-dark font-medium'>
                 간편 로그인을 통해 로그인하고,
                 <br />
-                추천 모임방을 확인하세요!
+                추천 모임을 확인하세요!
               </p>
               <Button
                 name='next-step'

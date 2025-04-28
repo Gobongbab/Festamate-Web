@@ -28,13 +28,13 @@ export default function MenuBottomSheet({
     if (roomAuthority === 'HOST') {
       return (
         <>
-          <button className='w-full cursor-pointer py-1'>모임방 수정</button>
+          <button className='w-full cursor-pointer py-1'>모임 수정</button>
           <button
             name='roomDelete'
             className='text-important w-full cursor-pointer py-1'
             onClick={handleDelete}
           >
-            모임방 삭제
+            모임 삭제
           </button>
         </>
       );
@@ -43,7 +43,7 @@ export default function MenuBottomSheet({
     return (
       <>
         <button className='text-important w-full cursor-pointer py-1'>
-          모임방 신고
+          모임 신고
         </button>
       </>
     );

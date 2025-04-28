@@ -24,8 +24,8 @@ export default function RoomDeleteModal({ roomId }: RoomDeleteModalProps) {
         <Modal modalKey={MODAL.ROOM_DELETE}>
           {!isError ? (
             <>
-              <p className='text-lg font-semibold'>모임방 삭제</p>
-              <p>정말 모임방을 삭제할까요?</p>
+              <p className='text-lg font-semibold'>모임 삭제</p>
+              <p>정말 모임을 삭제할까요?</p>
               <div className='mt-2 flex gap-3'>
                 <Button
                   halfWidth

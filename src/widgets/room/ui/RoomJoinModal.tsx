@@ -24,8 +24,8 @@ export default function RoomJoinModal({ roomId }: RoomJoinModalProps) {
         <Modal modalKey={MODAL.JOIN}>
           {!isError ? (
             <>
-              <p className='text-lg font-semibold'>모임방 참여하기</p>
-              <p>티켓 한 장을 소모하고 모임방에 참여할까요?</p>
+              <p className='text-lg font-semibold'>모임 참여하기</p>
+              <p>티켓 한 장을 소모하고 모임에 참여할까요?</p>
               <div className='mt-2 flex gap-3'>
                 <Button
                   halfWidth

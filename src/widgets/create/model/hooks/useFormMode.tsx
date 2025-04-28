@@ -30,7 +30,7 @@ export default function useFormMode({
 
   const MODE = [
     {
-      title: '모임방 기본 정보',
+      title: '모임 기본 정보',
       form: <GroupTitleForm register={register} watch={watch} />,
       button: '다음으로',
       isFormValid:
@@ -41,7 +41,7 @@ export default function useFormMode({
         place?.length > 0,
     },
     {
-      title: '모임방 세부 정보',
+      title: '모임 세부 정보',
       form: (
         <GroupDetailForm
           register={register}

@@ -15,7 +15,7 @@ export default function UserContainer() {
     <>
       <UserProfile />
       <GroupCarousel
-        label='참여한 모임방'
+        label='참여한 모임'
         to={PATH.LIST}
         request={REQUEST.ROOM_PARTICIPATED}
       />

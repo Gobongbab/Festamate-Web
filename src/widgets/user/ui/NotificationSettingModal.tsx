@@ -22,7 +22,7 @@ export default function AlermSettingModal() {
         >
           <p className='text-lg font-semibold'>알림 설정</p>
           <p>
-            알림을 설정하면 모임방 매칭 완료 여부, 삭제 등 다양한 정보를 푸시
+            알림을 설정하면 모임 매칭 완료 여부, 삭제 등 다양한 정보를 푸시
             알림으로 받아볼 수 있어요!
           </p>
           <Toggle
