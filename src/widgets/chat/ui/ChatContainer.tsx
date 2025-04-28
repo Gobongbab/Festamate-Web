@@ -5,6 +5,7 @@ import { getDate } from '@/shared/utils';
 import { userAtom } from '@/shared/atom';
 
 import { useFetchChatDetail } from '@/widgets/chat/api';
+import { Message } from '@/widgets/chat/types';
 
 export default function ChatContainer({ chatRoomId }: { chatRoomId: number }) {
   const { data } = useFetchChatDetail(chatRoomId);
@@ -21,7 +22,7 @@ export default function ChatContainer({ chatRoomId }: { chatRoomId: number }) {
               {message.nickname === nickname ? (
                 <SentText text={message.message} time={message.sendDate} />
               ) : (
-                <RecievedText text={message.message} time={message.sendDate} />
+                <RecievedText {...message} />
               )}
             </Fragment>
           ))}
@@ -32,12 +33,15 @@ export default function ChatContainer({ chatRoomId }: { chatRoomId: number }) {
   );
 }
 
-const RecievedText = ({ text, time }: { text: string; time: string }) => (
-  <div className='flex w-full items-end gap-2'>
-    <div className='border-border bg-sub w-fit max-w-[80%] rounded-tl-2xl rounded-r-2xl px-4 py-2'>
-      {text}
+const RecievedText = ({ message, sendDate, nickname }: Message) => (
+  <div className='flex flex-col gap-1'>
+    <p className='ml-2 text-sm'>{nickname}</p>
+    <div className='flex w-full items-end gap-2'>
+      <div className='border-border bg-sub w-fit max-w-[80%] rounded-tl-2xl rounded-r-2xl px-4 py-2'>
+        {message}
+      </div>
+      <span className='text-light text-sm'>{getDate(sendDate, 'A h:mm')}</span>
     </div>
-    <span className='text-light text-sm'>{getDate(time, 'A h:mm')}</span>
   </div>
 );
 

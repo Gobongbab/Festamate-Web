@@ -19,7 +19,7 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
   return (
     <div
       onSubmit={handleSubmit}
-      className='border-app-bar-border fixed right-0 bottom-0 left-0 grid h-fit grid-cols-[5fr_1fr] gap-2 border-t-[1px] bg-white px-6 pt-3 pb-12'
+      className='border-app-bar-border fixed right-0 bottom-0 left-0 grid h-24 grid-cols-[5fr_1fr] gap-2 border-t-[1px] bg-white px-6 pt-3 pb-12'
     >
       <Input
         value={message}
