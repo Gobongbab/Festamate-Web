@@ -5,6 +5,7 @@ export const REQUEST = {
   ROOM_PARTICIPATED: '/rooms/participations',
   KAKAO: '/auth/kakao',
   LOGIN: '/auth/login',
+  REFRESH: '/auth/refresh',
   SIGNUP: '/auth/register/profile',
   CERTIFY_CODE: '/auth/phone/verify',
   CERTIFY_PHONE: '/auth/phone/send',
