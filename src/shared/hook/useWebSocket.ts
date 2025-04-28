@@ -18,7 +18,7 @@ export default function useWebSocket({
   const connect = useCallback(() => {
     try {
       console.log('WebSocket 연결 시도 중...');
-      const socket = new SockJS('https://www.festamate.shop/ws');
+      const socket = new SockJS('ws://www.festamate.shop/ws');
 
       client.current = new Client({
         webSocketFactory: () => socket,
