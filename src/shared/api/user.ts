@@ -46,7 +46,7 @@ instance.interceptors.response.use(
         sessionStorage.setItem(
           'userToken',
           `{
-            accessToken: ${newAccessToken},
+            accessToken: ${newAccessToken}
           }`,
         );
       } catch {
