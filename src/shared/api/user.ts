@@ -1,7 +1,13 @@
-import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosHeaders,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 import { REQUEST } from './requests';
 import { post } from './axios';
 import { RAW_PATH } from '../constants';
+
 import { logout } from '@/widgets/user/utils';
 
 interface PostRequestParams<TData> {
@@ -45,10 +51,16 @@ instance.interceptors.response.use(
         const { accessToken: newAccessToken } = response.data;
         sessionStorage.setItem(
           'userToken',
-          `{
-            accessToken: ${newAccessToken}
-          }`,
+          JSON.stringify({ accessToken: newAccessToken }),
         );
+        const originalRequest = error.config as AxiosRequestConfig;
+        if (originalRequest) {
+          originalRequest.headers = {
+            ...originalRequest.headers,
+            Authorization: `Bearer ${newAccessToken}`,
+          };
+          return instance(originalRequest);
+        }
       } catch {
         alert('토큰 갱신에 실패했어요 ㅠㅠ');
         logout();
