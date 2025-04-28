@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
 import { REQUEST } from './requests';
 import { post } from './axios';
+import { RAW_PATH } from '../constants';
+import { logout } from '@/widgets/user/utils';
 
 interface PostRequestParams<TData> {
   request: string;
@@ -49,6 +51,8 @@ instance.interceptors.response.use(
         );
       } catch {
         alert('토큰 갱신에 실패했어요 ㅠㅠ');
+        logout();
+        window.location.replace(RAW_PATH.HOME);
       }
     }
     return Promise.reject(error);
