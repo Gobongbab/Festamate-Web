@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
 import { REQUEST } from './requests';
 import { post } from './axios';
-import { getCookie } from '../utils';
 
 interface PostRequestParams<TData> {
   request: string;
@@ -37,31 +36,19 @@ instance.interceptors.response.use(
   response => response,
   async (error: AxiosError) => {
     if (error.response?.status === 401) {
-      const stored = sessionStorage.getItem('userToken');
-
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        const refreshToken = parsed.refreshToken;
-        try {
-          const response = await post<
-            { refreshToken: string },
-            RefreshTokenResponse
-          >({
-            request: REQUEST.REFRESH,
-            data: { refreshToken },
-          });
-          const { accessToken: newAccessToken } = response.data;
-          const newRefreshToken = getCookie('refreshToken');
-          sessionStorage.setItem(
-            'userToken',
-            `{
+      try {
+        const response = await post<unknown, RefreshTokenResponse>({
+          request: REQUEST.REFRESH,
+        });
+        const { accessToken: newAccessToken } = response.data;
+        sessionStorage.setItem(
+          'userToken',
+          `{
             accessToken: ${newAccessToken},
-            refreshToken: ${newRefreshToken},
           }`,
-          );
-        } catch {
-          alert('토큰 갱신에 실패했어요 ㅠㅠ');
-        }
+        );
+      } catch {
+        alert('토큰 갱신에 실패했어요 ㅠㅠ');
       }
     }
     return Promise.reject(error);

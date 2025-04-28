@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
+
 import { useMutation } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 
 import { post, REQUEST, useFetchUserInfo } from '@/shared/api';
 import { KakaoAccessTokenAtom, userTokenAtom } from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
-import { useEffect } from 'react';
 
 interface KakaoTokenRequest {
   code: string;
@@ -28,7 +29,6 @@ interface KakaoLoginResponse {
   message: string;
   result: {
     accessToken: string;
-    refreshToken: string;
   };
 }
 

@@ -3,10 +3,7 @@ export const fetchLoginStatus = () => {
   if (stored) {
     const parsed = JSON.parse(stored);
     const hasToken: boolean =
-      parsed.accessToken &&
-      parsed.refreshToken &&
-      parsed.accessToken.length > 0 &&
-      parsed.refreshToken.length > 0;
+      parsed.accessToken && parsed.accessToken.length > 0;
     return hasToken;
   }
   return false;

@@ -10,12 +10,10 @@ export const KakaoAccessTokenAtom = atomWithStorage('kakaoAccessToken', {
 
 type Token = {
   accessToken: string;
-  refreshToken: string;
 };
 
 const initialUserState = {
   accessToken: '',
-  refreshToken: '',
 };
 
 const sessionStorage = createJSONStorage(() => window.sessionStorage);
