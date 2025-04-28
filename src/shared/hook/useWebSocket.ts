@@ -20,6 +20,10 @@ export default function useWebSocket({
       console.log('WebSocket 연결 시도 중...');
       const socket = new SockJS('https://www.festamate.shop/ws');
 
+      console.log('SockJS 객체 생성 완료');
+      console.log('SockJS 상태:', socket.readyState);
+      console.log('SockJS URL:', socket.url);
+
       client.current = new Client({
         webSocketFactory: () => socket,
         connectHeaders: {
