@@ -20,19 +20,19 @@ export const AppBar = (
   renderRight: () => (
     <div className='flex items-center gap-3'>
       {fetchLoginStatus() && (
-        <div className='border-border bg-fill flex items-center gap-2 rounded-full border-[1px] px-2 py-1 font-medium'>
-          <button
-            name='ticketInfo'
-            className='hover:text-point cursor-pointer focus:outline-none'
-            onClick={ticketOnClick}
-          >
+        <button
+          onClick={ticketOnClick}
+          name='ticketInfo'
+          className='active:bg-border border-border bg-fill flex cursor-pointer items-center gap-2 rounded-full border-[1px] px-2 py-1 font-medium focus:outline-none'
+        >
+          <div>
             <IoTicket size={16} />
-          </button>
+          </div>
           <div className='flex items-center gap-1'>
             <span className='text-point'>{remainingTicket}</span>/
             <span>{maximumTicket}</span>
           </div>
-        </div>
+        </button>
       )}
       <button
         name='search'
