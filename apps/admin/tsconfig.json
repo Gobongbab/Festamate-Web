@@ -1,0 +1,10 @@
+{
+  "extends": "@festamate/config/tsconfig.app.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["src"]
+}
