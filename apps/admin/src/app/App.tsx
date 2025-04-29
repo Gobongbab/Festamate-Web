@@ -1,11 +1,12 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { HomeRoutes } from '@/app/routes';
+import { AuthRoutes, HomeRoutes } from '@/app/routes';
 import AuthRouter from './router/AuthRouter';
 
 export default function App() {
   const router = createBrowserRouter([
+    AuthRoutes,
     { element: <AuthRouter />, children: [HomeRoutes] },
   ]);
 
