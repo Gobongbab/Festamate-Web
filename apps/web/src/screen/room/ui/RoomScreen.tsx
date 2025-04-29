@@ -14,7 +14,7 @@ import {
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
-import { cn, fetchLoginStatus } from '@/shared/utils';
+import { cn, fetchLoginStatus } from '@festamate/utils';
 import { useLeaveRoom } from '@/widgets/room/api';
 import { useFlow } from '@/app/stackflow';
 

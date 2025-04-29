@@ -3,7 +3,7 @@ import React from 'react';
 import { GroupCarousel, GroupList } from '@/shared/ui';
 import { PATH } from '@/shared/constants';
 import { REQUEST } from '@/shared/api';
-import { fetchLoginStatus } from '@/shared/utils';
+import { fetchLoginStatus } from '@festamate/utils';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '@/shared/atom';
 

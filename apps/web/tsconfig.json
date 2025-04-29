@@ -1,16 +1,10 @@
 {
+  "extends": "@festamate/config/tsconfig.app.json",
   "compilerOptions": {
-    "target": "ES2017",
     "baseUrl": "src",
     "paths": {
       "@/*": ["./*"]
-    },
-    "skipLibCheck": true,
-    "noUnusedLocals": false
+    }
   },
-  "files": [],
-  "extends": [
-    "@festamate/config/tsconfig.app.json",
-    "@festamate/config/tsconfig.node.json"
-  ]
+  "include": ["src"]
 }

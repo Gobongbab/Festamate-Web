@@ -1,7 +1,7 @@
 import React, { type Dispatch, type SetStateAction, useState } from 'react';
 
 import { Button, Input } from '@/shared/ui';
-import { getFormattedPhone } from '@/shared/utils';
+import { getFormattedPhone } from '@festamate/utils';
 import { useSubmitPhoneNumber } from '@/widgets/signup/api';
 
 interface PhoneFormProps {

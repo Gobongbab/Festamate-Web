@@ -3,7 +3,7 @@ import React from 'react';
 import { SignupSuccessBg } from '@/assets/images';
 import { Button } from '@/shared/ui';
 import { RAW_PATH } from '@/shared/constants';
-import { getPath } from '@/shared/utils';
+import { getPath } from '@festamate/utils';
 
 export default function SignupComplete() {
   const handleHomeClick = () =>

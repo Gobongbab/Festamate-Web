@@ -2,13 +2,13 @@ import React from 'react';
 import { useAtomValue } from 'jotai';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { fetchLoginStatus } from '@festamate/utils';
 import { MdAdd } from 'react-icons/md';
 
 import { useFlow } from '@/app/stackflow';
 
 import { AppBar, Button, Dock, LoginBottomSheet } from '@/shared/ui';
 import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
-import { fetchLoginStatus } from '@/shared/utils';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { userAtom } from '@/shared/atom';
 

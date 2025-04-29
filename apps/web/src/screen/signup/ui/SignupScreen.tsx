@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SignupContainer } from '@/widgets/signup/ui';
 import { RAW_PATH } from '@/shared/constants';
-import { getPath } from '@/shared/utils';
+import { getPath } from '@festamate/utils';
 
 export default function SignupScreen() {
   return (

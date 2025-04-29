@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 import { BottomSheetItem } from '../types';
 import { useBottomSheet } from '../hook';
 

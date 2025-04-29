@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 
 import { SIGNUP_PROCESS } from '@/widgets/signup/model';
 import {

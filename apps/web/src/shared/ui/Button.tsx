@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 
 type Size = 'sm' | 'md' | 'lg';
 

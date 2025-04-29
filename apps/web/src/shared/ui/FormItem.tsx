@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { cn } from '../utils';
+import { cn } from '@festamate/utils';
 
 interface FormItemProps {
   title: string;

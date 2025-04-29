@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import { userAtom } from '@/shared/atom';
 import { useEffect } from 'react';
-import { fetchLoginStatus } from '../utils';
+import { fetchLoginStatus } from '@festamate/utils';
 
 interface UserInfoResponse {
   isSuccess: boolean;

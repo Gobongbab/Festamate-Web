@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { REQUEST, userGet } from '@/shared/api';
-import { getPath } from '@/shared/utils';
+import { getPath } from '@festamate/utils';
 
 interface Sort {
   empty: boolean;

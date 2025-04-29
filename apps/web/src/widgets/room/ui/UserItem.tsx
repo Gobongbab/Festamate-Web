@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 
 import { RoomParticipant } from '@/widgets/room/types';
 import { IoMdFemale, IoMdMale } from 'react-icons/io';

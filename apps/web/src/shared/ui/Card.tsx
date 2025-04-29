@@ -8,7 +8,7 @@ import { GoClockFill } from 'react-icons/go';
 import { useFlow } from '@/app/stackflow';
 import { PATH } from '@/shared/constants';
 import { RoomListItem } from '@/shared/types';
-import { cn, getDate } from '@/shared/utils';
+import { cn, getDate } from '@festamate/utils';
 
 export default function Card(props: RoomListItem) {
   const { push } = useFlow();

@@ -5,7 +5,7 @@ import { RoomAuthority, RoomListItem } from '@/shared/types';
 
 import { RoomHeader, UserItem } from '@/widgets/room/ui';
 import { useRoomDetail, useUserRoomDetail } from '@/widgets/room/api';
-import { fetchLoginStatus } from '@/shared/utils';
+import { fetchLoginStatus } from '@festamate/utils';
 
 type RoomContainerProps = RoomListItem & {
   setStatus: Dispatch<

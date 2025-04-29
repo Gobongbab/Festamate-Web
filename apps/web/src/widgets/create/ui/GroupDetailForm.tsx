@@ -8,7 +8,7 @@ import {
 
 import { FormItem, Input, Radio } from '@/shared/ui';
 import { Room } from '@/shared/types';
-import { getDate } from '@/shared/utils';
+import { getDate } from '@festamate/utils';
 import { DETAIL_OPTION, useRoomCreateContext } from '@/widgets/create/model';
 
 interface GroupTitleFormProps {

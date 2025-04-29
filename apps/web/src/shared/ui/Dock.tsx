@@ -5,7 +5,7 @@ import { useFlow } from '@/app/stackflow';
 
 import { BOTTOM_SHEET, DOCK, DOCK_ITEMS, PATH } from '@/shared/constants';
 import { DockItem, PathItem } from '@/shared/types';
-import { cn, fetchLoginStatus } from '@/shared/utils';
+import { cn, fetchLoginStatus } from '@festamate/utils';
 import { useBottomSheet } from '@/shared/hook';
 
 interface DockProps {

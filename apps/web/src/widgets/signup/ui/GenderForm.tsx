@@ -1,6 +1,6 @@
 import React, { useState, type Dispatch, type SetStateAction } from 'react';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 import { Button } from '@/shared/ui';
 import { Gender } from '@/shared/types';
 

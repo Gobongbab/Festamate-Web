@@ -4,7 +4,7 @@ import { IoChevronBackSharp, IoTicket } from 'react-icons/io5';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 
 import { Input } from '@/shared/ui';
-import { fetchLoginStatus } from '@/shared/utils';
+import { fetchLoginStatus } from '@festamate/utils';
 
 const baseStyle = { height: '64px', backgroundColor: '#fff' };
 

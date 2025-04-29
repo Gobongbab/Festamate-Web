@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { cn, getDate } from '@/shared/utils';
+import { cn, getDate } from '@festamate/utils';
 import { Button } from '@/shared/ui';
 
 import { useRoomCreateContext, useFormMode } from '@/widgets/create/model';

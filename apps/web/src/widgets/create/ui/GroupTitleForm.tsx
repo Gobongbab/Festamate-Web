@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import type { UseFormWatch, UseFormRegister } from 'react-hook-form';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 
 import { FormItem, Input } from '@/shared/ui';
 import { Room } from '@/shared/types';

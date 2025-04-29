@@ -5,7 +5,7 @@ import { GENDER, ROOM_STATUS } from '@/shared/constants';
 import { GoClockFill } from 'react-icons/go';
 import { RiUser3Fill } from 'react-icons/ri';
 import { IoLocationSharp } from 'react-icons/io5';
-import { cn, getDate } from '@/shared/utils';
+import { cn, getDate } from '@festamate/utils';
 
 export default function RoomHeader(props: RoomListItem) {
   const {

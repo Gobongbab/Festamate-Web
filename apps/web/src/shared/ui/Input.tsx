@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;

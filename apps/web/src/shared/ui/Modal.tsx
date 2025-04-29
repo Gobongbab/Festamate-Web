@@ -2,7 +2,7 @@ import React, { useRef, type ReactNode } from 'react';
 
 import { ModalItem } from '@/shared/types';
 import { useModal, useOutsideClick } from '@/shared/hook';
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 
 interface ModalProps {
   children: ReactNode;

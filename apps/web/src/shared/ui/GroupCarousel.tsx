@@ -3,7 +3,7 @@ import React from 'react';
 import { useFlow } from '@/app/stackflow';
 import { Button, Card, CardSkeleton } from '@/shared/ui';
 import { PathItem, RoomListItem } from '@/shared/types';
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 import { REQUEST, useRoomList } from '@/shared/api';
 
 import { COVERED_ROOM_DATA } from '@/mock';

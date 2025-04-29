@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useAtomValue } from 'jotai';
 
-import { getDate } from '@/shared/utils';
+import { getDate } from '@festamate/utils';
 import { userAtom } from '@/shared/atom';
 
 import { useFetchChatDetail } from '@/widgets/chat/api';

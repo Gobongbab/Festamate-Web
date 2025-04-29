@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 
-import { cn } from '@/shared/utils';
+import { cn } from '@festamate/utils';
 
 export interface ToggleProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
