@@ -1,0 +1,8 @@
+{
+  "extends": "@festamate/config/tsconfig.next.json",
+  "compilerOptions": {
+    "target": "ES2017"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

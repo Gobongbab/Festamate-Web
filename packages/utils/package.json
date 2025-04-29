@@ -1,0 +1,22 @@
+{
+  "name": "@festamate/utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "private": "true",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@festamate/config": "workspace:^",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "entities": "^6.0.0",
+    "tailwind-merge": "^3.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vite-plugin-dts": "^4.5.3"
+  }
+}
