@@ -1,5 +1,15 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-export default function AppLayout({ children }: { children: ReactNode }) {
-  return <div className='flex h-screen'>{children}</div>;
+import { SideBar } from '@/shared/ui';
+
+export default function AppLayout() {
+  return (
+    <div className='flex h-screen'>
+      <SideBar />
+      <div className='flex-1 p-6'>
+        <Outlet />
+      </div>
+    </div>
+  );
 }

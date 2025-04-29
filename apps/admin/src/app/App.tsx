@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { PATH } from '@/shared/constants/path';
-import { HomePage } from '@/page/home/ui';
+import { AuthRoutes, HomeRoutes } from '@/app/routes';
+import AuthRouter from './router/AuthRouter';
 
 export default function App() {
   const router = createBrowserRouter([
-    { path: PATH.HOME, element: <HomePage /> },
+    AuthRoutes,
+    { element: <AuthRouter />, children: [HomeRoutes] },
   ]);
 
   return <RouterProvider router={router} />;
