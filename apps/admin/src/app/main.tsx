@@ -1,21 +1,17 @@
-import '@/app/fcm';
-import '@festamate/config/global.css';
-import '@stackflow/plugin-basic-ui/index.css';
-
-import { Provider } from 'jotai';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Analytics } from '@vercel/analytics/react';
+import '@festamate/config/global.css';
 
-import App from './App';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import App from './App.tsx';
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
-  <Provider>
+  <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Analytics />
       <App />
     </QueryClientProvider>
-  </Provider>,
+  </StrictMode>,
 );
