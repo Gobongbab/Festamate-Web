@@ -6,7 +6,7 @@ export type User = {
   studentId: string;
   phoneNumber: string;
   gender: Gender;
-  major: string;
+  department: string;
   maximumTicket: number;
   remainingTicket: number;
   profileImage: {
