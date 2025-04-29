@@ -10,11 +10,11 @@ export default function useAllowNotification() {
 
   async function handleAllowNotification() {
     const permission = await Notification.requestPermission();
-    await getDeviceToken();
 
     if (permission === 'granted') {
       setAllowNotification(true);
       console.log('알림 권한이 허용되었습니다.');
+      await getDeviceToken();
     } else if (permission === 'denied') {
       setAllowNotification(false);
       console.log('알림 권한이 거부되었습니다.');
