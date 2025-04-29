@@ -57,7 +57,7 @@ export default function StudentCertifyForm({
         studentId,
         phoneNumber,
         gender,
-        major: studentDepartment,
+        department: studentDepartment,
         kakaoAccessToken,
         fcmToken: fcmToken,
       };

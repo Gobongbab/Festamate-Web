@@ -10,7 +10,7 @@ interface SubmitSignupRequest {
   studentId: string;
   phoneNumber: string;
   gender: Gender;
-  major: string;
+  department: string;
   kakaoAccessToken: string;
   fcmToken: string;
 }
