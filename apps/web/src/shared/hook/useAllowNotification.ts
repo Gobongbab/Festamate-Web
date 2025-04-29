@@ -2,18 +2,19 @@ import { useSetAtom } from 'jotai';
 import { messaging } from '@/app/fcm';
 import { getToken } from 'firebase/messaging';
 
-import { notificationSettingAtom } from '@/shared/atom';
+import { fcmTokenAtom, notificationSettingAtom } from '@/shared/atom';
 
 export default function useAllowNotification() {
   const setAllowNotification = useSetAtom(notificationSettingAtom);
+  const setFcmToken = useSetAtom(fcmTokenAtom);
 
   async function handleAllowNotification() {
     const permission = await Notification.requestPermission();
+    await getDeviceToken();
 
     if (permission === 'granted') {
       setAllowNotification(true);
       console.log('알림 권한이 허용되었습니다.');
-      await getDeviceToken();
     } else if (permission === 'denied') {
       setAllowNotification(false);
       console.log('알림 권한이 거부되었습니다.');
@@ -29,6 +30,7 @@ export default function useAllowNotification() {
       .then(currentToken => {
         if (currentToken) {
           console.log('토큰: ', currentToken);
+          setFcmToken(currentToken);
         } else {
           console.log('토큰을 가져오지 못했습니다. 권한을 다시 요청하세요.');
         }
