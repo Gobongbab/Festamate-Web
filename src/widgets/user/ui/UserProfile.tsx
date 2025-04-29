@@ -6,6 +6,7 @@ import { userAtom, userUpdateAtom } from '@/shared/atom';
 
 import { UserProfileForm } from '@/widgets/user/ui';
 import { useUpdateUserInfo } from '@/widgets/user/api';
+import { useFetchUserInfo } from '@/shared/api';
 
 export default function UserProfile() {
   const { nickname, studentId, profileImage } = useAtomValue(userAtom)!;
@@ -15,6 +16,7 @@ export default function UserProfile() {
   const slicedStudentId = studentId.slice(2, 4);
 
   const updateUser = useSetAtom(userUpdateAtom);
+  const { refetch } = useFetchUserInfo();
   const { mutate } = useUpdateUserInfo();
 
   const handleSave = () => {
@@ -23,6 +25,7 @@ export default function UserProfile() {
       {
         onSuccess: () => {
           updateUser({ nickname: newNickname });
+          refetch();
           setUpdate(false);
         },
       },
