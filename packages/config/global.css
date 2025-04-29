@@ -98,8 +98,8 @@
     box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.04);
   }
 
-  .box-shadow-side {
-    box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.04);
+  .box-shadow-login {
+    box-shadow: 0px -1px 8px 0px rgba(0, 0, 0, 0.08);
   }
 
   .box-shadow-bottom-sheet {
