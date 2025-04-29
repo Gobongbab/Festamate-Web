@@ -39,8 +39,10 @@ const ListItem = forwardRef<HTMLButtonElement, RoomListItem & ListItemProps>(
       >
         <img className='rounded-5 h-full w-24' src={thumbnail.url || ''} />
         <div className='flex h-full flex-col justify-center gap-y-2 overflow-hidden'>
-          <div className='flex flex-col items-start text-lg'>
-            <p className='font-semibold'>{title}</p>
+          <div className='flex flex-col items-start'>
+            <p className='w-full overflow-hidden text-start text-lg font-semibold text-nowrap text-ellipsis'>
+              {title}
+            </p>
             <p className='text-md w-full overflow-hidden text-start text-nowrap text-ellipsis'>
               {getDate(meetingDateTime, 'M월 DD일 ddd요일 A h시 mm분')}
             </p>
