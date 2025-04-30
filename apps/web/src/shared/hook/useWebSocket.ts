@@ -1,8 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { useAtomValue } from 'jotai';
 import { Client } from '@stomp/stompjs';
-
-import { userTokenAtom } from '@/shared/atom';
 
 interface UseWebSocketProps {
   chatRoomId: number;
@@ -19,7 +16,9 @@ export default function useWebSocket({
 }: UseWebSocketProps) {
   const client = useRef<Client | null>(null);
   const subscriptions = useRef<{ [key: string]: Subscription }>({});
-  const { accessToken } = useAtomValue(userTokenAtom);
+  const stored = sessionStorage.getItem('userToken');
+  const parsed = JSON.parse(stored!);
+  const accessToken = parsed.accessToken;
 
   const path = `/topic/chatRooms/${chatRoomId}`;
 
