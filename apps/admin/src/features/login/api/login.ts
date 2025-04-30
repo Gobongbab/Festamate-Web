@@ -28,8 +28,7 @@ export const useSubmitLoginData = () => {
   return useMutation<LoginResponse, unknown, Login>({
     mutationFn: submitLoginData,
     onSuccess: data => {
-      const { accessToken } = data.result;
-      sessionStorage.setItem('accessToken', accessToken);
+      sessionStorage.setItem('userToken', JSON.stringify(data.result));
       navigate(PATH.HOME);
     },
   });
