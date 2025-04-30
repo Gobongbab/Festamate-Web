@@ -19,7 +19,7 @@ export default function UserDashBoard({
   };
 
   return (
-    <div className='border-border rounded-10 relative flex w-fit flex-col gap-3 border-[1px] p-6'>
+    <div className='border-border rounded-10 min-w-100 relative flex w-fit flex-col gap-3 border-[1px] p-6'>
       <button
         name='blockUser'
         className='border-important/50 text-important hover:bg-important/20 bg-important/10 absolute right-6 top-6 w-fit cursor-pointer rounded-full border-[1px] px-3 py-1.5 transition duration-150'
