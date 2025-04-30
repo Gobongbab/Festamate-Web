@@ -20,7 +20,7 @@ const ChatRoomItem = () => {
     <button
       name={`chat`}
       className='hover:bg-sub active:bg-sub grid h-28 w-full cursor-pointer grid-cols-[1fr_4fr] gap-3 px-6 py-2 focus:outline-none'
-      onClick={() => push(PATH.CHAT, { chatRoomId: 47 })}
+      onClick={() => push(PATH.CHAT, { chatRoomId: 31 })}
     >
       <div className='flex size-full items-center'>
         <img
