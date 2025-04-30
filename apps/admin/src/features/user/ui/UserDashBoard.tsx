@@ -1,5 +1,6 @@
 import React from 'react';
 import { User } from '../types';
+import { useSubmitUserBlock } from '../api';
 
 export default function UserDashBoard({
   name,
@@ -12,9 +13,19 @@ export default function UserDashBoard({
   profileImage,
 }: User) {
   const { name: imageName, url } = profileImage;
+  const { mutate: userBlock, isPending } = useSubmitUserBlock();
+  const handleBlockClick = () => {
+    userBlock(studentId);
+  };
+
   return (
     <div className='border-border rounded-10 relative flex w-fit flex-col gap-3 border-[1px] p-6'>
-      <button className='border-important/50 text-important hover:bg-important/20 bg-important/10 absolute right-6 top-6 w-fit cursor-pointer rounded-full border-[1px] px-3 py-1.5 transition duration-150'>
+      <button
+        name='blockUser'
+        className='border-important/50 text-important hover:bg-important/20 bg-important/10 absolute right-6 top-6 w-fit cursor-pointer rounded-full border-[1px] px-3 py-1.5 transition duration-150'
+        disabled={isPending}
+        onClick={handleBlockClick}
+      >
         사용자 제재하기
       </button>
       <img src={url} alt={imageName} className='rounded-10 size-24' />
