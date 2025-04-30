@@ -26,8 +26,8 @@ export default function UserDashBoard({
     useSubmitUserUnBlock();
 
   const handleBlockClick = () => {
-    if (blocked) userUnBlock(studentId, { onSuccess: () => refetch() });
-    else userBlock(studentId, { onSuccess: () => refetch() });
+    if (blocked) userUnBlock(id.toString(), { onSuccess: () => refetch() });
+    else userBlock(id.toString(), { onSuccess: () => refetch() });
   };
 
   return (
