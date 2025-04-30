@@ -24,16 +24,44 @@ export default function useWebSocket({
       return;
     }
 
+    console.log('WebSocket 연결 시도 중...');
     const socket = new SockJS('https://www.festamate.shop/ws-sockjs');
-    const stompClient = Stomp.over(socket);
+
+    // SockJS 이벤트 리스너 추가
+    socket.onopen = () => {
+      console.log('SockJS 연결 성공');
+    };
+
+    socket.onclose = event => {
+      console.log('SockJS 연결 종료:', event);
+    };
+
+    socket.onerror = error => {
+      console.error('SockJS 에러:', error);
+    };
+
+    const stompClient = Stomp.over(() => socket);
+
+    // STOMP 디버그 모드 활성화
+    stompClient.debug = str => {
+      console.log('STOMP Debug:', str);
+    };
+
+    // 연결 헤더에 필요한 정보 추가
+    const headers = {
+      // 필요한 경우 인증 헤더 추가
+      // 'Authorization': 'Bearer your-token'
+    };
 
     stompClient.connect(
-      {},
+      headers,
       () => {
-        console.log('WebSocket 연결 성공!');
+        console.log('STOMP 연결 성공!');
         client.current = stompClient;
 
         const path = `/topic/chatRooms/${chatRoomId}`;
+        console.log('구독 시도:', path);
+
         const subscription = stompClient.subscribe(path, message => {
           console.log('메시지 수신:', message);
           const receivedMessage = JSON.parse(message.body);
@@ -41,9 +69,10 @@ export default function useWebSocket({
         });
 
         subscriptions.current[path] = subscription;
+        console.log('구독 성공:', path);
       },
       (error: Error) => {
-        console.error('WebSocket 연결 실패:', error);
+        console.error('STOMP 연결 실패:', error);
       },
     );
   }, [chatRoomId, onMessage]);
@@ -72,6 +101,8 @@ export default function useWebSocket({
 
       try {
         const destination = `/app/chat/room/${chatRoomId}`;
+        console.log('메시지 전송 시도:', { destination, message });
+
         client.current.publish({
           destination,
           body: JSON.stringify({ message }),
