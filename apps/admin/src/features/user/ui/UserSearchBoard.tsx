@@ -12,22 +12,6 @@ export default function UserSearchBoard() {
     refetch();
   };
 
-  // const dummyUser: User = {
-  //   id: 1,
-  //   name: '홍길동',
-  //   nickname: '길동이',
-  //   studentId: '202312345',
-  //   loginId: 'hong123',
-  //   loginPassword: 'securepassword123',
-  //   phoneNumber: '010-1234-5678',
-  //   gender: 'MALE',
-  //   department: '컴퓨터공학과',
-  //   profileImage: {
-  //     name: 'profile.jpg',
-  //     url: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
-  //   },
-  // };
-
   return (
     <div className='rounded-10 border-border flex w-full flex-col gap-6 border-[1px] p-6'>
       <div className='flex flex-col gap-3'>
