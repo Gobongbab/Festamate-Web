@@ -20,6 +20,7 @@ export default function useWebSocket({
       console.log('WebSocket 연결 시도 중...');
       client.current = new Client({
         webSocketFactory: () => {
+          console.log('webSocketFactory 실행됨');
           const socket = new SockJS('https://www.festamate.shop/ws');
           console.log('SockJS 객체 생성 완료');
           console.log('SockJS 상태:', socket.readyState);
@@ -97,6 +98,8 @@ export default function useWebSocket({
   );
 
   useEffect(() => {
+    console.log('useWebSocket useEffect 실행됨');
+    console.log('chatRoomId:', chatRoomId);
     connect();
     return () => {
       disconnect();
