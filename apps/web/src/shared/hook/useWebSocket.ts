@@ -24,7 +24,7 @@ export default function useWebSocket({
       return;
     }
 
-    const socket = new SockJS('https://www.festamate.shop/ws');
+    const socket = new SockJS('https://www.festamate.shop/ws-sockjs');
     const stompClient = Stomp.over(socket);
 
     stompClient.connect(
