@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { Client } from '@stomp/stompjs';
+import { Client, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
 interface UseWebSocketProps {
@@ -12,61 +12,26 @@ export default function useWebSocket({
   onMessage,
 }: UseWebSocketProps) {
   const client = useRef<Client | null>(null);
-  const reconnectAttempts = useRef(0);
-  const maxReconnectAttempts = 3;
 
   const connect = useCallback(() => {
-    try {
-      console.log('WebSocket 연결 시도 중...');
-      client.current = new Client({
-        webSocketFactory: () => {
-          console.log('webSocketFactory 실행됨');
-          const socket = new SockJS('https://www.festamate.shop/ws');
-          console.log('SockJS 객체 생성 완료');
-          console.log('SockJS 상태:', socket.readyState);
-          console.log('SockJS URL:', socket.url);
-          return socket;
-        },
-        connectHeaders: {
-          'heart-beat': '10000,10000',
-        },
-        heartbeatIncoming: 10000,
-        heartbeatOutgoing: 10000,
-        reconnectDelay: 5000,
-        onConnect: () => {
-          console.log('WebSocket 연결 성공!');
-          reconnectAttempts.current = 0;
-          client.current?.subscribe(
-            `/topic/chatRooms/${chatRoomId}`,
-            message => {
-              onMessage(JSON.parse(message.body));
-            },
-          );
-        },
-        onStompError: frame => {
-          console.error('STOMP 에러 발생:', frame);
-        },
-        onWebSocketError: event => {
-          console.error('WebSocket 에러 발생:', event);
-        },
-        onDisconnect: () => {
-          console.log('WebSocket 연결이 끊어졌습니다.');
-          if (reconnectAttempts.current < maxReconnectAttempts) {
-            reconnectAttempts.current += 1;
-            console.log(
-              `재연결 시도 중... (${reconnectAttempts.current}/${maxReconnectAttempts})`,
-            );
-            setTimeout(connect, 5000);
-          } else {
-            console.error('최대 재연결 시도 횟수를 초과했습니다.');
-          }
-        },
-      });
+    const socket = new SockJS('https://www.festamate.shop/ws');
+    const stompClient = Stomp.over(socket);
 
-      client.current.activate();
-    } catch (error) {
-      console.error('WebSocket 연결 중 에러 발생:', error);
-    }
+    stompClient.connect(
+      {},
+      () => {
+        console.log('WebSocket 연결 성공!');
+        client.current = stompClient;
+
+        stompClient.subscribe(`/topic/chatRooms/${chatRoomId}`, message => {
+          const receivedMessage = JSON.parse(message.body);
+          onMessage(receivedMessage.message);
+        });
+      },
+      (error: Error) => {
+        console.error('WebSocket 연결 실패:', error);
+      },
+    );
   }, [chatRoomId, onMessage]);
 
   const disconnect = useCallback(() => {
@@ -104,7 +69,7 @@ export default function useWebSocket({
     return () => {
       disconnect();
     };
-  }, [connect, disconnect]);
+  }, [connect, disconnect, chatRoomId]);
 
   return { sendMessage };
 }
