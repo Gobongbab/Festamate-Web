@@ -1,8 +1,13 @@
 import React from 'react';
 import { User } from '../types';
-import { useSubmitUserBlock } from '../api';
+import {
+  useFetchUserInfo,
+  useSubmitUserBlock,
+  useSubmitUserUnBlock,
+} from '../api';
 
 export default function UserDashBoard({
+  id,
   name,
   nickname,
   studentId,
@@ -11,11 +16,18 @@ export default function UserDashBoard({
   gender,
   department,
   profileImage,
+  status,
 }: User) {
+  const blocked = status === 'BLOCKED';
   const { name: imageName, url } = profileImage;
-  const { mutate: userBlock, isPending } = useSubmitUserBlock();
+  const { refetch } = useFetchUserInfo(id.toString());
+  const { mutate: userBlock, isPending: blockPending } = useSubmitUserBlock();
+  const { mutate: userUnBlock, isPending: unBlockPending } =
+    useSubmitUserUnBlock();
+
   const handleBlockClick = () => {
-    userBlock(studentId);
+    if (blocked) userUnBlock(studentId, { onSuccess: () => refetch() });
+    else userBlock(studentId, { onSuccess: () => refetch() });
   };
 
   return (
@@ -23,10 +35,10 @@ export default function UserDashBoard({
       <button
         name='blockUser'
         className='border-important/50 text-important hover:bg-important/20 bg-important/10 absolute right-6 top-6 w-fit cursor-pointer rounded-full border-[1px] px-3 py-1.5 transition duration-150'
-        disabled={isPending}
+        disabled={blockPending || unBlockPending}
         onClick={handleBlockClick}
       >
-        사용자 제재하기
+        {blocked ? '사용자 제재 해제' : '사용자 제재하기'}
       </button>
       <img src={url} alt={imageName} className='rounded-10 size-24' />
       <div className='flex gap-3'>
