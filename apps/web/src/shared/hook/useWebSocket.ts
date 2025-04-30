@@ -1,6 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { Client, Stomp } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
 
 interface UseWebSocketProps {
   chatRoomId: number;
@@ -25,8 +24,7 @@ export default function useWebSocket({
     }
 
     console.log('WebSocket 연결 시도 중...');
-    const socket = new SockJS('https://www.festamate.shop/ws-sockjs');
-
+    const socket = new WebSocket('wss://www.festamate.shop/ws');
     // SockJS 이벤트 리스너 추가
     socket.onopen = () => {
       console.log('SockJS 연결 성공');
