@@ -3,6 +3,7 @@ import React, { InputHTMLAttributes } from 'react';
 import { cn } from '@festamate/utils';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  className?: string;
   labelClassName?: string;
   disabled?: boolean;
   label?: string;
@@ -12,6 +13,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function Input({
   label,
+  labelClassName,
+  className,
   placeholder,
   id,
   type,
@@ -21,13 +24,14 @@ export default function Input({
   return (
     <div className='flex flex-col gap-y-1.5'>
       <p className='flex items-center gap-2'>
-        <span className='text-lg'>{label}</span>
+        <span className={cn('text-lg', labelClassName)}>{label}</span>
         {error && <span className='text-important'>{error}</span>}
       </p>
       <input
         id={id}
         className={cn(
           'border-border rounded-10 focus:border-point/60 w-full border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none',
+          className,
           error ? 'border-important/40' : 'border-border',
         )}
         type={type}
