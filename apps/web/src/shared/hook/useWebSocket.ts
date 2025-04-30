@@ -1,5 +1,8 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { Client, Stomp } from '@stomp/stompjs';
+import { useAtomValue } from 'jotai';
+import { Client } from '@stomp/stompjs';
+
+import { userTokenAtom } from '@/shared/atom';
 
 interface UseWebSocketProps {
   chatRoomId: number;
@@ -16,6 +19,13 @@ export default function useWebSocket({
 }: UseWebSocketProps) {
   const client = useRef<Client | null>(null);
   const subscriptions = useRef<{ [key: string]: Subscription }>({});
+  const { accessToken } = useAtomValue(userTokenAtom);
+
+  const path = `/topic/chatRooms/${chatRoomId}`;
+
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
 
   const connect = useCallback(() => {
     if (client.current?.connected) {
@@ -23,63 +33,33 @@ export default function useWebSocket({
       return;
     }
 
-    console.log('WebSocket 연결 시도 중...');
-    const socket = new WebSocket('wss://www.festamate.shop/ws');
-    // SockJS 이벤트 리스너 추가
-    socket.onopen = () => {
-      console.log('SockJS 연결 성공');
-    };
+    try {
+      const stompClient = new Client({
+        brokerURL: 'wss://www.festamate.shop/ws',
+        connectHeaders: headers,
+        debug: message => console.log(message),
+        reconnectDelay: 5000,
+      });
 
-    socket.onclose = event => {
-      console.log('SockJS 연결 종료:', event);
-    };
+      client.current = stompClient;
 
-    socket.onerror = error => {
-      console.error('SockJS 에러:', error);
-    };
-
-    const stompClient = Stomp.over(() => socket);
-
-    // STOMP 디버그 모드 활성화
-    stompClient.debug = str => {
-      console.log('STOMP Debug:', str);
-    };
-
-    // 연결 헤더에 필요한 정보 추가
-    const headers = {
-      // 필요한 경우 인증 헤더 추가
-      // 'Authorization': 'Bearer your-token'
-    };
-
-    stompClient.connect(
-      headers,
-      () => {
-        console.log('STOMP 연결 성공!');
-        client.current = stompClient;
-
-        const path = `/topic/chatRooms/${chatRoomId}`;
-        console.log('구독 시도:', path);
-
-        const subscription = stompClient.subscribe(path, message => {
-          console.log('메시지 수신:', message);
+      stompClient.onConnect = () =>
+        stompClient.subscribe(path, message => {
+          console.log(`메시지 수신: ${message}`);
           const receivedMessage = JSON.parse(message.body);
           onMessage(receivedMessage.message);
         });
 
-        subscriptions.current[path] = subscription;
-        console.log('구독 성공:', path);
-      },
-      (error: Error) => {
-        console.error('STOMP 연결 실패:', error);
-      },
-    );
+      stompClient.activate();
+    } catch (err) {
+      console.error(err);
+    }
   }, [chatRoomId, onMessage]);
 
   const disconnect = useCallback(() => {
     if (client.current) {
       console.log('WebSocket 연결을 종료합니다.');
 
-      // 모든 구독 해제
       Object.keys(subscriptions.current).forEach(path => {
         subscriptions.current[path].unsubscribe();
         delete subscriptions.current[path];
@@ -98,12 +78,13 @@ export default function useWebSocket({
       }
 
       try {
-        const destination = `/app/chat/room/${chatRoomId}`;
+        const destination = `/app/messages/chatRooms/${chatRoomId}`;
         console.log('메시지 전송 시도:', { destination, message });
 
         client.current.publish({
+          headers: headers,
           destination,
-          body: JSON.stringify({ message }),
+          body: JSON.stringify({ message: message }),
         });
         console.log('메시지 전송 성공:', message);
       } catch (error) {
@@ -114,7 +95,6 @@ export default function useWebSocket({
   );
 
   useEffect(() => {
-    console.log('useWebSocket useEffect 실행됨');
     console.log('chatRoomId:', chatRoomId);
     connect();
     return () => {
