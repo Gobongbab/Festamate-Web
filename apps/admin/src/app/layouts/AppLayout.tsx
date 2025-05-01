@@ -7,7 +7,7 @@ export default function AppLayout() {
   return (
     <div className='flex h-screen'>
       <SideBar />
-      <div className='flex-1 p-6'>
+      <div className='scrollbar-hide flex-1 overflow-scroll p-6'>
         <Outlet />
       </div>
     </div>
