@@ -4,7 +4,16 @@ export type Report = {
   reporterName: string;
   roomId: number;
   roomTitle: string;
-  reason: string;
+  reason: Reason;
   reportDate: string;
   processed: boolean;
 };
+
+export type Reason =
+  | 'UNHEALTHY'
+  | 'ADVERTISING'
+  | 'ABUSE'
+  | 'SPLASH'
+  | 'POLITICS'
+  | 'IMPERSONATION'
+  | 'ILLEGAL';

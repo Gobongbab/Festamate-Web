@@ -4,17 +4,18 @@ import { useLoaderData } from 'react-router-dom';
 import { cn, getDate } from '@festamate/utils';
 
 import { Report } from '@/features/report/types';
-import { REPORT_COLUMNS } from '@/features/report/model';
+import { REASON, REPORT_TABLE } from '@/features/report/model';
 
-export default function ReportTable() {
+export default function ReportTable({ filtered }: { filtered: boolean }) {
   const data: Report[] = useLoaderData();
+  const reports = filtered ? data.filter(d => !d.processed) : data;
 
   return (
     <div className='border-border overflow-hidden rounded-lg border'>
-      <table className='divide-border min-w-full table-fixed divide-y'>
+      <table className='divide-border min-w-full table-auto divide-y'>
         <ReportHeader />
         <tbody className='divide-border divide-y bg-white'>
-          {data.map(report => (
+          {reports.map(report => (
             <ReportItem key={report.id} report={report} />
           ))}
         </tbody>
@@ -26,14 +27,11 @@ export default function ReportTable() {
 const ReportHeader = () => (
   <thead className='bg-sub'>
     <tr>
-      {REPORT_COLUMNS.map(({ key, width, label }) => (
+      {REPORT_TABLE.map(({ key, width, label }) => (
         <th
           key={key}
           scope='col'
-          className={cn(
-            width,
-            'py-2 text-center text-sm font-medium text-gray-500',
-          )}
+          className={cn(width, 'py-2 text-center font-medium text-gray-500')}
         >
           {label}
         </th>
@@ -42,25 +40,28 @@ const ReportHeader = () => (
   </thead>
 );
 
-const ReportItem = ({ report }: { report: Report }) => (
-  <tr className='hover:bg-sub cursor-pointer'>
-    {REPORT_COLUMNS.map(({ key, width }, i) => (
-      <td
-        key={key}
-        className={cn(
-          width,
-          'whitespace-nowrap p-2 text-center text-gray-900',
-          i !== REPORT_COLUMNS.length ? 'border-border border-r-[1px]' : '',
-        )}
-      >
-        {key === 'processed'
-          ? report[key]
-            ? '완료'
-            : '미처리'
-          : key === 'reportDate'
-            ? getDate(report[key], 'YYYY년 M월 D일')
-            : report[key]}
-      </td>
-    ))}
-  </tr>
-);
+const ReportItem = ({ report }: { report: Report }) => {
+  const renderValue = (key: string) => {
+    if (key === 'processed') return report[key] ? '완료' : '미처리';
+    if (key === 'reportDate') return getDate(report[key], 'YYYY년 M월 D일');
+    if (key === 'reason') return REASON[report[key]];
+    return report[key as keyof Report];
+  };
+
+  return (
+    <tr className='hover:bg-sub cursor-pointer'>
+      {REPORT_TABLE.map(({ key, width }, i) => (
+        <td
+          key={key}
+          className={cn(
+            width,
+            'whitespace-nowrap p-2 text-center text-gray-900',
+            i === REPORT_TABLE.length - 1 ? '' : 'border-border border-r-[1px]',
+          )}
+        >
+          {renderValue(key)}
+        </td>
+      ))}
+    </tr>
+  );
+};
