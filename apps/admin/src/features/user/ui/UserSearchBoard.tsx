@@ -15,7 +15,7 @@ export default function UserSearchBoard() {
   return (
     <div className='rounded-10 border-border flex w-full flex-col gap-6 border-[1px] p-6'>
       <div className='flex flex-col gap-3'>
-        <p className='text-xl font-medium'>회원 조회하기</p>
+        <p className='text-lg font-medium'>ID로 회원 조회하기</p>
         <div className='flex items-end gap-3'>
           <div className='w-80'>
             <Input
