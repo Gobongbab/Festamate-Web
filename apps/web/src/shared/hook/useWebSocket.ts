@@ -78,7 +78,7 @@ export default function useWebSocket({
       }
 
       try {
-        const destination = `/app/messages/chatRooms/${chatRoomId}`;
+        const destination = `/api/messages/chatRooms/${chatRoomId}`;
         console.log('메시지 전송 시도:', { destination, message });
 
         client.current.publish({
