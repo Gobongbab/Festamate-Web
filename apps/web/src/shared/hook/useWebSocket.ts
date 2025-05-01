@@ -53,6 +53,7 @@ export default function useWebSocket({
     } catch (err) {
       console.error(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatRoomId, onMessage]);
 
   const disconnect = useCallback(() => {
@@ -90,6 +91,7 @@ export default function useWebSocket({
         console.error('메시지 전송 중 에러 발생:', error);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [chatRoomId],
   );
 
