@@ -4,6 +4,7 @@ import { AppLayout } from '@/app/layouts';
 import { HomePage } from '@/pages/home/ui';
 import { PATH } from '@/shared/constants';
 import { UserPage } from '@/pages/user/ui';
+import { ReportPage } from '@/pages/report/ui';
 
 export const HomeRoutes: RouteObject = {
   element: <AppLayout />,
@@ -14,5 +15,6 @@ export const HomeRoutes: RouteObject = {
       element: <HomePage />,
     },
     { path: PATH.USER, element: <UserPage /> },
+    { path: PATH.REPORT, element: <ReportPage /> },
   ],
 };

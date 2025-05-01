@@ -14,7 +14,7 @@ export default function SideBar() {
       <p className='agbalumo-regular logo text-center'>Festamate!</p>
       <div className='flex flex-col items-center justify-center gap-4 text-lg font-medium'>
         <SideBarButton to={PATH.USER} label='회원 조회' />
-        <SideBarButton to={PATH.BLOCK} label='신고 조회' />
+        <SideBarButton to={PATH.REPORT} label='신고 조회' />
         <SideBarButton to={PATH.ROOM} label='모임 조회' />
       </div>
       <button
