@@ -35,7 +35,7 @@ interface FetchRoomListResponse {
 export const fetchRooms = async ({ pageParam = 0 }) => {
   const response = await get<FetchRoomListResponse>({
     request: REQUEST.ROOM,
-    params: { page: pageParam, size: 20 },
+    params: { page: pageParam, size: 40 },
   });
   return response.data.result;
 };
