@@ -1,34 +1,53 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { getDate } from '@festamate/utils';
 import { userAtom } from '@/shared/atom';
 
-import { useFetchChatDetail } from '@/widgets/chat/api';
 import { Message } from '@/widgets/chat/types';
 
-export default function ChatContainer({ chatRoomId }: { chatRoomId: number }) {
-  const { data } = useFetchChatDetail(chatRoomId);
+export default function ChatContainer({ data }: { data: Message[] }) {
   const userData = useAtomValue(userAtom);
   const { nickname } = userData!;
+  let previousChatDate: string;
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current!.scrollIntoView({ behavior: 'smooth' });
+  }, [data, bottomRef]);
 
   return (
     <>
-      {data?.pages.map(page => (
-        <Fragment key={page.result.pageable.pageNumber}>
-          <DateDivider date={page.result.content[0]?.sendDate} />
-          {page.result.content.map(message => (
-            <Fragment key={message.id}>
-              {message.nickname === nickname ? (
-                <SentText text={message.message} time={message.sendDate} />
+      {data.map(d => {
+        const { id, nickname: sentBy, sendDate, message } = d;
+        if (previousChatDate !== getDate(sendDate, 'YYYY.MM.DD')) {
+          previousChatDate = getDate(sendDate, 'YYYY.MM.DD');
+          return (
+            <Fragment key={id}>
+              <DateDivider date={sendDate} />
+              {sentBy === nickname ? (
+                <SentText text={message} time={sendDate} />
               ) : (
-                <RecievedText {...message} />
+                <RecievedText {...d} />
               )}
             </Fragment>
-          ))}
-        </Fragment>
-      ))}
-      <div className='mb-26' />
+          );
+        } else {
+          previousChatDate = getDate(sendDate, 'YYYY.MM.DD');
+          return (
+            <Fragment key={id}>
+              {sentBy === nickname ? (
+                <SentText text={message} time={sendDate} />
+              ) : (
+                <RecievedText {...d} />
+              )}
+            </Fragment>
+          );
+        }
+      })}
+
+      <div className='mb-26' ref={bottomRef} />
     </>
   );
 }

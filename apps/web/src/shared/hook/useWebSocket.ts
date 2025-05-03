@@ -37,48 +37,59 @@ export default function useWebSocket({
     Authorization: `Bearer ${accessToken}`,
   };
 
-  const connect = useCallback(() => {
-    if (client.current?.connected) {
-      console.log('이미 연결된 상태입니다.');
-      return;
-    }
+  const connect = useCallback(async () => {
+    const stompClient = new Client({
+      brokerURL: 'wss://www.festamate.shop/ws',
+      connectHeaders: headers,
+      debug: message => console.log('[STOMP]', message),
+      reconnectDelay: 5000,
+    });
 
-    try {
-      const stompClient = new Client({
-        brokerURL: 'wss://www.festamate.shop/ws',
-        connectHeaders: headers,
-        debug: message => console.log(message),
-        reconnectDelay: 5000,
+    stompClient.onConnect = () => {
+      console.log('WebSocket 연결 성공');
+      const subscription = stompClient.subscribe(path, message => {
+        const receivedMessage = JSON.parse(message.body);
+        onMessage(receivedMessage as Message);
       });
+      subscriptions.current[path] = subscription;
+    };
 
-      client.current = stompClient;
+    stompClient.onWebSocketClose = () => {
+      console.warn('WebSocket 연결 종료됨');
+    };
 
-      stompClient.onConnect = () =>
-        stompClient.subscribe(path, message => {
-          console.log(`메시지 수신: ${message}`);
-          const receivedMessage = JSON.parse(message.body);
-          onMessage(receivedMessage as Message);
-        });
+    stompClient.onStompError = frame => {
+      console.error('STOMP 에러:', frame.headers['message']);
+      console.error('상세:', frame.body);
+    };
 
-      stompClient.activate();
-    } catch (err) {
-      console.error(err);
-    }
+    client.current = stompClient;
+    stompClient.activate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatRoomId, onMessage]);
 
   const disconnect = useCallback(() => {
-    if (client.current) {
-      console.log('WebSocket 연결을 종료합니다.');
+    return new Promise<void>(resolve => {
+      if (client.current) {
+        console.log('WebSocket 연결을 종료합니다.');
 
-      Object.keys(subscriptions.current).forEach(path => {
-        subscriptions.current[path].unsubscribe();
-        delete subscriptions.current[path];
-      });
+        Object.keys(subscriptions.current).forEach(path => {
+          subscriptions.current[path].unsubscribe();
+          delete subscriptions.current[path];
+        });
 
-      client.current.deactivate();
+        client.current.onDisconnect = () => {
+          console.log('WebSocket 완전 종료됨');
+          resolve(); // 종료 완료 시 resolve
+        };
+
+        client.current.deactivate();
+      } else {
+        resolve(); // 이미 없으면 바로 resolve
+      }
+
       client.current = null;
-    }
+    });
   }, []);
 
   const sendMessage = useCallback(

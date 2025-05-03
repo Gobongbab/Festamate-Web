@@ -40,7 +40,7 @@ const fetchChatDetail = async (chatRoomId: number, pageParam: number = 0) => {
     request: getPath(REQUEST.CHAT_ROOM, `${chatRoomId}`),
     params: {
       page: pageParam,
-      size: 2000,
+      size: 20,
     },
   });
   return response.data;
