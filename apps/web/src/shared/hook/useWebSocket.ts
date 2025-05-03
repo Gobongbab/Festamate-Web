@@ -43,6 +43,8 @@ export default function useWebSocket({
       connectHeaders: headers,
       debug: message => console.log('[STOMP]', message),
       reconnectDelay: 5000,
+      heartbeatIncoming: 30000,
+      heartbeatOutgoing: 30000,
     });
 
     stompClient.onConnect = () => {
