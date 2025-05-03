@@ -1,9 +1,18 @@
-import { useEffect, useRef, useCallback } from 'react';
+import {
+  useEffect,
+  useRef,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import { Client } from '@stomp/stompjs';
+import { Message } from '@/widgets/chat/types';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '../atom';
 
 interface UseWebSocketProps {
   chatRoomId: number;
-  onMessage: (message: string) => void;
+  onMessage: (message: Message) => void;
 }
 
 interface Subscription {
@@ -19,6 +28,8 @@ export default function useWebSocket({
   const stored = sessionStorage.getItem('userToken');
   const parsed = JSON.parse(stored!);
   const accessToken = parsed.accessToken;
+  const userData = useAtomValue(userAtom);
+  const { nickname } = userData!;
 
   const path = `/topic/chatRooms/${chatRoomId}`;
 
@@ -46,7 +57,7 @@ export default function useWebSocket({
         stompClient.subscribe(path, message => {
           console.log(`메시지 수신: ${message}`);
           const receivedMessage = JSON.parse(message.body);
-          onMessage(receivedMessage.message);
+          onMessage(receivedMessage as Message);
         });
 
       stompClient.activate();
@@ -71,24 +82,33 @@ export default function useWebSocket({
   }, []);
 
   const sendMessage = useCallback(
-    (message: string) => {
+    (message: string, setData: Dispatch<SetStateAction<Message[]>>) => {
       if (!client.current?.connected) {
-        console.warn('WebSocket이 연결되지 않았습니다.');
+        alert('연결이 불안정해요. 채팅방을 다시 로드해 주세요.');
+        /**웹소켓 미연결시 사용자에게 해당 알림을 발생시킵니다 */
         return;
       }
 
       try {
         const destination = `/api/messages/chatRooms/${chatRoomId}`;
-        console.log('메시지 전송 시도:', { destination, message });
 
         client.current.publish({
           headers: headers,
           destination,
           body: JSON.stringify({ message: message }),
         });
-        console.log('메시지 전송 성공:', message);
+
+        const sentChat: Message = {
+          id: 0,
+          nickname: nickname,
+          message: message,
+          sendDate: new Date().toISOString(),
+        };
+
+        setData(prev => [...prev, sentChat]);
       } catch (error) {
-        console.error('메시지 전송 중 에러 발생:', error);
+        alert('메시지 전송 중 에러가 발생했어요!');
+        console.error(error);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
