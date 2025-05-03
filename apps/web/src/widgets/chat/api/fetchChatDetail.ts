@@ -2,6 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { REQUEST, userGet } from '@/shared/api';
 import { getPath } from '@festamate/utils';
+import { Message } from '../types';
 
 interface Sort {
   empty: boolean;
@@ -18,19 +19,12 @@ interface Pageable {
   unpaged: boolean;
 }
 
-interface ChatMessage {
-  id: number;
-  nickname: string;
-  message: string;
-  sendDate: string;
-}
-
 interface ChatResponse {
   isSuccess: boolean;
   message: string;
   result: {
     size: number;
-    content: ChatMessage[];
+    content: Message[];
     number: number;
     sort: Sort;
     pageable: Pageable;

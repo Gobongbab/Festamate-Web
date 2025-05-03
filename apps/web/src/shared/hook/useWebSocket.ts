@@ -1,9 +1,18 @@
-import { useEffect, useRef, useCallback } from 'react';
+import {
+  useEffect,
+  useRef,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import { Client } from '@stomp/stompjs';
+import { Message } from '@/widgets/chat/types';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '../atom';
 
 interface UseWebSocketProps {
   chatRoomId: number;
-  onMessage: (message: string) => void;
+  onMessage: (message: Message) => void;
 }
 
 interface Subscription {
@@ -19,6 +28,8 @@ export default function useWebSocket({
   const stored = sessionStorage.getItem('userToken');
   const parsed = JSON.parse(stored!);
   const accessToken = parsed.accessToken;
+  const userData = useAtomValue(userAtom);
+  const { nickname } = userData!;
 
   const path = `/topic/chatRooms/${chatRoomId}`;
 
@@ -26,69 +37,89 @@ export default function useWebSocket({
     Authorization: `Bearer ${accessToken}`,
   };
 
-  const connect = useCallback(() => {
-    if (client.current?.connected) {
-      console.log('이미 연결된 상태입니다.');
-      return;
-    }
+  const connect = useCallback(async () => {
+    const stompClient = new Client({
+      brokerURL: 'wss://www.festamate.shop/ws',
+      connectHeaders: headers,
+      debug: message => console.log('[STOMP]', message),
+      reconnectDelay: 5000,
+    });
 
-    try {
-      const stompClient = new Client({
-        brokerURL: 'wss://www.festamate.shop/ws',
-        connectHeaders: headers,
-        debug: message => console.log(message),
-        reconnectDelay: 5000,
+    stompClient.onConnect = () => {
+      console.log('WebSocket 연결 성공');
+      const subscription = stompClient.subscribe(path, message => {
+        const receivedMessage = JSON.parse(message.body);
+        onMessage(receivedMessage as Message);
       });
+      subscriptions.current[path] = subscription;
+    };
 
-      client.current = stompClient;
+    stompClient.onWebSocketClose = () => {
+      console.warn('WebSocket 연결 종료됨');
+    };
 
-      stompClient.onConnect = () =>
-        stompClient.subscribe(path, message => {
-          console.log(`메시지 수신: ${message}`);
-          const receivedMessage = JSON.parse(message.body);
-          onMessage(receivedMessage.message);
-        });
+    stompClient.onStompError = frame => {
+      console.error('STOMP 에러:', frame.headers['message']);
+      console.error('상세:', frame.body);
+    };
 
-      stompClient.activate();
-    } catch (err) {
-      console.error(err);
-    }
+    client.current = stompClient;
+    stompClient.activate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatRoomId, onMessage]);
 
   const disconnect = useCallback(() => {
-    if (client.current) {
-      console.log('WebSocket 연결을 종료합니다.');
+    return new Promise<void>(resolve => {
+      if (client.current) {
+        console.log('WebSocket 연결을 종료합니다.');
 
-      Object.keys(subscriptions.current).forEach(path => {
-        subscriptions.current[path].unsubscribe();
-        delete subscriptions.current[path];
-      });
+        Object.keys(subscriptions.current).forEach(path => {
+          subscriptions.current[path].unsubscribe();
+          delete subscriptions.current[path];
+        });
 
-      client.current.deactivate();
+        client.current.onDisconnect = () => {
+          console.log('WebSocket 완전 종료됨');
+          resolve(); // 종료 완료 시 resolve
+        };
+
+        client.current.deactivate();
+      } else {
+        resolve(); // 이미 없으면 바로 resolve
+      }
+
       client.current = null;
-    }
+    });
   }, []);
 
   const sendMessage = useCallback(
-    (message: string) => {
+    (message: string, setData: Dispatch<SetStateAction<Message[]>>) => {
       if (!client.current?.connected) {
-        console.warn('WebSocket이 연결되지 않았습니다.');
+        alert('연결이 불안정해요. 채팅방을 다시 로드해 주세요.');
+        /**웹소켓 미연결시 사용자에게 해당 알림을 발생시킵니다 */
         return;
       }
 
       try {
         const destination = `/api/messages/chatRooms/${chatRoomId}`;
-        console.log('메시지 전송 시도:', { destination, message });
 
         client.current.publish({
           headers: headers,
           destination,
           body: JSON.stringify({ message: message }),
         });
-        console.log('메시지 전송 성공:', message);
+
+        const sentChat: Message = {
+          id: 0,
+          nickname: nickname,
+          message: message,
+          sendDate: new Date().toISOString(),
+        };
+
+        setData(prev => [...prev, sentChat]);
       } catch (error) {
-        console.error('메시지 전송 중 에러 발생:', error);
+        alert('메시지 전송 중 에러가 발생했어요!');
+        console.error(error);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

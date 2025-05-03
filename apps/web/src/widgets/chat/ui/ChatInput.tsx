@@ -1,23 +1,29 @@
-import React, { useState } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 
 import { Button, Input } from '@/shared/ui';
+import { Message } from '../types';
 
 interface ChatInputProps {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (
+    message: string,
+    setData: Dispatch<SetStateAction<Message[]>>,
+  ) => void;
+  setData: Dispatch<SetStateAction<Message[]>>;
 }
 
-export default function ChatInput({ onSendMessage }: ChatInputProps) {
+export default function ChatInput({ onSendMessage, setData }: ChatInputProps) {
   const [message, setMessage] = useState<string>('');
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     if (message.trim()) {
-      onSendMessage(message.trim());
+      onSendMessage(message.trim(), setData);
       setMessage('');
     }
   };
 
   return (
-    <div
+    <form
       onSubmit={handleSubmit}
       className='border-app-bar-border fixed right-0 bottom-0 left-0 grid h-24 grid-cols-[5fr_1fr] gap-2 border-t-[1px] bg-white px-6 pt-3 pb-12'
     >
@@ -33,6 +39,6 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
         className='h-10 w-full'
         onClick={handleSubmit}
       />
-    </div>
+    </form>
   );
 }
