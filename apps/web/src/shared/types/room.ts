@@ -8,17 +8,24 @@ export type RoomAuthority =
   | 'NON_PARTICIPANT'
   | 'NON_MEMBER';
 
-export type Room = Partial<FormData> & {
-  id: number;
-  maxParticipants: 2 | 4 | 6;
-  status: RoomStatus;
-  preferredGender: Gender;
-  preferredStudentIdMin: string;
-  preferredStudentIdMax: string;
-  meetingDateTime: string;
-  title: string;
-  content: string;
-  place: string;
+export type Room = Partial<FormData> &
+  Partial<FriendPhoneNumbers> & {
+    id: number;
+    maxParticipants: 2 | 4 | 6;
+    status: RoomStatus;
+    preferredGender: Gender;
+    preferredStudentIdMin: string;
+    preferredStudentIdMax: string;
+    meetingDateTime: string;
+    title: string;
+    content: string;
+    place: string;
+  };
+
+export type FriendPhoneNumbers = {
+  friendPhoneNumbers: {
+    friendPhoneNumbers: string[];
+  };
 };
 
 export type RoomDetail = RoomListItem & {

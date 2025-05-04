@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAtomValue } from 'jotai';
 
 import {
   UseFormSetValue,
@@ -6,10 +7,16 @@ import {
   type UseFormRegister,
 } from 'react-hook-form';
 
+import { getDate, getFormattedPhone } from '@festamate/utils';
+
 import { FormItem, Input, Radio } from '@/shared/ui';
+import { userAtom } from '@/shared/atom';
 import { Room } from '@/shared/types';
-import { getDate } from '@festamate/utils';
+import { useBottomSheet } from '@/shared/hook';
+import { BOTTOM_SHEET } from '@/shared/constants';
+
 import { DETAIL_OPTION, useRoomCreateContext } from '@/widgets/create/model';
+import { useSubmitFriendPhone } from '@/widgets/create/api';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
@@ -25,36 +32,44 @@ export default function GroupDetailForm({
   const {
     preferredGender,
     maxParticipants,
-    meetingDateTime,
     preferredStudentIdMin,
     preferredStudentIdMax,
   } = watch();
-  const { maxParticipantsRender, setMaxParticipantsRender } =
-    useRoomCreateContext();
+  const {
+    maxParticipantsRender,
+    setMaxParticipantsRender,
+    date,
+    friendPhoneNumbers,
+  } = useRoomCreateContext();
+  const { openBottomSheet } = useBottomSheet();
+  const isFormValid =
+    maxParticipantsRender !== 2
+      ? friendPhoneNumbers.length === maxParticipants / 2 - 1
+      : true;
 
   return (
     <>
       <FormItem
         title='희망 멤버 학번'
-        description='모임에 들어올 구성원들의 학번을 지정해주세요.'
+        description='모임에 들어올 구성원들의 학번을 제한해요.'
       >
         <div className='flex w-full items-center gap-2'>
           <Input
-            className='w-14'
+            className='w-14 text-center'
             type='number'
             id='preferredStudentIdMin'
             value={preferredStudentIdMin.slice(0, 2)}
             {...register('preferredStudentIdMin', { required: true })}
           />
-          이상
+          학번 이상
           <Input
-            className='w-14'
+            className='w-14 text-center'
             type='number'
             id='preferredStudentIdMax'
             value={preferredStudentIdMax.slice(0, 2)}
             {...register('preferredStudentIdMax', { required: true })}
           />
-          이하
+          학번 이하
         </div>
       </FormItem>
       <FormItem
@@ -90,7 +105,7 @@ export default function GroupDetailForm({
           />
         ))}
       </FormItem>
-      {maxParticipantsRender !== 2 && (
+      {!isFormValid && maxParticipantsRender !== 2 && (
         <FormItem
           title='친구'
           description={
@@ -113,41 +128,66 @@ export default function GroupDetailForm({
         <button
           type='button'
           name='meeting-date-time'
-          className='border-border hover:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          className='border-border active:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          onClick={() => openBottomSheet(BOTTOM_SHEET.DATE_PICKER)}
         >
-          {getDate(meetingDateTime, 'YYYY년 MM월 DD일')}
+          {getDate(date, 'YYYY년 M월 D일')}
         </button>
         <button
           type='button'
           name='meeting-date-time'
-          className='border-border hover:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          className='border-border active:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          onClick={() => openBottomSheet(BOTTOM_SHEET.TIME_PICKER)}
         >
-          {getDate(meetingDateTime, 'HH시 MM분')}
+          {getDate(date, 'A h시 m분')}
         </button>
       </FormItem>
     </>
   );
 }
 
-const FriendInput = () => (
-  <div className='flex w-fit gap-2'>
-    <div className='w-50'>
-      <Input
+const FriendInput = () => {
+  const [value, setValue] = useState<string>('');
+  const { mutate } = useSubmitFriendPhone();
+  const { phoneNumber } = useAtomValue(userAtom)!;
+  const { setFriendPhoneNumbers } = useRoomCreateContext();
+
+  return (
+    <div className='flex w-fit gap-2'>
+      <div className='w-50'>
+        <Input
+          id='co-founder'
+          placeholder='전화번호'
+          type='phone'
+          value={value}
+          onChange={e => {
+            const rawValue = e.target.value;
+            const formattedValue = getFormattedPhone(rawValue);
+            setValue(formattedValue);
+          }}
+        />
+      </div>
+      <button
         id='co-founder'
-        placeholder='전화번호'
-        type='phone'
-        // onChange={e => {
-        //   const rawValue = e.target.value;
-        //   const formattedValue = getFormattedPhone(rawValue);
-        // }} 차후 해당 로직 연결 & 데이터 패칭 진행하면 됩니다.
-      />
+        type='button'
+        className='bg-fill rounded-5 border-border hover:bg-sub cursor-pointer border-[1px] px-4 py-2'
+        onClick={() => {
+          if (phoneNumber === value)
+            alert('자신의 번호는 친구로 추가할 수 없어요.');
+          else {
+            mutate(value, {
+              onSuccess: data => {
+                if (data.result.exist) {
+                  alert('친구를 추가했어요!');
+                  setFriendPhoneNumbers(prev => [...prev, value]);
+                } else alert('가입하지 않은 친구입니다.');
+              },
+            });
+          }
+        }}
+      >
+        친구 추가
+      </button>
     </div>
-    <button
-      id='co-founder'
-      type='button'
-      className='bg-fill rounded-5 border-border hover:bg-sub cursor-pointer border-[1px] px-4 py-2'
-    >
-      친구 추가
-    </button>
-  </div>
-);
+  );
+};

@@ -10,14 +10,14 @@ import { Room } from '@/shared/types';
 import { useFormSubmit } from '@/widgets/create/api';
 
 export default function CreateContainer() {
-  const { mode, setMode, file } = useRoomCreateContext();
+  const { mode, setMode, file, date, friendPhoneNumbers } =
+    useRoomCreateContext();
 
   const { register, watch, setValue } = useForm<Room>({
     defaultValues: {
       content: '',
-      preferredStudentIdMin: '25',
-      preferredStudentIdMax: '24',
-      meetingDateTime: getDate(new Date(), 'YYYY-MM-DD HH:MM:') + '00',
+      preferredStudentIdMin: '20',
+      preferredStudentIdMax: '23',
     },
   });
 
@@ -31,7 +31,12 @@ export default function CreateContainer() {
     const postData = JSON.stringify({
       ...watch(),
       maxParticipants: Number(watch('maxParticipants')) as 2 | 4 | 6,
+      meetingDateTime: getDate(date, 'YYYY-MM-DD HH:mm:ss'),
+      friendPhoneNumbers: {
+        friendPhoneNumbers: [...friendPhoneNumbers],
+      },
     });
+    console.log(postData);
     const blob = new Blob([postData], { type: 'application/json' });
     formData.append('request', blob);
     mutate(formData);
