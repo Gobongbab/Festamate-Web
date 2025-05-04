@@ -10,6 +10,7 @@ export const REQUEST = {
   CERTIFY_CODE: '/auth/phone/verify',
   CERTIFY_PHONE: '/auth/phone/send',
   CERTIFY_STUDENT: '/check/student-card',
+  CERTIFY_USER: '/members/exist',
   USER_INFO: '/auth/members/profile',
   UPDATE_USER: '/auth/members/profile',
   REGISTER_TICKET: '/coupons',
