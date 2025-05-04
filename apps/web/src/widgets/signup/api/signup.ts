@@ -12,7 +12,6 @@ interface SubmitSignupRequest {
   gender: Gender;
   department: string;
   kakaoAccessToken: string;
-  fcmToken: string;
 }
 
 interface SubmitSignupResponse {

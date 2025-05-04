@@ -7,11 +7,14 @@ import React, {
 
 import { useAtomValue } from 'jotai';
 
-import { StudentIdSample } from '@/assets/images';
 import { cn } from '@festamate/utils';
-import { fcmTokenAtom, KakaoAccessTokenAtom } from '@/shared/atom';
-import { useCertifyStudent, useSignup } from '@/widgets/signup/api';
+
+import { StudentIdSample } from '@/assets/images';
+
+import { KakaoAccessTokenAtom } from '@/shared/atom';
 import { Gender } from '@/shared/types';
+
+import { useCertifyStudent, useSignup } from '@/widgets/signup/api';
 
 interface StudentCertifyFormProps {
   setProcess: Dispatch<SetStateAction<number>>;
@@ -31,7 +34,6 @@ export default function StudentCertifyForm({
     'idle' | 'certifying' | 'signing' | 'complete'
   >('idle');
 
-  const fcmToken = useAtomValue(fcmTokenAtom);
   const { kakaoAccessToken } = useAtomValue(KakaoAccessTokenAtom);
   const { mutate: signup } = useSignup({ setProcess });
   const { mutateAsync: certifyStudent, isError: isCertifyError } =
@@ -59,7 +61,6 @@ export default function StudentCertifyForm({
         gender,
         department: studentDepartment,
         kakaoAccessToken,
-        fcmToken: fcmToken,
       };
 
       signup(signupInfo, {
