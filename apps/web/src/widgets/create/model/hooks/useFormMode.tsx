@@ -13,6 +13,7 @@ import {
   CONTENT_MAX_LENGTH,
   TITLE_MAX_LENGTH,
   TITLE_MIN_LENGTH,
+  useRoomCreateContext,
 } from '@/widgets/create/model';
 
 interface RoomModeProps {
@@ -27,6 +28,7 @@ export default function useFormMode({
   setValue,
 }: RoomModeProps) {
   const { title, content, preferredGender, maxParticipants, place } = watch();
+  const { maxParticipantsRender, friendPhoneNumbers } = useRoomCreateContext();
 
   const MODE = [
     {
@@ -50,7 +52,12 @@ export default function useFormMode({
         />
       ),
       button: '생성하기',
-      isFormValid: preferredGender && maxParticipants,
+      isFormValid:
+        preferredGender &&
+        maxParticipants &&
+        (maxParticipantsRender !== 2
+          ? friendPhoneNumbers.length === maxParticipantsRender / 2 - 1
+          : true),
     },
   ];
 
