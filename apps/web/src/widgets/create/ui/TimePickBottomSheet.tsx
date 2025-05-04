@@ -4,7 +4,7 @@ import { BottomSheet, Button } from '@/shared/ui';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET } from '@/shared/constants';
 import { useRoomCreateContext } from '../model';
-import { getDate } from '@festamate/utils';
+import { cn, getDate } from '@festamate/utils';
 
 export default function TimePickBottomSheet() {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
@@ -22,9 +22,7 @@ export default function TimePickBottomSheet() {
   const handleClick = async () => {
     const hour = isAM ? selectedHour : selectedHour + 12;
     const newDate = new Date(date);
-    console.log('Selected minute:', selectedMinute);
     newDate.setHours(hour, selectedMinute);
-    console.log('New date:', newDate);
     setDate(newDate);
     closeBottomSheet(BOTTOM_SHEET.TIME_PICKER);
   };
@@ -58,13 +56,19 @@ export default function TimePickBottomSheet() {
           <div className='my-6 grid w-full grid-cols-3 gap-3'>
             <div className='flex items-center justify-center gap-2'>
               <button
-                className={`border-border rounded-10 border-[1px] px-3 py-2 ${isAM ? 'bg-primary text-white' : ''}`}
+                className={cn(
+                  'border-border rounded-10 border-[1px] px-3 py-2',
+                  isAM && 'bg-point text-white',
+                )}
                 onClick={() => handleAMPMClick(true)}
               >
                 오전
               </button>
               <button
-                className={`border-border rounded-10 border-[1px] px-3 py-2 ${!isAM ? 'bg-primary text-white' : ''}`}
+                className={cn(
+                  'border-border rounded-10 border-[1px] px-3 py-2',
+                  !isAM && 'bg-point text-white',
+                )}
                 onClick={() => handleAMPMClick(false)}
               >
                 오후
