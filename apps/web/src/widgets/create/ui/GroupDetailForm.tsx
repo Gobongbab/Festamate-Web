@@ -10,6 +10,8 @@ import { FormItem, Input, Radio } from '@/shared/ui';
 import { Room } from '@/shared/types';
 import { getDate } from '@festamate/utils';
 import { DETAIL_OPTION, useRoomCreateContext } from '@/widgets/create/model';
+import { useBottomSheet } from '@/shared/hook';
+import { BOTTOM_SHEET } from '@/shared/constants';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
@@ -25,36 +27,36 @@ export default function GroupDetailForm({
   const {
     preferredGender,
     maxParticipants,
-    meetingDateTime,
     preferredStudentIdMin,
     preferredStudentIdMax,
   } = watch();
-  const { maxParticipantsRender, setMaxParticipantsRender } =
+  const { maxParticipantsRender, setMaxParticipantsRender, date } =
     useRoomCreateContext();
+  const { openBottomSheet } = useBottomSheet();
 
   return (
     <>
       <FormItem
         title='희망 멤버 학번'
-        description='모임에 들어올 구성원들의 학번을 지정해주세요.'
+        description='모임에 들어올 구성원들의 학번을 제한해요.'
       >
         <div className='flex w-full items-center gap-2'>
           <Input
-            className='w-14'
+            className='w-14 text-center'
             type='number'
             id='preferredStudentIdMin'
             value={preferredStudentIdMin.slice(0, 2)}
             {...register('preferredStudentIdMin', { required: true })}
           />
-          이상
+          학번 이상
           <Input
-            className='w-14'
+            className='w-14 text-center'
             type='number'
             id='preferredStudentIdMax'
             value={preferredStudentIdMax.slice(0, 2)}
             {...register('preferredStudentIdMax', { required: true })}
           />
-          이하
+          학번 이하
         </div>
       </FormItem>
       <FormItem
@@ -113,16 +115,18 @@ export default function GroupDetailForm({
         <button
           type='button'
           name='meeting-date-time'
-          className='border-border hover:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          className='border-border active:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          onClick={() => openBottomSheet(BOTTOM_SHEET.DATE_PICKER)}
         >
-          {getDate(meetingDateTime, 'YYYY년 MM월 DD일')}
+          {getDate(date, 'YYYY년 M월 D일')}
         </button>
         <button
           type='button'
           name='meeting-date-time'
-          className='border-border hover:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          className='border-border active:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          onClick={() => openBottomSheet(BOTTOM_SHEET.TIME_PICKER)}
         >
-          {getDate(meetingDateTime, 'HH시 MM분')}
+          {getDate(date, 'A h시 m분')}
         </button>
       </FormItem>
     </>
