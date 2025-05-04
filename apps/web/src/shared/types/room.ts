@@ -1,4 +1,4 @@
-import { Gender } from '@/shared/types';
+import { Gender, User } from '@/shared/types';
 
 export type RoomStatus = 'MATCHING' | 'MATCHED' | 'CLOSED';
 
@@ -34,13 +34,13 @@ export type RoomDetail = RoomListItem & {
   guestParticipants: RoomParticipant[];
 };
 
-export type RoomParticipant = {
+export type RoomParticipant = Pick<
+  User,
+  'nickname' | 'department' | 'gender' | 'studentId'
+> & {
   id: number;
-  nickname: string;
-  studentId: string;
-  gender: Gender;
-  major: string;
   isHost: boolean;
+  profileImageUrl: string;
 };
 
 export type RoomListItem = Room & {
