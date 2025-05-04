@@ -11,10 +11,10 @@ export const REQUEST = {
   CERTIFY_PHONE: '/auth/phone/send',
   CERTIFY_STUDENT: '/check/student-card',
   CERTIFY_USER: '/members/exist',
-  USER_INFO: '/auth/members/profile',
-  UPDATE_USER: '/auth/members/profile',
+  USER_INFO: '/members/profile',
+  UPDATE_USER: '/members/profile',
   REGISTER_TICKET: '/coupons',
   CHAT_ROOM: '/messages/chatRooms',
-  CHAT_ROOM_LIST: '/chatRooms/participations',
+  CHAT_ROOM_LIST: '/messages/chatRooms/participations',
   FCM_TOKEN: '/members/fcm-token',
 };
