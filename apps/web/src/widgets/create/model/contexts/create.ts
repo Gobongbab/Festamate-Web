@@ -11,4 +11,6 @@ export const RoomCreateContext = createContext<{
   setImage: Dispatch<SetStateAction<string>>;
   date: Date;
   setDate: Dispatch<SetStateAction<Date>>;
+  friendPhoneNumbers: string[];
+  setFriendPhoneNumbers: Dispatch<SetStateAction<string[]>>;
 } | null>(null);
