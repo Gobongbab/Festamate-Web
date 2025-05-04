@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { ActivityComponentType, useStack } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { Button, RoomAppBar } from '@/shared/ui';
+import { Button, LoginBottomSheet, RoomAppBar } from '@/shared/ui';
 import {
   MenuBottomSheet,
   RoomContainer,
@@ -169,6 +169,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
       >
         {renderActionButtons()}
       </div>
+      <LoginBottomSheet />
       <MenuBottomSheet roomAuthority={status.data} roomStatus={roomStatus} />
       <RoomDeleteModal roomId={id} />
       <RoomJoinModal roomId={id} />

@@ -15,4 +15,5 @@ export const REQUEST = {
   UPDATE_USER: '/auth/members/profile',
   REGISTER_TICKET: '/coupons',
   CHAT_ROOM: '/messages/chatRooms',
+  FCM_TOKEN: '/members/fcm-token',
 };

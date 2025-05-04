@@ -19,13 +19,6 @@ export default function UserContainer() {
         to={PATH.LIST}
         request={REQUEST.ROOM_PARTICIPATED}
       />
-      <div className='bg-sub mt-normal-spacing h-[1px] w-full flex-shrink-0' />
-      <FormItem title='계정'>
-        <button className='flex w-full justify-start focus:outline-none'>
-          비밀번호 변경하기
-        </button>
-      </FormItem>
-      <div className='bg-sub h-[1px] w-full flex-shrink-0' />
       <FormItem title='티켓'>
         <button
           name='registerTicket'

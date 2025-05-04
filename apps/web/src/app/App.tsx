@@ -6,14 +6,12 @@ import { Stack } from '@/app/stackflow';
 
 import { RAW_PATH } from '@/shared/constants';
 import { userAtom } from '@/shared/atom';
-import { useAllowNotification } from '@/shared/hook';
 
 import { AuthScreen } from '@/screen/auth/ui';
 import { SignupScreen } from '@/screen/signup/ui';
 
 export default function App() {
   const setUserAtom = useSetAtom(userAtom);
-  const { handleAllowNotification } = useAllowNotification();
 
   useEffect(() => {
     const stored = localStorage.getItem('user');
@@ -25,7 +23,6 @@ export default function App() {
         console.error('유저 정보 파싱 실패', e);
       }
     }
-    handleAllowNotification();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
