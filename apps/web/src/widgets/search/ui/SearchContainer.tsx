@@ -28,8 +28,8 @@ export default function SearchContainer() {
         <div className='flex flex-col gap-3'>
           <div className='flex h-fit w-full flex-wrap gap-2'>
             {recentSearches.map(keyword => (
-              <button
-                name={keyword}
+              <div
+                key={keyword}
                 className='border-border flex items-center gap-2 rounded-lg border-[1px] px-4 py-2'
                 onClick={() => keywordOnClick(keyword)}
               >
@@ -40,7 +40,7 @@ export default function SearchContainer() {
                 >
                   x
                 </button>
-              </button>
+              </div>
             ))}
           </div>
           <button
