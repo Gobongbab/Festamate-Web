@@ -17,7 +17,7 @@ export default function ChatListContainer() {
           <ChatRoomItem key={chatRoom.id} {...chatRoom} />
         ))
       ) : (
-        <span className='text-light'>채팅방 불러오는 중..</span>
+        <span className='text-light p-6'>채팅방 불러오는 중..</span>
       )}
     </div>
   );
