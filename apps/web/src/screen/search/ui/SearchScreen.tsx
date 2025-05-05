@@ -18,8 +18,10 @@ export default function SearchScreen() {
   const closeOnClick = () => replace(PATH.HOME, {});
   const searchOnClick = (e: FormEvent) => {
     e.preventDefault();
-    addSearch(value);
-    replace(PATH.RESULT, { searchKey: value }, { animate: false });
+    if (value.length > 0) {
+      addSearch(value);
+      replace(PATH.RESULT, { searchKey: value }, { animate: false });
+    }
   };
 
   useEffect(() => {
