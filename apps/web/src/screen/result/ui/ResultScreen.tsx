@@ -1,34 +1,64 @@
-import React from 'react';
+import React, { useState, type FormEvent } from 'react';
+import { useAtom } from 'jotai';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
+import { type ActivityComponentType } from '@stackflow/react';
 import { MdAdd } from 'react-icons/md';
 
 import { useFlow } from '@/app/stackflow';
 import { PATH } from '@/shared/constants';
-import { SearchAppBar, Dock } from '@/shared/ui';
-import { ResultContainer } from '@/widgets/result/ui';
+import { searchAtom } from '@/shared/atom';
+import { SearchAppBar, Dock, Button } from '@/shared/ui';
 
-export default function ResultScreen() {
+import { useRecentSearches } from '@/widgets/search/model';
+import { FilterBottomSheet, ResultContainer } from '@/widgets/result/ui';
+import { Filter } from '@/widgets/result/types';
+
+const ResultScreen: ActivityComponentType<{ searchKey: string }> = ({
+  params,
+}: {
+  params: { searchKey: string };
+}) => {
+  const [value, setValue] = useAtom(searchAtom);
+  const [filter, setFilter] = useState<Filter>({});
+  const { addSearch } = useRecentSearches();
   const { replace, push } = useFlow();
+
   const closeOnClick = () => replace(PATH.HOME, {});
-  const searchOnClick = () => replace(PATH.RESULT, {}, { animate: false });
+  const searchOnClick = (e: FormEvent) => {
+    e.preventDefault();
+    if (value.length > 0) {
+      addSearch(value);
+    }
+    replace(PATH.RESULT, { searchKey: value }, { animate: false });
+  };
   const createOnClick = () => push(PATH.CREATE, {});
 
   return (
     <div className='fixed inset-0 overflow-hidden'>
-      <AppScreen appBar={SearchAppBar(closeOnClick, searchOnClick)}>
-        <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll pb-24'>
-          <ResultContainer searchKey='과팅' />
+      <AppScreen
+        appBar={SearchAppBar(closeOnClick, searchOnClick, value, setValue)}
+      >
+        <div className='scrollbar-hide container-mobile p-normal-padding flex size-full flex-col gap-y-2 overflow-scroll overflow-y-scroll pb-24'>
+          <ResultContainer searchKey={params.searchKey} filter={filter} />
         </div>
-        <button
+        <Button
+          shadow
           name='create-group'
-          className='box-shadow-buttonLg hover:bg-primary-hover absolute right-6 bottom-26 z-30 flex w-fit flex-shrink-0 cursor-pointer items-center gap-x-2 rounded-full bg-[#775bf0] px-5 py-2.5 text-lg font-medium text-white'
+          size='md'
+          className='absolute right-6 bottom-18 z-30 flex w-fit items-center gap-x-2 rounded-full px-5'
           onClick={createOnClick}
-        >
-          <MdAdd size={14} /> 모임 만들기
-        </button>
+          label={
+            <>
+              <MdAdd size={14} /> <span>모임 만들기</span>
+            </>
+          }
+        />
         <Dock />
       </AppScreen>
+      <FilterBottomSheet setFilter={setFilter} />
     </div>
   );
-}
+};
+
+export default ResultScreen;

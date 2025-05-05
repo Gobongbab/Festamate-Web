@@ -5,6 +5,7 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 
 import { Input } from '@/shared/ui';
 import { fetchLoginStatus } from '@festamate/utils';
+import { type Dispatch, type SetStateAction, type FormEvent } from 'react';
 
 const baseStyle = { height: '64px', backgroundColor: '#fff' };
 
@@ -54,23 +55,30 @@ export const NormalAppBar = (title?: string) => ({
 
 export const SearchAppBar = (
   closeOnClick: () => void,
-  searchOnClick: () => void,
-) => ({
-  renderLeft: () => (
-    <>
-      <IoChevronBackSharp size={24} onClick={closeOnClick} />
-      <Input
-        className='ml-3 w-[calc(100vw-128px)]'
-        placeholder='검색어를 입력하세요'
-      />
-    </>
-  ),
-  renderRight: () => (
-    <FiSearch size={24} onClick={searchOnClick} className='mr-2' />
-  ),
-  ...baseStyle,
-  backgroundColor: '#fff',
-});
+  searchOnClick: (e: FormEvent) => void,
+  value: string,
+  setValue: Dispatch<SetStateAction<string>>,
+) => {
+  const SearchAppBar = {
+    renderLeft: () => (
+      <form onSubmit={searchOnClick} className='flex items-center'>
+        <IoChevronBackSharp size={24} onClick={closeOnClick} />
+        <Input
+          className='ml-3 w-[calc(100vw-128px)]'
+          placeholder='검색어를 입력하세요'
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+      </form>
+    ),
+    renderRight: () => (
+      <FiSearch size={24} onClick={searchOnClick} className='mr-2' />
+    ),
+    ...baseStyle,
+    backgroundColor: '#fff',
+  };
+  return SearchAppBar;
+};
 
 export const RoomAppBar = (menuOnClick: () => void) => ({
   renderRight: () => (
