@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import { cn } from '@festamate/utils';
 
 import { ListItem } from '@/shared/ui';
 import { useBottomSheet } from '@/shared/hook';
-import { BOTTOM_SHEET, ROOM_STATUS } from '@/shared/constants';
+import {
+  BOTTOM_SHEET,
+  GENDER_LABEL,
+  PARTICIPANTS,
+  ROOM_STATUS,
+} from '@/shared/constants';
 
 import { useInfiniteRoomsWithFilters } from '@/widgets/result/api';
 import { Filter } from '@/widgets/result/types';
@@ -18,8 +23,65 @@ export default function ResultContainer({
   searchKey,
   filter,
 }: ResultContainerParams) {
-  const { data } = useInfiniteRoomsWithFilters({ ...filter });
+  const { data, hasNextPage, isLoading, isFetchingNextPage, fetchNextPage } =
+    useInfiniteRoomsWithFilters({ ...filter });
   const { openBottomSheet } = useBottomSheet();
+
+  const observer = useRef<IntersectionObserver | undefined>(undefined);
+  const lastRoomRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (!hasNextPage || isLoading || isFetchingNextPage) {
+        if (observer.current) {
+          observer.current.disconnect();
+          observer.current = undefined;
+        }
+        return;
+      }
+
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+
+      observer.current = new IntersectionObserver(
+        entries => {
+          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+            console.log('Fetching next page...', {
+              hasNextPage,
+              isFetchingNextPage,
+              currentPage: data?.pages.length,
+            });
+            fetchNextPage();
+          }
+        },
+        { threshold: 0.7 },
+      );
+
+      if (node) {
+        observer.current.observe(node);
+      }
+    },
+    [
+      isLoading,
+      isFetchingNextPage,
+      hasNextPage,
+      fetchNextPage,
+      data?.pages.length,
+    ],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, []);
+
+  const rooms = data
+    ? data.pages
+        .flatMap(page => page.content)
+        .filter(room => room.title.includes(searchKey))
+    : [];
 
   return (
     <>
@@ -53,7 +115,7 @@ export default function ResultContainer({
           >
             모집 성별
             {filter.gender && (
-              <span className='text-xs'>({filter.gender})</span>
+              <span className='text-xs'>({GENDER_LABEL[filter.gender]})</span>
             )}
           </button>
           <button
@@ -67,17 +129,27 @@ export default function ResultContainer({
           >
             모임 인원
             {filter.participants && (
-              <span className='text-xs'>({filter.participants})</span>
+              <span className='text-xs'>
+                ({PARTICIPANTS[filter.participants]})
+              </span>
             )}
           </button>
         </div>
       </div>
 
-      {data && (
+      {data && rooms.length > 0 ? (
         <div className='flex flex-col gap-1.5'>
-          {data.pages[0].content.map(room => (
-            <ListItem key={room.id} {...room} />
+          {rooms.map((room, index) => (
+            <ListItem
+              key={room.id}
+              {...room}
+              ref={index === rooms.length - 1 ? lastRoomRef : null}
+            />
           ))}
+        </div>
+      ) : (
+        <div className='text-light grid h-30 w-full place-items-center'>
+          <span>검색 결과가 없어요!</span>
         </div>
       )}
     </>

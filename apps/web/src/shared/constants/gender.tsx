@@ -14,3 +14,8 @@ export const GENDER = {
     </span>
   ),
 } as const;
+
+export const GENDER_LABEL = {
+  MALE: '남자',
+  FEMALE: '여자',
+} as const;
