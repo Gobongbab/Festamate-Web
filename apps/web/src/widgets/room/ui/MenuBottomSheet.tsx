@@ -4,6 +4,7 @@ import { BottomSheet, Button } from '@/shared/ui';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { RoomAuthority, RoomStatus } from '@/shared/types';
+import { fetchLoginStatus } from '@festamate/utils';
 
 interface MenuBottomSheetProps {
   roomAuthority: RoomAuthority | null;
@@ -24,6 +25,11 @@ export default function MenuBottomSheet({
     else openModal(MODAL.ROOM_DELETE_DENIAL);
   };
 
+  const handleReport = () => {
+    closeBottomSheet(BOTTOM_SHEET.MENU);
+    if (fetchLoginStatus()) openModal(MODAL.ROOM_REPORT);
+  };
+
   const renderMenu = (roomAuthority: RoomAuthority) => {
     if (roomAuthority === 'HOST') {
       return (
@@ -42,7 +48,11 @@ export default function MenuBottomSheet({
 
     return (
       <>
-        <button className='text-important w-full cursor-pointer py-1'>
+        <button
+          name='roomReport'
+          className='text-important w-full cursor-pointer py-1'
+          onClick={handleReport}
+        >
           모임 신고
         </button>
       </>

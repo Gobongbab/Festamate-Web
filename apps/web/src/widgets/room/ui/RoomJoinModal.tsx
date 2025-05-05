@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { MODAL } from '@/shared/constants';
 import { Button, Modal } from '@/shared/ui';
@@ -12,11 +12,15 @@ interface RoomJoinModalProps {
 
 export default function RoomJoinModal({ roomId }: RoomJoinModalProps) {
   const { closeModal, modalState } = useModal();
-  const { mutate, isError } = useSubmitRoomJoin(roomId);
+  const { mutate, isError, reset } = useSubmitRoomJoin(roomId);
   const { isOpen } = modalState(MODAL.JOIN);
 
   const onClose = () => closeModal(MODAL.JOIN);
   const onJoin = () => mutate(roomId);
+
+  useEffect(() => {
+    reset();
+  }, [isOpen, reset]);
 
   return (
     <>

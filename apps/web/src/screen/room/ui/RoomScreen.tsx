@@ -10,6 +10,7 @@ import {
   RoomDeleteModal,
   RoomJoinFriendModal,
   RoomJoinModal,
+  RoomReportModal,
 } from '@/widgets/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
@@ -173,6 +174,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
       <MenuBottomSheet roomAuthority={status.data} roomStatus={roomStatus} />
       <RoomDeleteModal roomId={id} />
       <RoomJoinModal roomId={id} />
+      <RoomReportModal roomId={id} />
       <RoomJoinFriendModal
         availableFriendCnt={availableFriendCnt}
         roomId={id}
