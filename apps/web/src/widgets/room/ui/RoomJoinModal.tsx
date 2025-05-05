@@ -16,7 +16,7 @@ export default function RoomJoinModal({ roomId }: RoomJoinModalProps) {
   const { isOpen } = modalState(MODAL.JOIN);
 
   const onClose = () => closeModal(MODAL.JOIN);
-  const onJoin = () => mutate(roomId);
+  const onJoin = () => mutate({ roomId: roomId });
 
   useEffect(() => {
     reset();

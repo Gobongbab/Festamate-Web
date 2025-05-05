@@ -36,7 +36,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   });
   const stack = useStack();
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const { maxParticipants, id, status: roomStatus } = params;
+  const { maxParticipants, id, status: roomStatus, preferredGender } = params;
   const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
@@ -177,6 +177,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
       <RoomReportModal roomId={id} />
       <RoomJoinFriendModal
         availableFriendCnt={availableFriendCnt}
+        preferredGender={preferredGender}
         roomId={id}
       />
     </div>

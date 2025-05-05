@@ -1,26 +1,44 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+
+import { getFormattedPhone } from '@festamate/utils';
 
 import { MODAL } from '@/shared/constants';
 import { Button, Input, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
 
-import { useSubmitRoomJoin } from '@/widgets/room/api';
+import { useSubmitFriendPhone, useSubmitRoomJoin } from '@/widgets/room/api';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/shared/atom';
+import { Gender } from '@/shared/types';
 
 interface RoomJoinFriendModalProps {
   availableFriendCnt: number;
   roomId: number;
+  preferredGender: Gender;
+}
+
+interface FriendInputProps {
+  setFriendPhoneNumbers: Dispatch<SetStateAction<string[]>>;
+  preferredGender: Gender;
 }
 
 export default function RoomJoinFriendModal({
+  preferredGender,
   availableFriendCnt,
   roomId,
 }: RoomJoinFriendModalProps) {
   const { closeModal, modalState } = useModal();
-  const { mutate } = useSubmitRoomJoin(roomId);
   const { isOpen } = modalState(MODAL.JOIN_WITH_FRIEND);
+  const [friendPhoneNumbers, setFriendPhoneNumbers] = useState<string[]>([]);
+  const { mutate, reset } = useSubmitRoomJoin(roomId);
+
+  useEffect(() => {
+    reset();
+  }, [isOpen, reset]);
 
   const onClose = () => closeModal(MODAL.JOIN_WITH_FRIEND);
-  const onJoin = () => mutate(roomId);
+  const onJoin = () =>
+    mutate({ roomId: roomId, friendPhoneNumbers: friendPhoneNumbers });
 
   return (
     <>
@@ -32,7 +50,11 @@ export default function RoomJoinFriendModal({
             참여할 수 있어요.
           </p>
           {Array.from({ length: availableFriendCnt }).map((_, i) => (
-            <FriendInput key={i} />
+            <FriendInput
+              key={i}
+              setFriendPhoneNumbers={setFriendPhoneNumbers}
+              preferredGender={preferredGender}
+            />
           ))}
           <div className='mt-2 flex gap-3'>
             <Button
@@ -50,7 +72,7 @@ export default function RoomJoinFriendModal({
               className='m-0'
               size='md'
               onClick={onJoin}
-              disabled
+              disabled={friendPhoneNumbers.length < availableFriendCnt / 2}
             />
           </div>
         </Modal>
@@ -59,25 +81,60 @@ export default function RoomJoinFriendModal({
   );
 }
 
-const FriendInput = () => (
-  <div className='flex w-full gap-2'>
-    <div className='flex-1'>
-      <Input
+const FriendInput = ({
+  setFriendPhoneNumbers,
+  preferredGender,
+}: FriendInputProps) => {
+  const [value, setValue] = useState<string>('');
+  const [isAdded, setIsAdded] = useState<boolean>(false);
+  const { mutate } = useSubmitFriendPhone();
+  const { phoneNumber } = useAtomValue(userAtom)!;
+
+  return (
+    <div className='flex gap-2'>
+      <div className='flex-1'>
+        <Input
+          id='co-founder'
+          placeholder='전화번호'
+          type='phone'
+          value={value}
+          onChange={e => {
+            const rawValue = e.target.value;
+            const formattedValue = getFormattedPhone(rawValue);
+            setValue(formattedValue);
+          }}
+          disabled={isAdded}
+        />
+      </div>
+      <button
         id='co-founder'
-        placeholder='전화번호'
-        type='phone'
-        // onChange={e => {
-        //   const rawValue = e.target.value;
-        //   const formattedValue = getFormattedPhone(rawValue);
-        // }} 차후 해당 로직 연결 & 데이터 패칭 진행하면 됩니다.
-      />
+        type='button'
+        className='bg-fill rounded-5 border-border hover:bg-sub cursor-pointer border-[1px] px-4 py-2'
+        onClick={() => {
+          if (phoneNumber === value)
+            alert('자신의 번호는 친구로 추가할 수 없어요.');
+          else {
+            mutate(value, {
+              onSuccess: data => {
+                if (
+                  data.result.exist &&
+                  data.result.gender === preferredGender
+                ) {
+                  alert('친구를 추가했어요!');
+                  setFriendPhoneNumbers(prev => [...prev, value]);
+                  setIsAdded(true);
+                } else if (data.result.gender !== preferredGender) {
+                  alert('참여 성별이 아닙니다.');
+                } else {
+                  alert('가입하지 않은 친구입니다.');
+                }
+              },
+            });
+          }
+        }}
+      >
+        친구 추가
+      </button>
     </div>
-    <button
-      id='co-founder'
-      type='button'
-      className='bg-fill rounded-5 border-border hover:bg-sub cursor-pointer border-[1px] px-4 py-2'
-    >
-      확인
-    </button>
-  </div>
-);
+  );
+};
