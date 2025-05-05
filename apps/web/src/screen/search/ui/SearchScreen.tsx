@@ -20,8 +20,8 @@ export default function SearchScreen() {
     e.preventDefault();
     if (value.length > 0) {
       addSearch(value);
-      replace(PATH.RESULT, { searchKey: value }, { animate: false });
     }
+    replace(PATH.RESULT, { searchKey: value }, { animate: false });
   };
 
   useEffect(() => {

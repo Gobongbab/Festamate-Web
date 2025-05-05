@@ -86,9 +86,11 @@ export default function ResultContainer({
   return (
     <>
       <div className='flex flex-col gap-2'>
-        <p className='text-lg'>
-          "<b>{searchKey}</b>" 에 대한 검색 결과입니다.
-        </p>
+        {searchKey.length > 0 && (
+          <p className='text-lg'>
+            "<b>{searchKey}</b>" 에 대한 검색 결과입니다.
+          </p>
+        )}
         <div className='flex w-full items-center gap-1'>
           <button
             className={cn(
