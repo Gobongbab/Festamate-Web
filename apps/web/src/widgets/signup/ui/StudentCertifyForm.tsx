@@ -140,7 +140,7 @@ export default function StudentCertifyForm({
         >
           {image === '' && (
             <button className='text-light -z-10 cursor-pointer font-light focus:outline-none'>
-              경기대 전자출결 앱 내부의 학생증 사진을 올려주세요!
+              여기를 클릭해 학생증 사진을 올려주세요!
             </button>
           )}
         </div>
