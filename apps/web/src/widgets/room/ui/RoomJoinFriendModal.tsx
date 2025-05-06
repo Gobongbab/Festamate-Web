@@ -30,7 +30,7 @@ export default function RoomJoinFriendModal({
   const { closeModal, modalState } = useModal();
   const { isOpen } = modalState(MODAL.JOIN_WITH_FRIEND);
   const [friendPhoneNumbers, setFriendPhoneNumbers] = useState<string[]>([]);
-  const { mutate, reset } = useSubmitRoomJoin(roomId);
+  const { mutate, reset, isPending } = useSubmitRoomJoin(roomId);
 
   useEffect(() => {
     reset();
@@ -72,7 +72,9 @@ export default function RoomJoinFriendModal({
               className='m-0'
               size='md'
               onClick={onJoin}
-              disabled={friendPhoneNumbers.length < availableFriendCnt / 2}
+              disabled={
+                friendPhoneNumbers.length < availableFriendCnt / 2 || isPending
+              }
             />
           </div>
         </Modal>

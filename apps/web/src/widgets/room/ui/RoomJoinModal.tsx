@@ -12,7 +12,7 @@ interface RoomJoinModalProps {
 
 export default function RoomJoinModal({ roomId }: RoomJoinModalProps) {
   const { closeModal, modalState } = useModal();
-  const { mutate, isError, reset } = useSubmitRoomJoin(roomId);
+  const { mutate, isError, reset, isPending } = useSubmitRoomJoin(roomId);
   const { isOpen } = modalState(MODAL.JOIN);
 
   const onClose = () => closeModal(MODAL.JOIN);
@@ -48,6 +48,7 @@ export default function RoomJoinModal({ roomId }: RoomJoinModalProps) {
                   className='m-0'
                   size='md'
                   onClick={onJoin}
+                  disabled={isPending}
                 />
               </div>
             </>
