@@ -24,7 +24,7 @@ export default function HomeScreen() {
   const user = useAtomValue(userAtom);
   const isLoading = stack.globalTransitionState === 'loading';
 
-  const searchOnClick = () => replace(PATH.SEARCH, {});
+  const searchOnClick = () => replace(PATH.RESULT, { searchKey: '' });
   const ticketOnClick = () => openModal(MODAL.TICKET_INFO);
   const createOnClick = () => {
     if (isLogin) push(PATH.CREATE, {});
