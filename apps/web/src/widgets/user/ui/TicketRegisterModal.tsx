@@ -24,7 +24,7 @@ export default function TermOfServiceModal() {
         refetch();
         closeModal(MODAL.REGISTER_TICKET);
       },
-      onError: () => setError('등록되지 않은 쿠폰이에요'),
+      onError: error => setError(error.message || '등록되지 않은 쿠폰이에요'),
     });
   };
 
