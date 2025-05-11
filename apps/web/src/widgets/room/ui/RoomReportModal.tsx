@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useSetAtom } from 'jotai';
 
 import { MODAL } from '@/shared/constants';
 import { Button, Modal, Radio } from '@/shared/ui';
+import { errorMessageAtom } from '@/shared/atom';
 import { useModal } from '@/shared/hook';
 
 import { useSubmitRoomReport } from '@/widgets/room/api';
@@ -12,7 +14,8 @@ interface RoomReportModalProps {
 }
 
 export default function RoomReportModal({ roomId }: RoomReportModalProps) {
-  const { closeModal, modalState } = useModal();
+  const { openModal, closeModal, modalState } = useModal();
+  const setErrorMessage = useSetAtom(errorMessageAtom);
   const { mutate, isError, reset } = useSubmitRoomReport();
   const { isOpen } = modalState(MODAL.ROOM_REPORT);
   const [selectedReason, setSelectedReason] = useState<Reason>('UNHEALTHY');
@@ -21,7 +24,14 @@ export default function RoomReportModal({ roomId }: RoomReportModalProps) {
   const onReport = () =>
     mutate(
       { roomId: roomId, reason: selectedReason },
-      { onSuccess: () => closeModal(MODAL.ROOM_REPORT) },
+      {
+        onSuccess: () => closeModal(MODAL.ROOM_REPORT),
+        onError: error => {
+          closeModal(MODAL.ROOM_REPORT);
+          setErrorMessage(error.message);
+          openModal(MODAL.ERROR);
+        },
+      },
     );
 
   const REPORT: Record<Reason, string> = {

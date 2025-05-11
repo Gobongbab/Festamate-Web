@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useSetAtom } from 'jotai';
 
 import { MODAL } from '@/shared/constants';
 import { Button, Modal, Radio } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
+import { errorMessageAtom } from '@/shared/atom';
 
 import { useSubmitUserReport } from '@/widgets/room/api';
 import { Reason } from '../types';
@@ -12,7 +14,8 @@ interface UserReportModalProps {
 }
 
 export default function UserReportModal({ userId }: UserReportModalProps) {
-  const { closeModal, modalState } = useModal();
+  const { openModal, closeModal, modalState } = useModal();
+  const setErrorMessage = useSetAtom(errorMessageAtom);
   const { mutate, isError, reset } = useSubmitUserReport();
   const { isOpen } = modalState(MODAL.USER_REPORT);
   const [selectedReason, setSelectedReason] = useState<Reason>('UNHEALTHY');
@@ -21,7 +24,14 @@ export default function UserReportModal({ userId }: UserReportModalProps) {
   const onReport = () =>
     mutate(
       { userId: userId, reason: selectedReason },
-      { onSuccess: () => closeModal(MODAL.USER_REPORT) },
+      {
+        onSuccess: () => closeModal(MODAL.USER_REPORT),
+        onError: error => {
+          closeModal(MODAL.USER_REPORT);
+          setErrorMessage(error.message);
+          openModal(MODAL.ERROR);
+        },
+      },
     );
 
   const REPORT: Record<Reason, string> = {

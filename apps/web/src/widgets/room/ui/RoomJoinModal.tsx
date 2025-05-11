@@ -5,18 +5,31 @@ import { Button, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
 
 import { useSubmitRoomJoin } from '@/widgets/room/api';
+import { useSetAtom } from 'jotai';
+import { errorMessageAtom } from '@/shared/atom';
 
 interface RoomJoinModalProps {
   roomId: number;
 }
 
 export default function RoomJoinModal({ roomId }: RoomJoinModalProps) {
-  const { closeModal, modalState } = useModal();
+  const { closeModal, modalState, openModal } = useModal();
+  const setErrorMessage = useSetAtom(errorMessageAtom);
   const { mutate, isError, reset, isPending } = useSubmitRoomJoin(roomId);
   const { isOpen } = modalState(MODAL.JOIN);
 
   const onClose = () => closeModal(MODAL.JOIN);
-  const onJoin = () => mutate({ roomId: roomId });
+  const onJoin = () =>
+    mutate(
+      { roomId: roomId },
+      {
+        onError: error => {
+          closeModal(MODAL.JOIN);
+          setErrorMessage(error.message);
+          openModal(MODAL.ERROR);
+        },
+      },
+    );
 
   useEffect(() => {
     reset();

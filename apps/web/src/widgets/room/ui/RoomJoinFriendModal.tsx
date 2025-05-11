@@ -7,8 +7,8 @@ import { Button, Input, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
 
 import { useSubmitFriendPhone, useSubmitRoomJoin } from '@/widgets/room/api';
-import { useAtomValue } from 'jotai';
-import { userAtom } from '@/shared/atom';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { errorMessageAtom, userAtom } from '@/shared/atom';
 import { Gender } from '@/shared/types';
 
 interface RoomJoinFriendModalProps {
@@ -27,7 +27,8 @@ export default function RoomJoinFriendModal({
   availableFriendCnt,
   roomId,
 }: RoomJoinFriendModalProps) {
-  const { closeModal, modalState } = useModal();
+  const { openModal, closeModal, modalState } = useModal();
+  const setErrorMessage = useSetAtom(errorMessageAtom);
   const { isOpen } = modalState(MODAL.JOIN_WITH_FRIEND);
   const [friendPhoneNumbers, setFriendPhoneNumbers] = useState<string[]>([]);
   const { mutate, reset, isPending } = useSubmitRoomJoin(roomId);
@@ -38,7 +39,16 @@ export default function RoomJoinFriendModal({
 
   const onClose = () => closeModal(MODAL.JOIN_WITH_FRIEND);
   const onJoin = () =>
-    mutate({ roomId: roomId, friendPhoneNumbers: friendPhoneNumbers });
+    mutate(
+      { roomId: roomId, friendPhoneNumbers: friendPhoneNumbers },
+      {
+        onError: error => {
+          closeModal(MODAL.JOIN_WITH_FRIEND);
+          setErrorMessage(error.message);
+          openModal(MODAL.ERROR);
+        },
+      },
+    );
 
   return (
     <>
