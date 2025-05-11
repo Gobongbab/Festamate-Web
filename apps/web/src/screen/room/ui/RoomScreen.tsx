@@ -36,7 +36,13 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   });
   const stack = useStack();
   const [isLogin, setIsLogin] = useState<boolean>(false);
-  const { maxParticipants, id, status: roomStatus, preferredGender } = params;
+  const {
+    maxParticipants,
+    id,
+    status: roomStatus,
+    chatRoomId,
+    preferredGender,
+  } = params;
   const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
@@ -65,8 +71,8 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   };
 
   const handleMoveToChat = () => {
-    push(PATH.CHAT, { chatRoomId: id });
-    console.log('이동 to 채팅방:', id);
+    push(PATH.CHAT, { chatRoomId: chatRoomId });
+    console.log('이동 to 채팅방:', chatRoomId);
   };
 
   const handleLeaveRoom = () => leave(id);

@@ -44,6 +44,7 @@ export type RoomParticipant = Pick<
 };
 
 export type RoomListItem = Room & {
+  chatRoomId: number;
   currentParticipants: number;
   thumbnail: {
     name: string;
