@@ -10,6 +10,7 @@ export default function UserItem({
   studentId,
   gender,
   department,
+  profileImageUrl,
 }: RoomParticipant) {
   const male = gender === 'MALE';
 
@@ -19,8 +20,7 @@ export default function UserItem({
         <div
           className='size-13 rounded-[50%] bg-cover bg-center'
           style={{
-            backgroundImage:
-              'url(https://i.pinimg.com/736x/04/15/e3/0415e3a6c56fc6e8f1e0ac1bed4b6aaf.jpg)',
+            backgroundImage: `url(${profileImageUrl || 'https://i.pinimg.com/736x/04/15/e3/0415e3a6c56fc6e8f1e0ac1bed4b6aaf.jpg'})`,
           }}
         />
       </div>

@@ -16,4 +16,5 @@ export type RoomParticipant = {
   gender: 'MALE' | 'FEMALE';
   department: string;
   isHost: boolean;
+  profileImageUrl: string;
 };
