@@ -11,6 +11,7 @@ import { Room } from '@/shared/types';
 import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
 import {
   CONTENT_MAX_LENGTH,
+  PLACE_MAX_LENGTH,
   TITLE_MAX_LENGTH,
   TITLE_MIN_LENGTH,
   useRoomCreateContext,
@@ -40,7 +41,8 @@ export default function useFormMode({
         content.length > 0 &&
         title?.length <= TITLE_MAX_LENGTH &&
         content.length <= CONTENT_MAX_LENGTH &&
-        place?.length > 0,
+        place?.length > 0 &&
+        place?.length <= PLACE_MAX_LENGTH,
     },
     {
       title: '모임 세부 정보',
