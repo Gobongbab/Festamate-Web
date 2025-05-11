@@ -10,7 +10,6 @@ import { PATH } from '@/shared/constants';
 import { searchAtom } from '@/shared/atom';
 import { SearchAppBar, Dock, Button } from '@/shared/ui';
 
-import { useRecentSearches } from '@/widgets/search/model';
 import { FilterBottomSheet, ResultContainer } from '@/widgets/result/ui';
 import { Filter } from '@/widgets/result/types';
 
@@ -21,15 +20,11 @@ const ResultScreen: ActivityComponentType<{ searchKey: string }> = ({
 }) => {
   const [value, setValue] = useAtom(searchAtom);
   const [filter, setFilter] = useState<Filter>({});
-  const { addSearch } = useRecentSearches();
   const { replace, push } = useFlow();
 
   const closeOnClick = () => replace(PATH.HOME, {});
   const searchOnClick = (e: FormEvent) => {
     e.preventDefault();
-    if (value.length > 0) {
-      addSearch(value);
-    }
     replace(PATH.RESULT, { searchKey: value }, { animate: false });
   };
   const createOnClick = () => push(PATH.CREATE, {});
