@@ -12,6 +12,7 @@ export const COVERED_ROOM_DATA = [
     place: '여의도 한강공원',
     maxParticipants: 4,
     currentParticipants: 2,
+    chatRoomId: 1,
     thumbnail: {
       name: 'picnic.jpg',
       url: 'https://example.com/images/picnic.jpg',
@@ -30,6 +31,7 @@ export const COVERED_ROOM_DATA = [
     place: '홍대 보드게임 카페',
     maxParticipants: 6,
     currentParticipants: 4,
+    chatRoomId: 1,
     thumbnail: {
       name: 'boardgame.png',
       url: 'https://example.com/images/boardgame.png',
@@ -48,6 +50,7 @@ export const COVERED_ROOM_DATA = [
     place: '북한산 둘레길',
     maxParticipants: 4,
     currentParticipants: 1,
+    chatRoomId: 1,
     thumbnail: {
       name: 'hiking.jpg',
       url: 'https://example.com/images/hiking.jpg',
