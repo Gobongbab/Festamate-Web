@@ -9,4 +9,5 @@ export const MODAL = {
   ALERT_SETTING: 'alertSettingModal',
   TICKET_INFO: 'ticketInfoModal',
   REGISTER_TICKET: 'registerTicketModal',
+  ERROR: 'errorModal',
 } as const;

@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Stack } from '@/app/stackflow';
 
 import { RAW_PATH } from '@/shared/constants';
+import { ErrorModal } from '@/shared/ui';
 import { userAtom } from '@/shared/atom';
 
 import { AuthScreen } from '@/screen/auth/ui';
@@ -35,5 +36,10 @@ export default function App() {
     { path: RAW_PATH.SIGNUP, element: <SignupScreen /> },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ErrorModal />
+    </>
+  );
 }
