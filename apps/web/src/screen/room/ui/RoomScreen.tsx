@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { ActivityComponentType, useStack } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
+import { cn, fetchLoginStatus } from '@festamate/utils';
+
 import { Button, LoginBottomSheet, RoomAppBar } from '@/shared/ui';
 import {
   MenuBottomSheet,
@@ -15,8 +17,7 @@ import {
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
-import { cn, fetchLoginStatus } from '@festamate/utils';
-import { useLeaveRoom } from '@/widgets/room/api';
+// import { useLeaveRoom } from '@/widgets/room/api';
 import { useFlow } from '@/app/stackflow';
 
 // 사용자 상태를 위한 타입 정의
@@ -43,7 +44,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     chatRoomId,
     preferredGender,
   } = params;
-  const { mutate: leave } = useLeaveRoom(id);
+  // const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
   const { push } = useFlow();
@@ -75,7 +76,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     console.log('이동 to 채팅방:', chatRoomId);
   };
 
-  const handleLeaveRoom = () => leave(id);
+  // const handleLeaveRoom = () => leave(id);
 
   const renderActionButtons = () => {
     if (isLogin && status.status === 'pending') {
@@ -117,17 +118,16 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
           <Button
             name='room-chat'
             label='채팅방 이동'
-            halfWidth
             onClick={handleMoveToChat}
             className='mb-normal-spacing'
           />
-          <Button
+          {/* <Button
             name='room-leave'
             label='방 나가기'
             halfWidth
             onClick={handleLeaveRoom}
             className='mb-normal-spacing'
-          />
+          /> */}
         </>
       );
     }
