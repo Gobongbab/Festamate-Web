@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ActivityComponentType } from '@stackflow/react';
@@ -38,27 +39,27 @@ const ChatScreen: ActivityComponentType<{ chatRoomId: number }> = ({
   //   }
   // }, [data]);
 
-  useEffect(() => {
-    const scroll = scrollRef.current;
-    if (!scroll || !hasNextPage) return;
+  // useEffect(() => {
+  //   const scroll = scrollRef.current;
+  //   if (!scroll || !hasNextPage) return;
 
-    const onScroll = async () => {
-      if (scroll.scrollTop <= 20 && hasNextPage && !isFetchingNextPage) {
-        prevScrollHeight.current = scroll.scrollHeight;
+  //   const onScroll = async () => {
+  //     if (scroll.scrollTop <= 20 && hasNextPage && !isFetchingNextPage) {
+  //       prevScrollHeight.current = scroll.scrollHeight;
 
-        await fetchNextPage();
+  //       await fetchNextPage();
 
-        if (scrollRef.current) {
-          const newScrollHeight = scrollRef.current.scrollHeight;
-          scrollRef.current.scrollTop =
-            newScrollHeight - prevScrollHeight.current;
-        }
-      }
-    };
+  //       if (scrollRef.current) {
+  //         const newScrollHeight = scrollRef.current.scrollHeight;
+  //         scrollRef.current.scrollTop =
+  //           newScrollHeight - prevScrollHeight.current;
+  //       }
+  //     }
+  //   };
 
-    scroll.addEventListener('scroll', onScroll);
-    return () => scroll.removeEventListener('scroll', onScroll);
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  //   scroll.addEventListener('scroll', onScroll);
+  //   return () => scroll.removeEventListener('scroll', onScroll);
+  // }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   const { sendMessage } = useWebSocket({
     chatRoomId: params.chatRoomId,
