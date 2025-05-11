@@ -9,11 +9,12 @@ import { useUpdateUserInfo } from '@/widgets/user/api';
 import { useFetchUserInfo } from '@/shared/api';
 
 export default function UserProfile() {
-  const { nickname, studentId, profileImage } = useAtomValue(userAtom)!;
+  const { nickname, studentId, profileImage, status } = useAtomValue(userAtom)!;
 
   const [update, setUpdate] = useState<boolean>(false);
   const [newNickname, setNewNickname] = useState<string>(nickname);
   const slicedStudentId = studentId.slice(2, 4);
+  const blocked = status === 'BLOCKED';
 
   const updateUser = useSetAtom(userUpdateAtom);
   const { refetch } = useFetchUserInfo();
@@ -60,6 +61,11 @@ export default function UserProfile() {
               }}
             />
             <span className='font-medium'>{nickname}</span>
+            {blocked && (
+              <span className='border-important bg-important/10 rounded-full border-[1px] px-3 py-1.5'>
+                신고로 인해 이용이 정지되었어요
+              </span>
+            )}
             <div className='flex flex-col text-center'>
               <span>경기대학교</span>
               <span>{slicedStudentId}학번 재학생</span>

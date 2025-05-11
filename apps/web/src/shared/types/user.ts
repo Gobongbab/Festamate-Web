@@ -1,4 +1,4 @@
-import { Gender } from '@/shared/types';
+import { Gender, Status } from '@/shared/types';
 
 export type User = {
   name: string;
@@ -6,6 +6,7 @@ export type User = {
   studentId: string;
   phoneNumber: string;
   gender: Gender;
+  status: Status;
   department: string;
   maximumTicket: number;
   remainingTicket: number;
