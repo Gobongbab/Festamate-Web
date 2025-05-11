@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 const submitTicket = async (data: string) => {
   const response = await userPost({
     request: REQUEST.REGISTER_TICKET,
-    data: data,
+    data: { code: data },
     headers: { 'Content-Type': 'application/json' },
   });
   return response.status;
