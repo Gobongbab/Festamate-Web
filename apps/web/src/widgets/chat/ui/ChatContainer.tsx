@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useAtomValue } from 'jotai';
 
 import { getDate } from '@festamate/utils';
@@ -13,9 +13,9 @@ export default function ChatContainer({ data }: { data: Message[] }) {
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    bottomRef.current!.scrollIntoView({ behavior: 'smooth' });
-  }, [data, bottomRef]);
+  // useEffect(() => {
+  //   bottomRef.current!.scrollIntoView({ behavior: 'smooth' });
+  // }, [data, bottomRef]);
 
   return (
     <>
