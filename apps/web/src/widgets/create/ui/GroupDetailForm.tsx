@@ -112,6 +112,7 @@ export default function GroupDetailForm({
             <>
               <p>모임을 함께 생성하는 친구의 전화번호를 입력해주세요.</p>
               <p>친구도 Festamate!에 가입된 상태여야 해요!</p>
+              <p>친구의 성별이 같아야 모임을 생성할 수 있어요.</p>
             </>
           }
           className='flex flex-col gap-2'
@@ -147,10 +148,11 @@ export default function GroupDetailForm({
 }
 
 const FriendInput = () => {
+  const [success, setSuccess] = useState(false);
   const [value, setValue] = useState<string>('');
   const { mutate } = useSubmitFriendPhone();
-  const { phoneNumber } = useAtomValue(userAtom)!;
-  const { setFriendPhoneNumbers } = useRoomCreateContext();
+  const { phoneNumber, gender } = useAtomValue(userAtom)!;
+  const { setFriendPhoneNumbers, friendPhoneNumbers } = useRoomCreateContext();
 
   return (
     <div className='flex w-fit gap-2'>
@@ -161,6 +163,7 @@ const FriendInput = () => {
           type='phone'
           className='h-12'
           value={value}
+          disabled={success}
           onChange={e => {
             const rawValue = e.target.value;
             const formattedValue = getFormattedPhone(rawValue);
@@ -178,8 +181,16 @@ const FriendInput = () => {
           else {
             mutate(value, {
               onSuccess: data => {
-                if (data.result.exist) {
+                if (friendPhoneNumbers.includes(value))
+                  alert('이미 추가한 친구입니다.');
+                else if (data.result.gender !== gender)
+                  alert('친구의 성별이 나와 달라요.');
+                else if (
+                  data.result.exist &&
+                  !friendPhoneNumbers.includes(value)
+                ) {
                   alert('친구를 추가했어요!');
+                  setSuccess(true);
                   setFriendPhoneNumbers(prev => [...prev, value]);
                 } else alert('가입하지 않은 친구입니다.');
               },

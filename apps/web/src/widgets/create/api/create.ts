@@ -1,14 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
+import { useSetAtom } from 'jotai';
 
 import { useFlow } from '@/app/stackflow';
 
 import { REQUEST, useFetchUserInfo, useRoomList, userPost } from '@/shared/api';
+import { errorMessageAtom } from '@/shared/atom';
+import { MODAL } from '@/shared/constants';
+import { useModal } from '@/shared/hook';
+import { Gender } from '@/shared/types';
 
 interface FriendPhoneResponse {
   isSuccess: boolean;
   message: string;
   result: {
     exist: boolean;
+    gender: Gender;
   };
 }
 
@@ -31,8 +37,10 @@ const submitFriendPhone = async (data: string) => {
 
 export const useFormSubmit = () => {
   const { pop } = useFlow();
+  const { openModal } = useModal();
   const { refetch } = useRoomList(REQUEST.ROOM);
   const { refetch: fetchUserInfo } = useFetchUserInfo();
+  const setErrorMessage = useSetAtom(errorMessageAtom);
 
   return useMutation<unknown, unknown, FormData>({
     mutationFn: data => submitRoomCreation(data),
@@ -41,7 +49,11 @@ export const useFormSubmit = () => {
       fetchUserInfo();
       pop();
     },
-    onError: () => alert('모임 생성에 실패했어요.'),
+    onError: e => {
+      const error = e as Error;
+      setErrorMessage(error.message);
+      openModal(MODAL.ERROR);
+    },
   });
 };
 
