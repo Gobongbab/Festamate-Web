@@ -55,7 +55,7 @@ export default function GroupDetailForm({
       >
         <div className='flex w-full items-center gap-2'>
           <Input
-            className='w-14 text-center'
+            className='h-12 w-14 text-center'
             type='number'
             id='preferredStudentIdMin'
             value={preferredStudentIdMin.slice(0, 2)}
@@ -63,7 +63,7 @@ export default function GroupDetailForm({
           />
           학번 이상
           <Input
-            className='w-14 text-center'
+            className='h-12 w-14 text-center'
             type='number'
             id='preferredStudentIdMax'
             value={preferredStudentIdMax.slice(0, 2)}
@@ -128,7 +128,7 @@ export default function GroupDetailForm({
         <button
           type='button'
           name='meeting-date-time'
-          className='border-border active:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          className='border-border active:border-point rounded-5 h-12 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
           onClick={() => openBottomSheet(BOTTOM_SHEET.DATE_PICKER)}
         >
           {getDate(date, 'YYYY년 M월 D일')}
@@ -136,7 +136,7 @@ export default function GroupDetailForm({
         <button
           type='button'
           name='meeting-date-time'
-          className='border-border active:border-point rounded-5 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
+          className='border-border active:border-point rounded-5 h-12 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
           onClick={() => openBottomSheet(BOTTOM_SHEET.TIME_PICKER)}
         >
           {getDate(date, 'A h시 m분')}
@@ -159,6 +159,7 @@ const FriendInput = () => {
           id='co-founder'
           placeholder='전화번호'
           type='phone'
+          className='h-12'
           value={value}
           onChange={e => {
             const rawValue = e.target.value;

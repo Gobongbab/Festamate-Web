@@ -74,6 +74,7 @@ export default function GroupTitleForm({
           value={title}
           maxLength={TITLE_MAX_LENGTH}
           {...register('title', { required: true })}
+          className='h-12'
         />
       </FormItem>
       <FormItem title='만남 장소' description='간단하고 명확하게 작성해주세요!'>
@@ -83,6 +84,7 @@ export default function GroupTitleForm({
           value={place}
           maxLength={PLACE_MAX_LENGTH}
           {...register('place', { required: true })}
+          className='h-12'
         />
       </FormItem>
       <FormItem title='모임 설명' className='mb-normal-spacing'>
@@ -91,7 +93,7 @@ export default function GroupTitleForm({
           placeholder='설명을 입력해주세요.'
           {...register('content', { required: true })}
           className={cn(
-            'border-border rounded-5 text-md h-44 w-full resize-none border-[1px] px-4 py-3 focus:outline-none',
+            'border-border rounded-5 text-md h-48 w-full resize-none border-[1px] px-4 py-3 focus:outline-none',
             content.length > CONTENT_MAX_LENGTH && 'border-important shake',
           )}
         />
