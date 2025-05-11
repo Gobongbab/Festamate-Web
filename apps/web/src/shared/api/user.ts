@@ -12,7 +12,7 @@ import { logout } from '@/widgets/user/utils';
 
 interface PostRequestParams<TData> {
   request: string;
-  headers?: AxiosHeaders;
+  headers?: AxiosHeaders | { [key: string]: string };
   data?: TData;
 }
 
