@@ -7,3 +7,5 @@ export { default as RoomJoinFriendModal } from './RoomJoinFriendModal';
 export { default as RoomJoinModal } from './RoomJoinModal';
 export { default as RoomReportModal } from './RoomReportModal';
 export { default as UserItem } from './UserItem';
+export { default as UserManageBottomSheet } from './UserManageBottomSheet';
+export { default as UserReportModal } from './UserReportModal';

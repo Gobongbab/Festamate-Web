@@ -4,6 +4,7 @@ export const MODAL = {
   ROOM_DELETE: 'deleteRoomModal',
   ROOM_DELETE_DENIAL: 'deleteRoomDenialModal',
   ROOM_REPORT: 'roomReportModal',
+  USER_REPORT: 'userReportModal',
   TERM_OF_SERVICE: 'termOfServiceModal',
   ALERT_SETTING: 'alertSettingModal',
   TICKET_INFO: 'ticketInfoModal',

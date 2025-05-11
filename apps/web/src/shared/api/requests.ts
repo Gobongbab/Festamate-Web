@@ -13,6 +13,7 @@ export const REQUEST = {
   CERTIFY_STUDENT: '/check/student-card',
   CERTIFY_USER: '/members/exist',
   USER_INFO: '/members/profile',
+  USER_REPORT: '/report/member',
   UPDATE_USER: '/members/profile',
   REGISTER_TICKET: '/coupons',
   CHAT_ROOM: '/messages/chatRooms',

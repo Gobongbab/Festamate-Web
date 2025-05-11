@@ -22,8 +22,27 @@ const submitRoomReport = async ({
   });
 };
 
+const submitUserReport = async ({
+  userId,
+  reason,
+}: {
+  userId: number;
+  reason: Reason;
+}) => {
+  await userPost<SubmitRoomReportRequest>({
+    request: getPath(REQUEST.USER_REPORT, `${userId}`),
+    data: { reason: reason },
+  });
+};
+
 export const useSubmitRoomReport = () => {
   return useMutation({
     mutationFn: submitRoomReport,
+  });
+};
+
+export const useSubmitUserReport = () => {
+  return useMutation({
+    mutationFn: submitUserReport,
   });
 };

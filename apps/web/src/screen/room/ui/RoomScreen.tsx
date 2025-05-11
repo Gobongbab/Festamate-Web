@@ -13,12 +13,16 @@ import {
   RoomJoinFriendModal,
   RoomJoinModal,
   RoomReportModal,
+  UserManageBottomSheet,
+  UserReportModal,
 } from '@/widgets/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
 // import { useLeaveRoom } from '@/widgets/room/api';
 import { useFlow } from '@/app/stackflow';
+import { useAtomValue } from 'jotai';
+import { selectedUserAtom } from '@/shared/atom';
 
 // 사용자 상태를 위한 타입 정의
 type RoomStatus = {
@@ -48,6 +52,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
   const { push } = useFlow();
+  const selectedUser = useAtomValue(selectedUserAtom);
 
   useEffect(() => {
     setIsLogin(fetchLoginStatus());
@@ -177,10 +182,12 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
         {renderActionButtons()}
       </div>
       <LoginBottomSheet />
+      <UserManageBottomSheet />
       <MenuBottomSheet roomAuthority={status.data} roomStatus={roomStatus} />
       <RoomDeleteModal roomId={id} />
       <RoomJoinModal roomId={id} />
       <RoomReportModal roomId={id} />
+      <UserReportModal userId={selectedUser} />
       <RoomJoinFriendModal
         availableFriendCnt={availableFriendCnt}
         preferredGender={preferredGender}

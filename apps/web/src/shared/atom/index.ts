@@ -3,3 +3,4 @@ export * from './bottomSheet';
 export * from './modal';
 export * from './notificationSetting';
 export * from './search';
+export * from './selectedUser';
