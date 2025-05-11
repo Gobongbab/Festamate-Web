@@ -47,7 +47,7 @@ export default function HomeScreen() {
         <Button
           shadow
           name='create-group'
-          size='md'
+          size='lg'
           className='absolute right-6 bottom-26 z-30 flex w-fit items-center gap-x-2 rounded-full px-5'
           onClick={createOnClick}
           label={

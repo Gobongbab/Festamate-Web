@@ -19,6 +19,12 @@ interface ResultContainerParams {
   filter: Filter;
 }
 
+interface FilterButtonProps {
+  onClick: () => void;
+  label: string;
+  filter: Filter;
+}
+
 export default function ResultContainer({
   searchKey,
   filter,
@@ -91,51 +97,28 @@ export default function ResultContainer({
             "<b>{searchKey}</b>" 에 대한 검색 결과입니다.
           </p>
         )}
-        <div className='flex w-full items-center gap-1'>
-          <button
-            className={cn(
-              'border-border flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-3 py-1.5 text-sm',
-              filter.status && 'bg-point text-white',
-            )}
+        <div className='flex w-full items-center gap-2'>
+          <FilterButton
             onClick={() => {
               openBottomSheet(BOTTOM_SHEET.FILTER_STATUS);
             }}
-          >
-            매칭 상태
-            {filter.status && (
-              <span className='text-xs'>({ROOM_STATUS[filter.status]})</span>
-            )}
-          </button>
-          <button
-            className={cn(
-              'border-border flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-3 py-1.5 text-sm',
-              filter.gender && 'bg-point text-white',
-            )}
+            label='매칭 상태'
+            filter={filter}
+          />
+          <FilterButton
             onClick={() => {
               openBottomSheet(BOTTOM_SHEET.FILTER_GENDER);
             }}
-          >
-            모집 성별
-            {filter.gender && (
-              <span className='text-xs'>({GENDER_LABEL[filter.gender]})</span>
-            )}
-          </button>
-          <button
-            className={cn(
-              'border-border flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-3 py-1.5 text-sm',
-              filter.participants && 'bg-point text-white',
-            )}
+            label='모집 성별'
+            filter={filter}
+          />
+          <FilterButton
             onClick={() => {
               openBottomSheet(BOTTOM_SHEET.FILTER_PARTICIPANTS);
             }}
-          >
-            모임 인원
-            {filter.participants && (
-              <span className='text-xs'>
-                ({PARTICIPANTS[filter.participants]})
-              </span>
-            )}
-          </button>
+            label='모임 인원'
+            filter={filter}
+          />
         </div>
       </div>
 
@@ -157,3 +140,39 @@ export default function ResultContainer({
     </>
   );
 }
+
+const FilterButton = ({ onClick, label, filter }: FilterButtonProps) => {
+  const filterKey =
+    label === '매칭 상태'
+      ? 'status'
+      : label === '모집 성별'
+        ? 'gender'
+        : 'participants';
+
+  const getStatusText = () => {
+    if (label === '매칭 상태' && filter.status) {
+      return ROOM_STATUS[filter.status];
+    }
+    if (label === '모집 성별' && filter.gender) {
+      return GENDER_LABEL[filter.gender];
+    }
+    if (label === '모임 인원' && filter.participants) {
+      return PARTICIPANTS[filter.participants];
+    }
+    return null;
+  };
+
+  const status = getStatusText();
+
+  return (
+    <button
+      className={cn(
+        'border-border flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-4 py-2 text-[13px]',
+        filter[filterKey] && 'bg-point text-white',
+      )}
+      onClick={onClick}
+    >
+      {label} {status && <span className='text-xs'>{status}</span>}
+    </button>
+  );
+};
