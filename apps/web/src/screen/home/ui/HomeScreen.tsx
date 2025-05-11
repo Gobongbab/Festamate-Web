@@ -32,7 +32,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <div className='fixed inset-0 overflow-hidden'>
+    <div className='touch-action-none fixed inset-0 overflow-hidden overflow-x-hidden'>
       <AppScreen
         appBar={AppBar(
           searchOnClick,
