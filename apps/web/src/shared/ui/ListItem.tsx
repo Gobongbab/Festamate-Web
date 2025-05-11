@@ -37,7 +37,10 @@ const ListItem = forwardRef<HTMLButtonElement, RoomListItem & ListItemProps>(
         onClick={handleClick}
         ref={ref}
       >
-        <img className='rounded-5 h-full w-24' src={thumbnail.url || ''} />
+        <img
+          className='rounded-5 size-24 object-cover object-center'
+          src={thumbnail.url || ''}
+        />
         <div className='flex h-full flex-col justify-center gap-y-2 overflow-hidden'>
           <div className='flex flex-col items-start'>
             <p className='w-full overflow-hidden text-start text-lg font-semibold text-nowrap text-ellipsis'>
