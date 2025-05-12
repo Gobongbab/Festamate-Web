@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev",
     "lint": "next lint",
-    "preview": "vite preview"
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^19.0.0",

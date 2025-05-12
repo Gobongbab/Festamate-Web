@@ -11,6 +11,20 @@ export default function LoginPage() {
           로그인
         </p>
         <LoginForm />
+        <a
+          className='text-3xl text-red-500'
+          href='https://festamate-web.vercel.app/'
+        >
+          테스트1
+        </a>
+        <button
+          className='text-3xl text-red-500'
+          onClick={() =>
+            window.open('https://festamate-web.vercel.app/', '_blank')
+          }
+        >
+          테스트2(아마 이게 될거임)
+        </button>
       </div>
     </div>
   );
