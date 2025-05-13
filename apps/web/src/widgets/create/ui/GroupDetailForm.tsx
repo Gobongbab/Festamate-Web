@@ -147,6 +147,7 @@ export default function GroupDetailForm({
       <FormItem
         title='모임 오픈채팅방 링크'
         description='모임 구성원들과 대화를 나눌 오픈채팅방 링크를 입력해주세요'
+        className='mb-normal-spacing'
       >
         <Input
           id='openChatUrl'
