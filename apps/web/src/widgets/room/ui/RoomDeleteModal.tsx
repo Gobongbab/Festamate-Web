@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { MODAL } from '@/shared/constants';
 import { Button, Modal } from '@/shared/ui';
@@ -12,11 +12,15 @@ interface RoomDeleteModalProps {
 
 export default function RoomDeleteModal({ roomId }: RoomDeleteModalProps) {
   const { closeModal, modalState } = useModal();
-  const { mutate, isError } = useDeleteRoom();
+  const { mutate, isError, reset } = useDeleteRoom();
   const { isOpen } = modalState(MODAL.ROOM_DELETE);
 
   const onClose = () => closeModal(MODAL.ROOM_DELETE);
   const onJoin = () => mutate(roomId);
+
+  useEffect(() => {
+    reset();
+  }, [isOpen, reset]);
 
   return (
     <>
