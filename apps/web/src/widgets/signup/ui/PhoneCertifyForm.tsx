@@ -20,7 +20,7 @@ export default function PhoneCertifyForm({
 }: PhoneCertifyFormProps) {
   const [timeOver, setTimeOver] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
-  const [count, setCount] = useState<number>(2);
+  const [count, setCount] = useState<number>(300);
   const { mutate, isPending, isError } = useSubmitCode({
     setProcess,
   });
