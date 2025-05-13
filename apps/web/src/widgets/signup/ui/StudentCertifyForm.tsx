@@ -42,6 +42,8 @@ export default function StudentCertifyForm({
   const handleClick = async () => {
     if (!file) return;
 
+    console.log('test');
+
     setCertifyError('');
     setProcessStatus('certifying');
 
