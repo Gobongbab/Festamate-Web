@@ -4,10 +4,9 @@ import { cn } from '@festamate/utils';
 
 import { useFlow } from '@/app/stackflow';
 import { Button, Card, CardSkeleton } from '@/shared/ui';
-import { RoomListItem } from '@/shared/types';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET, PATH } from '@/shared/constants';
-import { REQUEST, useRoomList } from '@/shared/api';
+import { useRoomList } from '@/shared/api';
 
 import { COVERED_ROOM_DATA } from '@/mock';
 import { Error, Festa } from '@/assets/images';
@@ -26,12 +25,7 @@ export default function GroupCarousel({
   const { push } = useFlow();
   const skeleton = Array.from({ length: 4 });
 
-  let rooms;
-
-  if (request === REQUEST.ROOM_PARTICIPATED)
-    /**내가 참여한 모임의 응답은 content 없이 바로 주어져 다음과 같이 작성하였습니다 */
-    rooms = (data as unknown as RoomListItem[]) || [];
-  else rooms = data ? data.content : [];
+  const rooms = data ? data.content : [];
 
   return (
     <div className='flex w-full flex-col gap-y-3'>
