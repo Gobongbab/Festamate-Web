@@ -1,20 +1,20 @@
 import React from 'react';
 
 import { ListItem, ListSkeleton } from '@/shared/ui';
-import { PathItem } from '../types';
-import { useFlow } from '@/app/stackflow';
 import { useRoomList } from '@/shared/api';
+import { PATH } from '@/shared/constants';
+
+import { useFlow } from '@/app/stackflow';
 import { Error } from '@/assets/images';
 
 interface GroupListProps {
   label: string;
-  to: PathItem;
   request: string;
 }
 
 const GROUP_LIST_SKELETON_COUNT = 6;
 
-export default function GroupList({ label, to, request }: GroupListProps) {
+export default function GroupList({ label, request }: GroupListProps) {
   const { data, isLoading, isError } = useRoomList(request);
   const { push } = useFlow();
 
@@ -27,7 +27,7 @@ export default function GroupList({ label, to, request }: GroupListProps) {
         <button
           name='more'
           className='text-light hover:text-dark cursor-pointer text-sm focus:outline-none'
-          onClick={() => push(to, { title: label })}
+          onClick={() => push(PATH.LIST, { title: label, request: request })}
         >
           <u>더보기</u>
         </button>

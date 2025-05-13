@@ -5,6 +5,7 @@ import { ListContainer } from '@/widgets/list/ui';
 
 type ListScreenParams = {
   title: string;
+  request: string;
 };
 
 const ListScreen: ActivityComponentType<ListScreenParams> = ({
@@ -16,7 +17,7 @@ const ListScreen: ActivityComponentType<ListScreenParams> = ({
     <div className='fixed inset-0 overflow-hidden'>
       <AppScreen appBar={NormalAppBar(params.title)}>
         <div className='scrollbar-hide container-mobile p-normal-padding pb-dock-height flex size-full flex-col gap-y-1.5 overflow-y-scroll pt-0'>
-          <ListContainer />
+          <ListContainer request={params.request} />
         </div>
       </AppScreen>
     </div>

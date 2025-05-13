@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { GroupCarousel, GroupList } from '@/shared/ui';
-import { PATH } from '@/shared/constants';
 import { REQUEST } from '@/shared/api';
 import { fetchLoginStatus } from '@festamate/utils';
 import { useAtomValue } from 'jotai';
@@ -19,15 +18,13 @@ export default function HomeContainer() {
           isLogin && user ? `${user.nickname}님을 위한 추천 모임` : '추천 모임'
         }
         key='openedGroup'
-        to={PATH.LIST}
-        request={REQUEST.ROOM}
+        request={REQUEST.ROOM_RECOMMENDED}
         covered={!fetchLoginStatus()}
       />
       <GroupList
         label='개설된 모임'
         key='popularGroup'
         request={REQUEST.ROOM}
-        to={PATH.LIST}
       />
     </>
   );

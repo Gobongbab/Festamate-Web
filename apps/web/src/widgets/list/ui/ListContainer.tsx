@@ -3,7 +3,7 @@ import React, { useCallback, useRef, useEffect } from 'react';
 import { ListItem, ListSkeleton } from '@/shared/ui';
 import { useInfiniteRooms } from '@/widgets/list/api';
 
-export default function ListContainer() {
+export default function ListContainer({ request }: { request: string }) {
   const {
     data,
     fetchNextPage,
@@ -13,7 +13,7 @@ export default function ListContainer() {
     isError,
     error,
     refetch,
-  } = useInfiniteRooms();
+  } = useInfiniteRooms(request);
 
   const observer = useRef<IntersectionObserver | undefined>(undefined);
   const lastRoomRef = useCallback(
@@ -32,14 +32,8 @@ export default function ListContainer() {
 
       observer.current = new IntersectionObserver(
         entries => {
-          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-            console.log('Fetching next page...', {
-              hasNextPage,
-              isFetchingNextPage,
-              currentPage: data?.pages.length,
-            });
+          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage)
             fetchNextPage();
-          }
         },
         { threshold: 0.7 },
       );
@@ -48,13 +42,7 @@ export default function ListContainer() {
         observer.current.observe(node);
       }
     },
-    [
-      isLoading,
-      isFetchingNextPage,
-      hasNextPage,
-      fetchNextPage,
-      data?.pages.length,
-    ],
+    [fetchNextPage, hasNextPage, isFetchingNextPage, isLoading],
   );
 
   useEffect(() => {

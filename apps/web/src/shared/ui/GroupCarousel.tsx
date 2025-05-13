@@ -1,25 +1,24 @@
 import React from 'react';
 
+import { cn } from '@festamate/utils';
+
 import { useFlow } from '@/app/stackflow';
 import { Button, Card, CardSkeleton } from '@/shared/ui';
-import { PathItem, RoomListItem } from '@/shared/types';
-import { cn } from '@festamate/utils';
+import { RoomListItem } from '@/shared/types';
+import { useBottomSheet } from '@/shared/hook';
+import { BOTTOM_SHEET, PATH } from '@/shared/constants';
 import { REQUEST, useRoomList } from '@/shared/api';
 
 import { COVERED_ROOM_DATA } from '@/mock';
 import { Error, Festa } from '@/assets/images';
-import { useBottomSheet } from '../hook';
-import { BOTTOM_SHEET } from '../constants';
 
 interface GroupCarouselProps {
   label: string;
-  to: PathItem;
   covered?: boolean;
   request: string;
 }
 export default function GroupCarousel({
   label,
-  to,
   covered = false,
   request,
 }: GroupCarouselProps) {
@@ -41,7 +40,7 @@ export default function GroupCarousel({
         <button
           name='more'
           className='focus;outline-none text-light hover:text-dark cursor-pointer text-sm'
-          onClick={() => push(to, { title: label })}
+          onClick={() => push(PATH.LIST, { title: label, request: request })}
           disabled={covered}
         >
           <u>더보기</u>
