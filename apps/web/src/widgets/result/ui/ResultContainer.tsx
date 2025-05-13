@@ -30,7 +30,7 @@ export default function ResultContainer({
   filter,
 }: ResultContainerParams) {
   const { data, hasNextPage, isLoading, isFetchingNextPage, fetchNextPage } =
-    useInfiniteRoomsWithFilters({ ...filter });
+    useInfiniteRoomsWithFilters(searchKey, { ...filter });
   const { openBottomSheet } = useBottomSheet();
 
   const observer = useRef<IntersectionObserver | undefined>(undefined);
@@ -83,11 +83,7 @@ export default function ResultContainer({
     };
   }, []);
 
-  const rooms = data
-    ? data.pages
-        .flatMap(page => page.content)
-        .filter(room => room.title.includes(searchKey))
-    : [];
+  const rooms = data ? data.pages.flatMap(page => page.content) : [];
 
   return (
     <>

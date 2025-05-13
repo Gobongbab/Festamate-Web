@@ -7,6 +7,7 @@ import type { Filter } from '@/widgets/result/types';
 interface FetchRoomListProps {
   pageParam: number;
   filter?: Filter;
+  keyword: string;
 }
 
 interface FetchRoomListResponse {
@@ -43,12 +44,14 @@ interface FetchRoomListResponse {
 const fetchRoomsWithFilters = async ({
   pageParam = 0,
   filter,
+  keyword,
 }: FetchRoomListProps) => {
   const response = await get<FetchRoomListResponse>({
     request: REQUEST.ROOM,
     params: {
       page: pageParam,
       size: 20,
+      keyword: keyword,
       ...filter,
     },
   });
@@ -56,11 +59,13 @@ const fetchRoomsWithFilters = async ({
 };
 
 export const useInfiniteRoomsWithFilters = (
+  keyword: string,
   filter?: FetchRoomListProps['filter'],
 ) => {
   return useInfiniteQuery({
     queryKey: ['rooms', filter],
-    queryFn: ({ pageParam }) => fetchRoomsWithFilters({ pageParam, filter }),
+    queryFn: ({ pageParam }) =>
+      fetchRoomsWithFilters({ pageParam, filter, keyword }),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       if (lastPage.last || lastPage.empty) return undefined;
