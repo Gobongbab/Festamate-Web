@@ -34,6 +34,7 @@ export default function PhoneCertifyForm({
 
   const resendClick = () => {
     resend({ phoneNumber });
+    setTimeOver(false);
   };
 
   const timeFormat = (time: number) => {
@@ -43,19 +44,22 @@ export default function PhoneCertifyForm({
     return `${minute}:${isDigit ? `0${second}` : second}`;
   };
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCount(prev => {
-        if (prev <= 1) {
-          clearInterval(intervalId);
-          setTimeOver(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    let intervalId: ReturnType<typeof setInterval>;
+    if (timeOver === false) {
+      intervalId = setInterval(() => {
+        setCount(prev => {
+          if (prev <= 1) {
+            clearInterval(intervalId);
+            setTimeOver(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [timeOver]);
 
   return (
     <div className='flex w-full flex-col gap-6'>
