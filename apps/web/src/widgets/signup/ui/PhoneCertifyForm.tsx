@@ -34,6 +34,7 @@ export default function PhoneCertifyForm({
 
   const resendClick = () => {
     resend({ phoneNumber });
+    setTimeOver(true);
     setTimeOver(false);
   };
 
