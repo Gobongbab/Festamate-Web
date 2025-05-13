@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { REQUEST, userPatch } from '@/shared/api';
+import { REQUEST, userPatch, userPut } from '@/shared/api';
 
 interface UpdateUserInfoRequest {
   nickname?: string;
@@ -14,8 +14,18 @@ const updateUserInfo = async (data: UpdateUserInfoRequest) => {
   });
 };
 
+const updateUserProfile = async (data: FormData) => {
+  await userPut({ request: REQUEST.UPDATE_USER_PICTURE, data: data });
+};
+
 export const useUpdateUserInfo = () => {
   return useMutation({
     mutationFn: updateUserInfo,
+  });
+};
+
+export const useUpdateUserProfile = () => {
+  return useMutation({
+    mutationFn: updateUserProfile,
   });
 };

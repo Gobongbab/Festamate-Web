@@ -21,16 +21,19 @@ export default function UserProfile() {
   const { mutate } = useUpdateUserInfo();
 
   const handleSave = () => {
-    mutate(
-      { nickname: newNickname },
-      {
-        onSuccess: () => {
-          updateUser({ nickname: newNickname });
-          refetch();
-          setUpdate(false);
+    if (newNickname !== nickname) {
+      mutate(
+        { nickname: newNickname },
+        {
+          onSuccess: () => {
+            updateUser({ nickname: newNickname });
+            refetch();
+            setUpdate(false);
+          },
         },
-      },
-    );
+      );
+    }
+    setUpdate(false);
   };
 
   return (
