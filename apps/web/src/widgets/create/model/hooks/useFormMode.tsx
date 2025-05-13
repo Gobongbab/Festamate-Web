@@ -28,7 +28,14 @@ export default function useFormMode({
   watch,
   setValue,
 }: RoomModeProps) {
-  const { title, content, preferredGender, maxParticipants, place } = watch();
+  const {
+    title,
+    content,
+    preferredGender,
+    maxParticipants,
+    place,
+    openChatUrl,
+  } = watch();
   const { maxParticipantsRender, friendPhoneNumbers } = useRoomCreateContext();
 
   const MODE = [
@@ -57,6 +64,7 @@ export default function useFormMode({
       isFormValid:
         preferredGender &&
         maxParticipants &&
+        openChatUrl.length > 0 &&
         (maxParticipantsRender !== 2
           ? friendPhoneNumbers.length === maxParticipantsRender / 2 - 1
           : true),

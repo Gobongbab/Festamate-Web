@@ -34,6 +34,7 @@ export default function GroupDetailForm({
     maxParticipants,
     preferredStudentIdMin,
     preferredStudentIdMax,
+    openChatUrl,
   } = watch();
   const {
     maxParticipantsRender,
@@ -142,6 +143,18 @@ export default function GroupDetailForm({
         >
           {getDate(date, 'A h시 m분')}
         </button>
+      </FormItem>
+      <FormItem
+        title='모임 오픈채팅방 링크'
+        description='모임 구성원들과 대화를 나눌 오픈채팅방 링크를 입력해주세요'
+      >
+        <Input
+          id='openChatUrl'
+          placeholder='https://open.kakao.com/o/sgcUtX3g'
+          value={openChatUrl}
+          {...register('openChatUrl', { required: true })}
+          className='h-12'
+        />
       </FormItem>
     </>
   );

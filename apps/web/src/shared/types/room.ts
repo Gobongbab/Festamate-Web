@@ -20,6 +20,7 @@ export type Room = Partial<FormData> &
     title: string;
     content: string;
     place: string;
+    openChatUrl: string;
   };
 
 export type FriendPhoneNumbers = {
@@ -44,7 +45,6 @@ export type RoomParticipant = Pick<
 };
 
 export type RoomListItem = Room & {
-  chatRoomId: number;
   currentParticipants: number;
   thumbnail: {
     name: string;

@@ -19,9 +19,8 @@ import {
 } from '@/widgets/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
-import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
+import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 // import { useLeaveRoom } from '@/widgets/room/api';
-import { useFlow } from '@/app/stackflow';
 import { useAtomValue } from 'jotai';
 import { selectedUserAtom } from '@/shared/atom';
 
@@ -46,13 +45,12 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     maxParticipants,
     id,
     status: roomStatus,
-    chatRoomId,
+    openChatUrl,
     preferredGender,
   } = params;
   // const { mutate: leave } = useLeaveRoom(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
-  const { push } = useFlow();
   const selectedUser = useAtomValue(selectedUserAtom);
 
   useEffect(() => {
@@ -78,8 +76,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   };
 
   const handleMoveToChat = () => {
-    push(PATH.CHAT, { chatRoomId: chatRoomId });
-    console.log('이동 to 채팅방:', chatRoomId);
+    window.open(openChatUrl, '_blank');
   };
 
   // const handleLeaveRoom = () => leave(id);
@@ -123,7 +120,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
         <>
           <Button
             name='room-chat'
-            label='채팅방 이동'
+            label='오픈채팅방 이동'
             onClick={handleMoveToChat}
             className='mb-normal-spacing'
           />
