@@ -9,6 +9,7 @@ import { Button, LoginBottomSheet, RoomAppBar } from '@/shared/ui';
 import {
   MenuBottomSheet,
   RoomContainer,
+  RoomDeleteDenialModal,
   RoomDeleteModal,
   RoomJoinFriendModal,
   RoomJoinModal,
@@ -185,6 +186,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
       <UserManageBottomSheet />
       <MenuBottomSheet roomAuthority={status.data} roomStatus={roomStatus} />
       <RoomDeleteModal roomId={id} />
+      <RoomDeleteDenialModal />
       <RoomJoinModal roomId={id} />
       <RoomReportModal roomId={id} />
       <UserReportModal userId={selectedUser} />
