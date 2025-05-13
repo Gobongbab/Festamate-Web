@@ -15,13 +15,13 @@ export default function UserContainer() {
     <>
       <UserProfile />
       <GroupCarousel label='참여한 모임' request={REQUEST.ROOM_PARTICIPATED} />
-      <FormItem title='티켓'>
+      <FormItem title='쿠폰'>
         <button
-          name='registerTicket'
+          name='registerCoupon'
           className='flex w-full cursor-pointer justify-start focus:outline-none'
           onClick={() => openModal(MODAL.REGISTER_TICKET)}
         >
-          티켓 등록하기
+          쿠폰 등록하기
         </button>
       </FormItem>
       <div className='bg-sub h-[1px] w-full flex-shrink-0' />
