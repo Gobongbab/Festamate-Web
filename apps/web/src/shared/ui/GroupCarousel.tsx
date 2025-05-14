@@ -21,11 +21,7 @@ export default function GroupCarousel({
   covered = false,
   request,
 }: GroupCarouselProps) {
-  const { data, isError, isLoading } = useRoomList(request);
   const { push } = useFlow();
-  const skeleton = Array.from({ length: 4 });
-
-  const rooms = data ? data.content : [];
 
   return (
     <div className='flex w-full flex-col gap-y-3'>
@@ -43,38 +39,48 @@ export default function GroupCarousel({
       {covered ? (
         <CoveredMockup />
       ) : (
-        <div
-          className={cn(
-            'scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3',
-            covered ? 'overflow-hidden' : 'overflow-x-scroll',
-          )}
-        >
-          {data && (
-            <>
-              {rooms.length === 0 ? (
-                <div className='grid h-30 w-full place-items-center'>
-                  {label}이 없어요!
-                </div>
-              ) : (
-                rooms.map(room => <Card key={room.id} {...room} />)
-              )}
-            </>
-          )}
-          {isLoading &&
-            skeleton.map((_, i) => <CardSkeleton key={`card-skeleton-${i}`} />)}
-          {isError && (
-            <div className='grid h-30 w-full items-center'>
-              <div className='flex flex-col items-center justify-center gap-3'>
-                <img src={Error} className='size-14' />
-                <span> {label}을 불러오던 도중 오류가 발생했어요!</span>
-              </div>
-            </div>
-          )}
-        </div>
+        <CarouselWithData request={request} label={label} covered={covered} />
       )}
     </div>
   );
 }
+
+const CarouselWithData = ({ request, label, covered }: GroupCarouselProps) => {
+  const { data, isError, isLoading } = useRoomList(request);
+  const skeleton = Array.from({ length: 4 });
+  const rooms = data ? data.content : [];
+
+  return (
+    <div
+      className={cn(
+        'scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3',
+        covered ? 'overflow-hidden' : 'overflow-x-scroll',
+      )}
+    >
+      {data && (
+        <>
+          {rooms.length === 0 ? (
+            <div className='grid h-30 w-full place-items-center'>
+              {label}이 없어요!
+            </div>
+          ) : (
+            rooms.map(room => <Card key={room.id} {...room} />)
+          )}
+        </>
+      )}
+      {isLoading &&
+        skeleton.map((_, i) => <CardSkeleton key={`card-skeleton-${i}`} />)}
+      {isError && (
+        <div className='grid h-30 w-full items-center'>
+          <div className='flex flex-col items-center justify-center gap-3'>
+            <img src={Error} className='size-14' />
+            <span> {label}을 불러오던 도중 오류가 발생했어요!</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const CoveredMockup = () => {
   const { openBottomSheet } = useBottomSheet();
