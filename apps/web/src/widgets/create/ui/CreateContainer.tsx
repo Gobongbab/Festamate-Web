@@ -31,7 +31,7 @@ export default function CreateContainer() {
     const postData = JSON.stringify({
       ...watch(),
       maxParticipants: Number(watch('maxParticipants')) as 2 | 4 | 6,
-      meetingDateTime: getDate(date, 'YYYY-MM-DD HH:mm:ss'),
+      meetingDateTime: getDate(date!, 'YYYY-MM-DD HH:mm:ss'),
       friendPhoneNumbers: {
         friendPhoneNumbers: [...friendPhoneNumbers],
       },
