@@ -4,5 +4,14 @@ import BoothInfoBg from './booth-info-bg.webp';
 import Error from './error.webp';
 import Loader from './loader.gif';
 import Festa from './festa.png';
+import OpenChatGuide from './open-chat-guide.jpg';
 
-export { SignupSuccessBg, StudentIdSample, BoothInfoBg, Error, Loader, Festa };
+export {
+  SignupSuccessBg,
+  StudentIdSample,
+  BoothInfoBg,
+  Error,
+  Loader,
+  Festa,
+  OpenChatGuide,
+};

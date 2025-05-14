@@ -10,4 +10,5 @@ export const MODAL = {
   TICKET_INFO: 'ticketInfoModal',
   REGISTER_TICKET: 'registerTicketModal',
   ERROR: 'errorModal',
+  OPEN_CHAT_GUIDE: 'openChatGuideModal',
 } as const;

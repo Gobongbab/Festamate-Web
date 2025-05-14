@@ -6,6 +6,7 @@ import { NormalAppBar } from '@/shared/ui';
 import {
   CreateContainer,
   DatePickBottomSheet,
+  OpenChatGuideModal,
   TimePickBottomSheet,
 } from '@/widgets/create/ui';
 import { CreateProvider } from '@/widgets/create/model';
@@ -19,6 +20,7 @@ export default function CreateScreen() {
             <CreateContainer />
           </div>
         </AppScreen>
+        <OpenChatGuideModal />
         <DatePickBottomSheet />
         <TimePickBottomSheet />
       </div>

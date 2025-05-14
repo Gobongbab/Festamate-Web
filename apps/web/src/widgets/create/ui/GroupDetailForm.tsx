@@ -12,8 +12,8 @@ import { getDate, getFormattedPhone } from '@festamate/utils';
 import { FormItem, Input, Radio } from '@/shared/ui';
 import { userAtom } from '@/shared/atom';
 import { Room } from '@/shared/types';
-import { useBottomSheet } from '@/shared/hook';
-import { BOTTOM_SHEET } from '@/shared/constants';
+import { useBottomSheet, useModal } from '@/shared/hook';
+import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
 
 import { DETAIL_OPTION, useRoomCreateContext } from '@/widgets/create/model';
 import { useSubmitFriendPhone } from '@/widgets/create/api';
@@ -43,6 +43,7 @@ export default function GroupDetailForm({
     friendPhoneNumbers,
   } = useRoomCreateContext();
   const { openBottomSheet } = useBottomSheet();
+  const { openModal } = useModal();
   const isFormValid =
     maxParticipantsRender !== 2
       ? friendPhoneNumbers.length === maxParticipants / 2 - 1
@@ -146,7 +147,18 @@ export default function GroupDetailForm({
       </FormItem>
       <FormItem
         title='모임 오픈채팅방 링크'
-        description='모임 구성원들과 대화를 나눌 오픈채팅방 링크를 입력해주세요'
+        description={
+          <div className='flex items-center gap-2'>
+            모임 구성원들과 대화를 나눌 오픈채팅방 링크를 입력해주세요
+            <button
+              className='active:bg-fill size-4 cursor-pointer rounded-full border-[0.9px] text-center text-[9px] font-light focus:outline-none'
+              type='button'
+              onClick={() => openModal(MODAL.OPEN_CHAT_GUIDE)}
+            >
+              ?
+            </button>
+          </div>
+        }
         className='mb-normal-spacing'
       >
         <Input
