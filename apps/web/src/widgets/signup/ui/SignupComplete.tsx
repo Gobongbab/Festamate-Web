@@ -1,8 +1,12 @@
 import React from 'react';
+import { useSetAtom } from 'jotai';
+
+import { getPath } from '@festamate/utils';
 
 import { Button } from '@/shared/ui';
 import { RAW_PATH } from '@/shared/constants';
-import { getPath } from '@festamate/utils';
+import { userAtom } from '@/shared/atom';
+import { useFetchUserInfo } from '@/shared/api';
 
 export default function SignupComplete() {
   // const { handleAllowNotification } = useAllowNotification();
@@ -23,11 +27,18 @@ export default function SignupComplete() {
   // //   });
   // // };
 
-  const handleHomeClick = () =>
+  const setUserAtom = useSetAtom(userAtom);
+  const { refetch: fetchUserInfo } = useFetchUserInfo();
+
+  const handleHomeClick = async () => {
+    const response = await fetchUserInfo();
+    if (response.data) {
+      setUserAtom(response.data);
+    }
     window.location.replace(
       `${getPath(import.meta.env.VITE_PRODUCTION_URL, RAW_PATH.HOME)}`,
     );
-
+  };
   return (
     <div className='grid h-100 w-full place-items-center'>
       <div className='flex w-[80%] flex-col items-start gap-3'>
