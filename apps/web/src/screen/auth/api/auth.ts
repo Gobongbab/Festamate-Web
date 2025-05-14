@@ -4,7 +4,11 @@ import { useMutation } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 
 import { post, REQUEST, useFetchUserInfo } from '@/shared/api';
-import { KakaoAccessTokenAtom, userTokenAtom } from '@/shared/atom';
+import {
+  errorMessageAtom,
+  KakaoAccessTokenAtom,
+  userTokenAtom,
+} from '@/shared/atom';
 import { RAW_PATH } from '@/shared/constants';
 
 interface KakaoTokenRequest {
@@ -68,6 +72,7 @@ export const useKakaoToken = () => {
 
 export const useKakaoLogin = () => {
   const setUserAtom = useSetAtom(userTokenAtom);
+  const setErrorMessageAtom = useSetAtom(errorMessageAtom);
   const { refetch: fetchUserInfo, isFetched } = useFetchUserInfo();
 
   useEffect(() => {
@@ -75,13 +80,12 @@ export const useKakaoLogin = () => {
       window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);
   }, [isFetched]);
 
-  return useMutation<KakaoLoginResponse, unknown, KakaoLoginRequest>({
+  return useMutation<KakaoLoginResponse, Error, KakaoLoginRequest>({
     mutationFn: ({ kakaoAccessToken }) => submitKakaoLogin(kakaoAccessToken),
     onSuccess: data => {
       setUserAtom(data.result);
       fetchUserInfo();
     },
-    onError: () =>
-      window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`),
+    onError: error => setErrorMessageAtom(error.message),
   });
 };

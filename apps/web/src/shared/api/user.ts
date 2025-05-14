@@ -122,7 +122,8 @@ export async function userPut<TData, TResponse = unknown>(
     return response;
   } catch (error: unknown) {
     console.log(error);
-    if (axios.isAxiosError(error)) throw new Error(error.message);
+    if (axios.isAxiosError(error))
+      throw new Error(error.response?.data.message);
     else throw new Error('에러가 발생했습니다');
   }
 }
@@ -141,7 +142,8 @@ export async function userDel<TResponse = unknown>(
     return response;
   } catch (error: unknown) {
     console.log(error);
-    if (axios.isAxiosError(error)) throw new Error(error.message);
+    if (axios.isAxiosError(error))
+      throw new Error(error.response?.data.message);
     else throw new Error('에러가 발생했습니다');
   }
 }
@@ -161,7 +163,8 @@ export async function userPatch<TData, TResponse = unknown>(
     return response;
   } catch (error: unknown) {
     console.log(error);
-    if (axios.isAxiosError(error)) throw new Error(error.message);
+    if (axios.isAxiosError(error))
+      throw new Error(error.response?.data.message);
     else throw new Error('에러가 발생했습니다');
   }
 }

@@ -3,9 +3,12 @@ import React, { useEffect } from 'react';
 import { useKakaoToken } from '@/screen/auth/api';
 import { Loader } from '@/assets/images';
 import { Button } from '@/shared/ui';
+import { useAtomValue } from 'jotai';
+import { errorMessageAtom } from '@/shared/atom';
 
 export default function AuthScreen() {
   const params = new URLSearchParams(location.search);
+  const errorMessage = useAtomValue(errorMessageAtom);
   const code = params.get('code');
 
   const { mutate, isPending, isError } = useKakaoToken();
@@ -25,6 +28,7 @@ export default function AuthScreen() {
       {isError && (
         <div className='flex w-full flex-col items-center justify-center gap-2 text-lg'>
           <span>로그인에 실패했어요.</span>
+          <span>{errorMessage}</span>
           <Button
             size='sm'
             className='focus:outline-none'

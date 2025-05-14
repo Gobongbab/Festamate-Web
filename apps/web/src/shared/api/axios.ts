@@ -29,7 +29,8 @@ export async function get<TResponse, TParams = unknown>(
     return response;
   } catch (error: unknown) {
     console.log(error);
-    if (axios.isAxiosError(error)) throw new Error(error.message);
+    if (axios.isAxiosError(error))
+      throw new Error(error.response?.data.message);
     else throw new Error('에러가 발생했습니다');
   }
 }
@@ -50,7 +51,8 @@ export async function post<TData, TResponse = unknown>(
     return response;
   } catch (error: unknown) {
     console.log(error);
-    if (axios.isAxiosError(error)) throw new Error(error.message);
+    if (axios.isAxiosError(error))
+      throw new Error(error.response?.data.message);
     else throw new Error('에러가 발생했습니다');
   }
 }
@@ -59,8 +61,10 @@ export const del = async (request: string) => {
   try {
     const response = await instance.delete(`${request}`);
     return response;
-  } catch (error) {
-    const e = error as { message: string };
-    throw new Error(e.message);
+  } catch (error: unknown) {
+    console.log(error);
+    if (axios.isAxiosError(error))
+      throw new Error(error.response?.data.message);
+    else throw new Error('에러가 발생했습니다');
   }
 };
