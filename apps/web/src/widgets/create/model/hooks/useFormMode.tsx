@@ -36,7 +36,8 @@ export default function useFormMode({
     place,
     openChatUrl,
   } = watch();
-  const { maxParticipantsRender, friendPhoneNumbers } = useRoomCreateContext();
+  const { maxParticipantsRender, friendPhoneNumbers, date } =
+    useRoomCreateContext();
 
   const MODE = [
     {
@@ -62,6 +63,7 @@ export default function useFormMode({
       ),
       button: '생성하기',
       isFormValid:
+        date &&
         preferredGender &&
         maxParticipants &&
         openChatUrl.length > 0 &&

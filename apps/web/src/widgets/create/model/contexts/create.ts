@@ -9,8 +9,8 @@ export const RoomCreateContext = createContext<{
   setFile: Dispatch<SetStateAction<File | undefined>>;
   image: string;
   setImage: Dispatch<SetStateAction<string>>;
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date>>;
+  date: Date | null;
+  setDate: Dispatch<SetStateAction<Date | null>>;
   friendPhoneNumbers: string[];
   setFriendPhoneNumbers: Dispatch<SetStateAction<string[]>>;
 } | null>(null);

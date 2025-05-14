@@ -133,7 +133,7 @@ export default function GroupDetailForm({
           className='border-border active:border-point rounded-5 h-12 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
           onClick={() => openBottomSheet(BOTTOM_SHEET.DATE_PICKER)}
         >
-          {getDate(date, 'YYYY년 M월 D일')}
+          {date ? getDate(date, 'YYYY년 M월 D일') : '선택해 주세요'}
         </button>
         <button
           type='button'
@@ -141,7 +141,7 @@ export default function GroupDetailForm({
           className='border-border active:border-point rounded-5 h-12 flex-1 cursor-pointer border-[1px] bg-white px-4 py-2 transition duration-150 focus:outline-none'
           onClick={() => openBottomSheet(BOTTOM_SHEET.TIME_PICKER)}
         >
-          {getDate(date, 'A h시 m분')}
+          {date ? getDate(date, 'A h시 m분') : '선택해 주세요'}
         </button>
       </FormItem>
       <FormItem

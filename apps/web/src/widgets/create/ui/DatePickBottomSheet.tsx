@@ -48,7 +48,8 @@ export default function DatePickBottomSheet() {
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Calendar = () => {
-  const { date, setDate } = useRoomCreateContext();
+  const { date: contextDate, setDate } = useRoomCreateContext();
+  const date = contextDate ?? new Date();
   const currentYear = date.getFullYear();
   const currentMonth = date.getMonth();
   const today = new Date();

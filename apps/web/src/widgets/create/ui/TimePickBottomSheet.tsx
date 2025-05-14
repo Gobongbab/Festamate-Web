@@ -9,7 +9,8 @@ import { cn, getDate } from '@festamate/utils';
 export default function TimePickBottomSheet() {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
   const { isOpen } = bottomSheetState(BOTTOM_SHEET.TIME_PICKER);
-  const { date, setDate } = useRoomCreateContext();
+  const { date: contextDate, setDate } = useRoomCreateContext();
+  const date = contextDate ?? new Date();
 
   const [isAM, setIsAM] = useState(Number(getDate(date, 'HH')) < 12);
   const [selectedHour, setSelectedHour] = useState(

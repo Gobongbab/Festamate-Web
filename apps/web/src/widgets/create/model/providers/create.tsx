@@ -7,7 +7,7 @@ export default function CreateProvider({ children }: { children: ReactNode }) {
   const [maxParticipantsRender, setMaxParticipantsRender] = useState(2);
   const [file, setFile] = useState<File | undefined>(undefined);
   const [image, setImage] = useState<string>('');
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date | null>(null);
   const [friendPhoneNumbers, setFriendPhoneNumbers] = useState<string[]>([]);
 
   return (
