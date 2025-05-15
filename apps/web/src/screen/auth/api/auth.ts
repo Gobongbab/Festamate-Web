@@ -54,9 +54,10 @@ const submitKakaoLogin = async (kakaoAccessToken: string) => {
 
 export const useKakaoToken = () => {
   const setKakaoToken = useSetAtom(KakaoAccessTokenAtom);
+  const setErrorMessageAtom = useSetAtom(errorMessageAtom);
   const { mutate } = useKakaoLogin();
 
-  return useMutation<KakaoTokenResponse, unknown, { code: string }>({
+  return useMutation<KakaoTokenResponse, Error, { code: string }>({
     mutationFn: ({ code }) => submitKakaoToken(code),
     onSuccess: data => {
       const kakaoAccessToken = data.result.kakaoAccessToken;
@@ -67,6 +68,7 @@ export const useKakaoToken = () => {
           `${import.meta.env.VITE_PRODUCTION_URL + RAW_PATH.SIGNUP}`,
         );
     },
+    onError: error => setErrorMessageAtom(error.message),
   });
 };
 
