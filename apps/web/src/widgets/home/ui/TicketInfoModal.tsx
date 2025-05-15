@@ -14,22 +14,13 @@ export default function TicketInfoModal() {
       {isOpen && (
         <Modal modalKey={MODAL.TICKET_INFO}>
           <>
-            <p className='text-lg font-semibold'>Festamate! 티켓이란?</p>
+            <p className='text-lg font-semibold'>티켓이란?</p>
             <div className='flex flex-col gap-2'>
+              <p>티켓은 모임을 만들거나 참여할 때 사용되는 재화에요.</p>
+              <p>하루에 기본 2개가 제공되며, 매일 자정이 되면 다시 채워져요.</p>
               <p>
-                Festamate! 티켓은 모임을 개설하거나
-                <br />
-                참여할 때마다 하나씩 소모돼요.
-              </p>
-              <p>
-                모임에 참여했더라도, 모임이 취소된 경우에는
-                <br />
-                티켓을 돌려받을 수 있어요.
-              </p>
-              <p>
-                더 많은 티켓을 사용하고 싶다면,
-                <br />
-                Festamate! 부스로 찾아오세요!
+                부족한 티켓은 8강의동 앞 40번 부스에 방문해서 추가로 구매할 수
+                있어요.
               </p>
             </div>
             <div className='mt-2 flex gap-3'>
