@@ -14,7 +14,7 @@ interface ListItemProps {
 
 const ListItem = forwardRef<HTMLButtonElement, RoomListItem & ListItemProps>(
   function ListItem(props, ref) {
-    const { replace } = useFlow();
+    const { push } = useFlow();
     const {
       title,
       thumbnail,
@@ -25,7 +25,7 @@ const ListItem = forwardRef<HTMLButtonElement, RoomListItem & ListItemProps>(
       place,
     } = props;
     const handleClick = () => {
-      replace(PATH.ROOM, { ...props });
+      push(PATH.ROOM, { ...props });
     };
 
     return (
