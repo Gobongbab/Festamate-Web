@@ -3,8 +3,6 @@ import { useSetAtom } from 'jotai';
 
 import { getPath } from '@festamate/utils';
 
-import { useFlow } from '@/app/stackflow';
-
 import {
   REQUEST,
   useFetchUserInfo,
@@ -50,7 +48,6 @@ const submitFriendPhone = async (data: string) => {
 };
 
 export const useFormSubmit = (roomId: number) => {
-  const { pop } = useFlow();
   const { openModal } = useModal();
   const { refetch: fetchRoomList } = useRoomList(REQUEST.ROOM);
   const { refetch: fetchUserInfo } = useFetchUserInfo();
@@ -61,7 +58,7 @@ export const useFormSubmit = (roomId: number) => {
     onSuccess: () => {
       fetchRoomList();
       fetchUserInfo();
-      pop();
+      window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);
     },
     onError: e => {
       const error = e as Error;
