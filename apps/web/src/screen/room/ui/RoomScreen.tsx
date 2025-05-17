@@ -19,10 +19,11 @@ import {
 } from '@/widgets/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
-import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
+import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
 // import { useLeaveRoom } from '@/widgets/room/api';
 import { useAtomValue } from 'jotai';
 import { selectedUserAtom } from '@/shared/atom';
+import { useFlow } from '@/app/stackflow';
 
 // 사용자 상태를 위한 타입 정의
 type RoomStatus = {
@@ -49,6 +50,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     preferredGender,
   } = params;
   // const { mutate: leave } = useLeaveRoom(id);
+  const { replace } = useFlow();
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
   const selectedUser = useAtomValue(selectedUserAtom);
@@ -60,6 +62,8 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
   const availableFriendCnt = maxParticipants / 2 - 1;
   const isAvailableWithFriend = maxParticipants !== 2;
   const isLoading = stack.globalTransitionState === 'loading';
+
+  const handleCloseClick = () => replace(PATH.HOME, {});
 
   const handleMenuClick = () => {
     if (status.status === 'success') openBottomSheet(BOTTOM_SHEET.MENU);
@@ -166,7 +170,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
   return (
     <div className='fixed inset-0 overflow-hidden'>
-      <AppScreen appBar={RoomAppBar(handleMenuClick)}>
+      <AppScreen appBar={RoomAppBar(handleCloseClick, handleMenuClick)}>
         <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
           <RoomContainer {...params} setStatus={setStatus} />
         </div>

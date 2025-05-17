@@ -1,6 +1,5 @@
-import { FiSearch } from 'react-icons/fi';
-import { IoChevronBackSharp, IoTicket } from 'react-icons/io5';
-
+import { IoTicket, IoSearch } from 'react-icons/io5';
+import { IoIosArrowBack } from 'react-icons/io';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 
 import { Input } from '@/shared/ui';
@@ -40,7 +39,7 @@ export const AppBar = (
         className='mr-2 cursor-pointer'
         onClick={searchOnClick}
       >
-        <FiSearch size={24} />
+        <IoSearch size={24} />
       </button>
     </div>
   ),
@@ -62,7 +61,7 @@ export const SearchAppBar = (
   const SearchAppBar = {
     renderLeft: () => (
       <form onSubmit={searchOnClick} className='flex items-center'>
-        <IoChevronBackSharp size={24} onClick={closeOnClick} />
+        <IoIosArrowBack size={24} onClick={closeOnClick} />
         <Input
           className='ml-3 w-[calc(100vw-128px)]'
           placeholder='검색어를 입력하세요'
@@ -72,7 +71,7 @@ export const SearchAppBar = (
       </form>
     ),
     renderRight: () => (
-      <FiSearch size={24} onClick={searchOnClick} className='mr-2' />
+      <IoSearch size={24} onClick={searchOnClick} className='mr-2' />
     ),
     ...baseStyle,
     backgroundColor: '#fff',
@@ -80,7 +79,11 @@ export const SearchAppBar = (
   return SearchAppBar;
 };
 
-export const RoomAppBar = (menuOnClick: () => void) => ({
+export const RoomAppBar = (
+  closeOnClick: () => void,
+  menuOnClick: () => void,
+) => ({
+  renderLeft: () => <IoIosArrowBack size={24} onClick={closeOnClick} />,
   renderRight: () => (
     <button onClick={menuOnClick} name='menu'>
       <HiOutlineDotsVertical size={22} />
