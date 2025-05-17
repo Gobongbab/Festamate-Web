@@ -33,8 +33,8 @@ export default function RoomContainer(props: RoomContainerProps) {
       <div className='scrollbar-hide flex flex-col gap-y-6 overflow-scroll'>
         <RoomHeader {...props} />
         <div className='border-sub flex h-fit w-full flex-col border-y-1 py-6'>
-          {content.split('\n').map(v => (
-            <p key={v}>{v}</p>
+          {content.split('\n').map((v, i) => (
+            <p key={i}>{v}</p>
           ))}
         </div>
         {isLoading && (
