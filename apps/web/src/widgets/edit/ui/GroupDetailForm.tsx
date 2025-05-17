@@ -13,10 +13,10 @@ import { FormItem, Input, Radio } from '@/shared/ui';
 import { userAtom } from '@/shared/atom';
 import { Room } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
-import { BOTTOM_SHEET, MODAL, DETAIL_OPTION } from '@/shared/constants';
+import { BOTTOM_SHEET, DETAIL_OPTION, MODAL } from '@/shared/constants';
 
-import { useRoomCreateContext } from '@/widgets/create/model';
-import { useSubmitFriendPhone } from '@/widgets/create/api';
+import { useRoomEditContext } from '@/widgets/edit/model';
+import { useSubmitFriendPhone } from '@/widgets/edit/api';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
@@ -41,7 +41,7 @@ export default function GroupDetailForm({
     setMaxParticipantsRender,
     date,
     friendPhoneNumbers,
-  } = useRoomCreateContext();
+  } = useRoomEditContext();
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
   const isFormValid =
@@ -60,7 +60,11 @@ export default function GroupDetailForm({
             className='h-12 w-14 text-center'
             type='number'
             id='preferredStudentIdMin'
-            value={preferredStudentIdMin.slice(0, 2)}
+            value={
+              preferredStudentIdMin.length > 2
+                ? preferredStudentIdMin.slice(0, 2)
+                : preferredStudentIdMin
+            }
             {...register('preferredStudentIdMin', { required: true })}
           />
           학번 이상
@@ -68,7 +72,11 @@ export default function GroupDetailForm({
             className='h-12 w-14 text-center'
             type='number'
             id='preferredStudentIdMax'
-            value={preferredStudentIdMax.slice(0, 2)}
+            value={
+              preferredStudentIdMax.length > 2
+                ? preferredStudentIdMax.slice(0, 2)
+                : preferredStudentIdMax
+            }
             {...register('preferredStudentIdMax', { required: true })}
           />
           학번 이하
@@ -178,7 +186,7 @@ const FriendInput = () => {
   const [value, setValue] = useState<string>('');
   const { mutate } = useSubmitFriendPhone();
   const { phoneNumber, gender } = useAtomValue(userAtom)!;
-  const { setFriendPhoneNumbers, friendPhoneNumbers } = useRoomCreateContext();
+  const { setFriendPhoneNumbers, friendPhoneNumbers } = useRoomEditContext();
 
   return (
     <div className='flex w-fit gap-2'>

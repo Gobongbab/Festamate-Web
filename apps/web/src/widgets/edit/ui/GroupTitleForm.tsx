@@ -11,7 +11,7 @@ import {
   TITLE_MAX_LENGTH,
 } from '@/shared/constants';
 
-import { useRoomCreateContext } from '@/widgets/create/model';
+import { useRoomEditContext } from '@/widgets/edit/model';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
@@ -22,7 +22,7 @@ export default function GroupTitleForm({
   register,
   watch,
 }: GroupTitleFormProps) {
-  const { setFile, image, setImage } = useRoomCreateContext();
+  const { setFile, image, setImage } = useRoomEditContext();
   const { title, place, content } = watch();
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {

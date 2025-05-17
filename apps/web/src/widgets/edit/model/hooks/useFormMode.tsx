@@ -14,8 +14,8 @@ import {
   TITLE_MAX_LENGTH,
 } from '@/shared/constants';
 
-import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
-import { useRoomCreateContext } from '@/widgets/create/model';
+import { GroupDetailForm, GroupTitleForm } from '@/widgets/edit/ui';
+import { useRoomEditContext } from '@/widgets/edit/model';
 
 interface RoomModeProps {
   register: UseFormRegister<Room>;
@@ -37,7 +37,7 @@ export default function useFormMode({
     openChatUrl,
   } = watch();
   const { maxParticipantsRender, friendPhoneNumbers, date } =
-    useRoomCreateContext();
+    useRoomEditContext();
 
   const MODE = [
     {
@@ -61,7 +61,7 @@ export default function useFormMode({
           setValue={setValue}
         />
       ),
-      button: '생성하기',
+      button: '수정하기',
       isFormValid:
         date &&
         preferredGender &&

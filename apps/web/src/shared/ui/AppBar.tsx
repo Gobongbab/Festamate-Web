@@ -79,11 +79,7 @@ export const SearchAppBar = (
   return SearchAppBar;
 };
 
-export const RoomAppBar = (
-  closeOnClick: () => void,
-  menuOnClick: () => void,
-) => ({
-  renderLeft: () => <IoIosArrowBack size={24} onClick={closeOnClick} />,
+export const RoomAppBar = (menuOnClick: () => void) => ({
   renderRight: () => (
     <button onClick={menuOnClick} name='menu'>
       <HiOutlineDotsVertical size={22} />
