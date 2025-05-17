@@ -13,9 +13,9 @@ import { FormItem, Input, Radio } from '@/shared/ui';
 import { userAtom } from '@/shared/atom';
 import { Room } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
-import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
+import { BOTTOM_SHEET, MODAL, DETAIL_OPTION } from '@/shared/constants';
 
-import { DETAIL_OPTION, useRoomCreateContext } from '@/widgets/create/model';
+import { useRoomCreateContext } from '@/widgets/create/model';
 import { useSubmitFriendPhone } from '@/widgets/create/api';
 
 interface GroupTitleFormProps {

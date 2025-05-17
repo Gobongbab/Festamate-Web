@@ -7,15 +7,15 @@ import type {
 } from 'react-hook-form';
 
 import { Room } from '@/shared/types';
-
-import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
 import {
   CONTENT_MAX_LENGTH,
   PLACE_MAX_LENGTH,
-  TITLE_MAX_LENGTH,
   TITLE_MIN_LENGTH,
-  useRoomCreateContext,
-} from '@/widgets/create/model';
+  TITLE_MAX_LENGTH,
+} from '@/shared/constants';
+
+import { GroupDetailForm, GroupTitleForm } from '@/widgets/create/ui';
+import { useRoomCreateContext } from '@/widgets/create/model';
 
 interface RoomModeProps {
   register: UseFormRegister<Room>;

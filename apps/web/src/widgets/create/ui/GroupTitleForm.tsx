@@ -9,8 +9,9 @@ import {
   CONTENT_MAX_LENGTH,
   PLACE_MAX_LENGTH,
   TITLE_MAX_LENGTH,
-  useRoomCreateContext,
-} from '@/widgets/create/model';
+} from '@/shared/constants';
+
+import { useRoomCreateContext } from '@/widgets/create/model';
 
 interface GroupTitleFormProps {
   register: UseFormRegister<Room>;
