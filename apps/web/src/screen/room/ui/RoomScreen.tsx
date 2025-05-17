@@ -185,7 +185,11 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
       </div>
       <LoginBottomSheet />
       <UserManageBottomSheet />
-      <MenuBottomSheet roomAuthority={status.data} roomStatus={roomStatus} />
+      <MenuBottomSheet
+        roomAuthority={status.data}
+        roomStatus={roomStatus}
+        roomData={params}
+      />
       <RoomDeleteModal roomId={id} />
       <RoomDeleteDenialModal />
       <RoomJoinModal roomId={id} />

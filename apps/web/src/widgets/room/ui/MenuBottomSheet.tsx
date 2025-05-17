@@ -1,23 +1,34 @@
 import React from 'react';
 
-import { BottomSheet, Button } from '@/shared/ui';
-import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
-import { useBottomSheet, useModal } from '@/shared/hook';
-import { RoomAuthority, RoomStatus } from '@/shared/types';
 import { fetchLoginStatus } from '@festamate/utils';
+
+import { useFlow } from '@/app/stackflow';
+
+import { BottomSheet, Button } from '@/shared/ui';
+import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
+import { useBottomSheet, useModal } from '@/shared/hook';
+import type { RoomAuthority, RoomListItem, RoomStatus } from '@/shared/types';
 
 interface MenuBottomSheetProps {
   roomAuthority: RoomAuthority | null;
   roomStatus: RoomStatus;
+  roomData: RoomListItem;
 }
 
 export default function MenuBottomSheet({
   roomAuthority,
   roomStatus,
+  roomData,
 }: MenuBottomSheetProps) {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
   const { openModal } = useModal();
+  const { push } = useFlow();
   const { isOpen } = bottomSheetState(BOTTOM_SHEET.MENU);
+
+  const handleEdit = () => {
+    closeBottomSheet(BOTTOM_SHEET.MENU);
+    push(PATH.EDIT, { initialData: roomData });
+  };
 
   const handleDelete = () => {
     closeBottomSheet(BOTTOM_SHEET.MENU);
@@ -34,7 +45,13 @@ export default function MenuBottomSheet({
     if (roomAuthority === 'HOST') {
       return (
         <>
-          <button className='w-full cursor-pointer py-1'>모임 수정</button>
+          <button
+            name='roomEdit'
+            className='w-full cursor-pointer py-1'
+            onClick={handleEdit}
+          >
+            모임 수정
+          </button>
           <button
             name='roomDelete'
             className='text-important w-full cursor-pointer py-1'
