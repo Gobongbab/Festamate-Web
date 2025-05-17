@@ -34,7 +34,7 @@ export default function RoomContainer(props: RoomContainerProps) {
         <RoomHeader {...props} />
         <div className='border-sub flex h-fit w-full flex-col border-y-1 py-6'>
           {content.split('\n').map(v => (
-            <p>{v}</p>
+            <p key={v}>{v}</p>
           ))}
         </div>
         {isLoading && (
