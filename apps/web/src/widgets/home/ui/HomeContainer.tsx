@@ -44,7 +44,7 @@ const BoothInfo = () => (
     }
   >
     <div className='rounded-10 absolute inset-0 bg-black/30' />
-    <div className='z-1 flex items-center justify-between'>
+    <div className='z-1 flex w-full items-center justify-between'>
       <span className='agbalumo-regular text-xl font-bold'>Festamate!</span>
       <div className='flex items-center gap-1 text-sm'>
         바로가기
