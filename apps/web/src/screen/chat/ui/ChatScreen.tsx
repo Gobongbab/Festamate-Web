@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ActivityComponentType } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { RoomAppBar } from '@/shared/ui';
 import { ChatContainer, ChatInput } from '@/widgets/chat/ui';
 import { useWebSocket } from '@/shared/hook';
 import { useFetchChatDetail } from '@/widgets/chat/api';
@@ -73,7 +72,7 @@ const ChatScreen: ActivityComponentType<{ chatRoomId: number }> = ({
 
   return (
     <div className='fixed inset-0 overflow-hidden'>
-      <AppScreen appBar={RoomAppBar(() => {})}>
+      <AppScreen>
         <div className='container-mobile p-normal-padding flex size-full flex-col pt-0 pb-0'>
           <div
             ref={scrollRef}
