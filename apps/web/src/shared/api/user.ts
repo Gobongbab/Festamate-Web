@@ -27,7 +27,7 @@ type RefreshTokenResponse = {
 };
 
 const instance = axios.create({
-  baseURL: 'https://www.festamate.shop/api',
+  baseURL: 'https://www.pegion.ddns.net/api',
 });
 
 instance.interceptors.request.use(async config => {
