@@ -13,7 +13,7 @@ interface GetRequestParams<TParams> {
 }
 
 const instance = axios.create({
-  baseURL: 'https://pegion.ddns.net/api',
+  baseURL: 'https://www.pegion.ddns.net/api',
 });
 
 export async function get<TResponse, TParams = unknown>(
