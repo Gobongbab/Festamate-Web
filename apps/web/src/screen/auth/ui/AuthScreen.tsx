@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useKakaoToken } from '@/screen/auth/api';
+import { usePostKakaoToken } from '@/screen/auth/api';
 import { Loader } from '@/assets/images';
 import { Button } from '@/shared/ui';
 import { useAtomValue } from 'jotai';
@@ -11,7 +11,7 @@ export default function AuthScreen() {
   const errorMessage = useAtomValue(errorMessageAtom);
   const code = params.get('code');
 
-  const { mutate, isPending, isError } = useKakaoToken();
+  const { mutate, isPending, isError } = usePostKakaoToken();
 
   useEffect(() => {
     if (code) mutate({ code });
