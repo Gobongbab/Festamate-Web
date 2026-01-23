@@ -5,7 +5,7 @@ import { stackflow } from '@stackflow/react';
 import { HomeScreen } from '@/screen/home/ui';
 import { UserScreen } from '@/screen/user/ui';
 import { CreateScreen } from '@/screen/create/ui';
-import { ResultScreen } from '@/screen/result/ui';
+import { SearchScreen } from '@/screen/search/ui';
 import { ListScreen } from '@/screen/list/ui';
 import { RoomScreen } from '@/screen/room/ui';
 import { ChatListScreen, ChatScreen } from '@/screen/chat/ui';
@@ -17,7 +17,7 @@ export const { Stack, useFlow } = stackflow({
     HomeScreen,
     UserScreen,
     CreateScreen,
-    ResultScreen,
+    SearchScreen,
     ListScreen,
     RoomScreen,
     ChatListScreen,

@@ -1,34 +1,22 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { cn } from '@festamate/utils';
-
 import { ListItem } from '@/entities/list/ui';
 import { useBottomSheet } from '@/shared/hook';
-import {
-  BOTTOM_SHEET,
-  GENDER_LABEL,
-  PARTICIPANTS,
-  ROOM_STATUS,
-} from '@/shared/constants';
+import { BOTTOM_SHEET } from '@/shared/constants';
 
-import { useInfiniteRoomsWithFilters } from '@/features/result/api';
-import { Filter } from '@/features/result/types';
+import { useInfiniteRoomsWithFilters } from '@/screen/search/api';
+import { Filter } from '@/screen/search/types';
+import { SearchFilterTag } from '@/screen/search/ui';
 
-interface ResultContainerParams {
+interface SearchResultsParams {
   searchKey: string;
   filter: Filter;
 }
 
-interface FilterButtonProps {
-  onClick: () => void;
-  label: string;
-  filter: Filter;
-}
-
-export default function ResultContainer({
+export default function SearchResults({
   searchKey,
   filter,
-}: ResultContainerParams) {
+}: SearchResultsParams) {
   const { data, hasNextPage, isLoading, isFetchingNextPage, fetchNextPage } =
     useInfiniteRoomsWithFilters(searchKey, { ...filter });
   const { openBottomSheet } = useBottomSheet();
@@ -94,21 +82,21 @@ export default function ResultContainer({
           </p>
         )}
         <div className='flex w-full items-center gap-2'>
-          <FilterButton
+          <SearchFilterTag
             onClick={() => {
               openBottomSheet(BOTTOM_SHEET.FILTER_STATUS);
             }}
             label='매칭 상태'
             filter={filter}
           />
-          <FilterButton
+          <SearchFilterTag
             onClick={() => {
               openBottomSheet(BOTTOM_SHEET.FILTER_GENDER);
             }}
             label='모집 성별'
             filter={filter}
           />
-          <FilterButton
+          <SearchFilterTag
             onClick={() => {
               openBottomSheet(BOTTOM_SHEET.FILTER_PARTICIPANTS);
             }}
@@ -136,39 +124,3 @@ export default function ResultContainer({
     </>
   );
 }
-
-const FilterButton = ({ onClick, label, filter }: FilterButtonProps) => {
-  const filterKey =
-    label === '매칭 상태'
-      ? 'status'
-      : label === '모집 성별'
-        ? 'gender'
-        : 'participants';
-
-  const getStatusText = () => {
-    if (label === '매칭 상태' && filter.status) {
-      return ROOM_STATUS[filter.status];
-    }
-    if (label === '모집 성별' && filter.gender) {
-      return GENDER_LABEL[filter.gender];
-    }
-    if (label === '모임 인원' && filter.participants) {
-      return PARTICIPANTS[filter.participants];
-    }
-    return null;
-  };
-
-  const status = getStatusText();
-
-  return (
-    <button
-      className={cn(
-        'border-border flex w-fit cursor-pointer items-center gap-1 rounded-full border-[1px] px-4 py-2 text-[13px]',
-        filter[filterKey] && 'bg-point text-white',
-      )}
-      onClick={onClick}
-    >
-      {label} {status && <span className='text-xs'>{status}</span>}
-    </button>
-  );
-};

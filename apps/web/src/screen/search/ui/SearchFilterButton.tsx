@@ -1,17 +1,17 @@
 import React from 'react';
 import { cn } from '@festamate/utils';
 
-interface FilterButtonProps {
+interface SearchFilterButtonProps {
   label: string;
   isSelected?: boolean;
   onClick?: () => void;
 }
 
-export default function FilterButton({
+export default function SearchFilterButton({
   label,
   isSelected,
   onClick,
-}: FilterButtonProps) {
+}: SearchFilterButtonProps) {
   return (
     <button
       className={cn(

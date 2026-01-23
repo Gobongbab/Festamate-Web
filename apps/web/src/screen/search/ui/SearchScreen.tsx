@@ -10,10 +10,10 @@ import { PATH } from '@/shared/constants';
 import { searchAtom } from '@/shared/atom';
 import { SearchAppBar, Dock, Button } from '@/shared/ui';
 
-import { FilterBottomSheet, ResultContainer } from '@/features/result/ui';
-import { Filter } from '@/features/result/types';
+import { SearchFilter, SearchResults } from '@/screen/search/ui';
+import { Filter } from '@/screen/search/types';
 
-const ResultScreen: ActivityComponentType<{ searchKey: string }> = ({
+const SearchScreen: ActivityComponentType<{ searchKey: string }> = ({
   params,
 }: {
   params: { searchKey: string };
@@ -25,7 +25,7 @@ const ResultScreen: ActivityComponentType<{ searchKey: string }> = ({
   const closeOnClick = () => replace(PATH.HOME, {});
   const searchOnClick = (e: FormEvent) => {
     e.preventDefault();
-    replace(PATH.RESULT, { searchKey: value }, { animate: false });
+    replace(PATH.SEARCH, { searchKey: value }, { animate: false });
   };
   const createOnClick = () => push(PATH.CREATE, {});
 
@@ -35,7 +35,7 @@ const ResultScreen: ActivityComponentType<{ searchKey: string }> = ({
         appBar={SearchAppBar(closeOnClick, searchOnClick, value, setValue)}
       >
         <div className='scrollbar-hide container-mobile p-normal-padding flex size-full flex-col gap-y-2 overflow-scroll overflow-y-scroll pb-24'>
-          <ResultContainer searchKey={params.searchKey} filter={filter} />
+          <SearchResults searchKey={params.searchKey} filter={filter} />
         </div>
         <Button
           shadow
@@ -51,9 +51,9 @@ const ResultScreen: ActivityComponentType<{ searchKey: string }> = ({
         />
         <Dock />
       </AppScreen>
-      <FilterBottomSheet setFilter={setFilter} />
+      <SearchFilter setFilter={setFilter} />
     </div>
   );
 };
 
-export default ResultScreen;
+export default SearchScreen;

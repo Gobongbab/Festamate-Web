@@ -4,16 +4,16 @@ import { BottomSheet, Button } from '@/shared/ui';
 import { BOTTOM_SHEET } from '@/shared/constants';
 import { useBottomSheet } from '@/shared/hook';
 
-import { useFilterContent } from '@/features/result/model';
-import { Filter } from '../types';
+import { useFilterContent } from '@/screen/search/model';
+import { Filter } from '@/screen/search/types';
 
-interface FilterBottomSheetProps {
+interface SearchFilterProps {
   setFilter: Dispatch<SetStateAction<Filter>>;
 }
 
-export default function FilterBottomSheet({
+export default function SearchFilter({
   setFilter,
-}: FilterBottomSheetProps) {
+}: SearchFilterProps) {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
   const { isOpen: status } = bottomSheetState(BOTTOM_SHEET.FILTER_STATUS);
   const { isOpen: gender } = bottomSheetState(BOTTOM_SHEET.FILTER_GENDER);

@@ -2,7 +2,7 @@ export const PATH = {
   HOME: 'HomeScreen',
   USER: 'UserScreen',
   CREATE: 'CreateScreen',
-  RESULT: 'ResultScreen',
+  SEARCH: 'SearchScreen',
   LIST: 'ListScreen',
   ROOM: 'RoomScreen',
   CHAT_LIST: 'ChatListScreen',

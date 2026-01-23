@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { get, REQUEST } from '@/shared/api';
 import type { RoomListItem } from '@/shared/types';
-import type { Filter } from '@/features/result/types';
+import type { Filter } from '@/screen/search/types';
 
 interface FetchRoomListProps {
   pageParam: number;
