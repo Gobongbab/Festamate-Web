@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { MODAL } from '@/shared/constants';
 import { Button, Input, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
-import { useSubmitTicket } from '@/features/user/api';
+import { usePostTicket } from '@/screen/user/api';
 import { useFetchUserInfo } from '@/shared/api';
 
 export default function TermOfServiceModal() {
   const { closeModal, modalState } = useModal();
   const { refetch } = useFetchUserInfo();
 
-  const { mutate } = useSubmitTicket();
+  const { mutate } = usePostTicket();
   const { isOpen } = modalState(MODAL.REGISTER_TICKET);
 
   const [ticket, setTicket] = useState<string>('');

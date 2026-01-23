@@ -4,8 +4,8 @@ import { BsPencilFill } from 'react-icons/bs';
 
 import { userAtom, userUpdateAtom } from '@/shared/atom';
 
-import { UserProfileForm } from '@/features/user/ui';
-import { useUpdateUserInfo } from '@/features/user/api';
+import { UserProfileForm } from '@/screen/user/ui';
+import { usePatchUserInfo } from '@/screen/user/api';
 import { useFetchUserInfo } from '@/shared/api';
 
 export default function UserProfile() {
@@ -18,7 +18,7 @@ export default function UserProfile() {
 
   const updateUser = useSetAtom(userUpdateAtom);
   const { refetch } = useFetchUserInfo();
-  const { mutate } = useUpdateUserInfo();
+  const { mutate } = usePatchUserInfo();
 
   const handleSave = () => {
     if (newNickname !== nickname) {

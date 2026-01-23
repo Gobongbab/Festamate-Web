@@ -3,7 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { FaSave } from 'react-icons/fa';
 
 import { Input } from '@/shared/ui';
-import { useUpdateUserProfile } from '../api';
+import { usePutUserProfile } from '../api';
 import { useFetchUserInfo } from '@/shared/api';
 
 interface ProfileFormProps {
@@ -23,7 +23,7 @@ export default function UserProfileForm({
 }: ProfileFormProps) {
   const [image, setImage] = useState<string>(profileImage);
   const [file, setFile] = useState<File | undefined>();
-  const { mutate } = useUpdateUserProfile();
+  const { mutate } = usePutUserProfile();
   const { refetch } = useFetchUserInfo();
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {

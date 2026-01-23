@@ -6,8 +6,8 @@ import { MODAL } from '@/shared/constants';
 import { useModal } from '@/shared/hook';
 import { REQUEST } from '@/shared/api';
 
-import { logout } from '@/features/user/utils';
-import { UserProfile } from '@/features/user/ui';
+import { logout } from '@/screen/user/utils';
+import { UserProfile } from '@/screen/user/ui';
 
 export default function UserContainer() {
   const { openModal } = useModal();

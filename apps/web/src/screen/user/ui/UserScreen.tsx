@@ -5,7 +5,7 @@ import {
   UserContainer,
   NotificationSettingModal,
   TicketRegisterModal,
-} from '@/features/user/ui';
+} from '@/screen/user/ui';
 
 export default function UserScreen() {
   return (

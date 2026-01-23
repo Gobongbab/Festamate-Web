@@ -1,7 +1,7 @@
 import { REQUEST, userPost } from '@/shared/api';
 import { useMutation } from '@tanstack/react-query';
 
-const submitTicket = async (data: string) => {
+const postTicket = async (data: string) => {
   const response = await userPost({
     request: REQUEST.REGISTER_TICKET,
     data: { code: data },
@@ -10,8 +10,8 @@ const submitTicket = async (data: string) => {
   return response.status;
 };
 
-export const useSubmitTicket = () => {
+export const usePostTicket = () => {
   return useMutation({
-    mutationFn: submitTicket,
+    mutationFn: postTicket,
   });
 };
