@@ -8,8 +8,8 @@ import {
   CreateContainer,
   DatePickBottomSheet,
   TimePickBottomSheet,
-} from '@/features/create/ui';
-import { CreateProvider } from '@/features/create/model';
+} from '@/screen/create/ui';
+import { CreateProvider } from '@/screen/create/model';
 
 export default function CreateScreen() {
   return (

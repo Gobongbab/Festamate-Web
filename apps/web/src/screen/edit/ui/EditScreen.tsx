@@ -8,8 +8,8 @@ import {
   EditContainer,
   DatePickBottomSheet,
   TimePickBottomSheet,
-} from '@/features/edit/ui';
-import { EditProvider } from '@/features/edit/model';
+} from '@/screen/edit/ui';
+import { EditProvider } from '@/screen/edit/model';
 import { ActivityComponentType } from '@stackflow/react';
 import { RoomListItem } from '@/shared/types';
 

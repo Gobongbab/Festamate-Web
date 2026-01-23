@@ -16,11 +16,11 @@ import {
   RoomReportModal,
   UserManageBottomSheet,
   UserReportModal,
-} from '@/features/room/ui';
+} from '@/screen/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
-// import { useLeaveRoom } from '@/features/room/api';
+// import { usePostRoomLeave } from '@/screen/room/api';
 import { useAtomValue } from 'jotai';
 import { selectedUserAtom } from '@/shared/atom';
 
@@ -48,7 +48,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
     openChatUrl,
     preferredGender,
   } = params;
-  // const { mutate: leave } = useLeaveRoom(id);
+  // const { mutate: leave } = usePostRoomLeave(id);
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
   const selectedUser = useAtomValue(selectedUserAtom);
