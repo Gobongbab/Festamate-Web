@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 
-import { RoomListItem } from '@/widgets/room-list';
+import { RoomListInfinite } from '@/widgets/room-list';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET } from '@/shared/constants';
 
@@ -17,61 +17,17 @@ export default function SearchResults({
   searchKey,
   filter,
 }: SearchResultsParams) {
-  const { data, hasNextPage, isLoading, isFetchingNextPage, fetchNextPage } =
-    useGetSearchResults(searchKey, { ...filter });
+  const {
+    data,
+    hasNextPage,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    isError,
+    error,
+    refetch,
+  } = useGetSearchResults(searchKey, { ...filter });
   const { openBottomSheet } = useBottomSheet();
-
-  const observer = useRef<IntersectionObserver | undefined>(undefined);
-  const lastRoomRef = useCallback(
-    (node: HTMLElement | null) => {
-      if (!hasNextPage || isLoading || isFetchingNextPage) {
-        if (observer.current) {
-          observer.current.disconnect();
-          observer.current = undefined;
-        }
-        return;
-      }
-
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-
-      observer.current = new IntersectionObserver(
-        entries => {
-          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-            console.log('Fetching next page...', {
-              hasNextPage,
-              isFetchingNextPage,
-              currentPage: data?.pages.length,
-            });
-            fetchNextPage();
-          }
-        },
-        { threshold: 0.7 },
-      );
-
-      if (node) {
-        observer.current.observe(node);
-      }
-    },
-    [
-      isLoading,
-      isFetchingNextPage,
-      hasNextPage,
-      fetchNextPage,
-      data?.pages.length,
-    ],
-  );
-
-  useEffect(() => {
-    return () => {
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-    };
-  }, []);
-
-  const rooms = data ? data.pages.flatMap(page => page.content) : [];
 
   return (
     <>
@@ -106,21 +62,18 @@ export default function SearchResults({
         </div>
       </div>
 
-      {data && rooms.length > 0 ? (
-        <div className='flex flex-col gap-1.5'>
-          {rooms.map((room, index) => (
-            <RoomListItem
-              key={room.id}
-              {...room}
-              ref={index === rooms.length - 1 ? lastRoomRef : null}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className='text-light grid h-30 w-full place-items-center'>
-          <span>검색 결과가 없어요!</span>
-        </div>
-      )}
+      <div className='flex flex-col gap-1.5'>
+        <RoomListInfinite
+          data={data}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          isLoading={isLoading}
+          isError={isError}
+          error={error}
+          refetch={refetch}
+        />
+      </div>
     </>
   );
 }

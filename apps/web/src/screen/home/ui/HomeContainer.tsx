@@ -3,7 +3,7 @@ import { useAtomValue } from 'jotai';
 
 import { fetchLoginStatus } from '@festamate/utils';
 
-import { RoomListGroup } from '@/widgets/room-list';
+import { RoomList } from '@/widgets/room-list';
 import { RoomCarousel } from '@/widgets/room-carousel';
 import { REQUEST } from '@/shared/api';
 import { useGetRoomList } from '@/screen/home/api';
@@ -39,7 +39,7 @@ export default function HomeContainer() {
         isLoading={isRecommendedLoading}
         isError={isRecommendedError}
       />
-      <RoomListGroup
+      <RoomList
         label='개설된 모임'
         key='popularGroup'
         request={REQUEST.ROOM}

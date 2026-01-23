@@ -1,94 +1,71 @@
-import React, { useCallback, useRef, useEffect } from 'react';
-import { UseInfiniteQueryResult } from '@tanstack/react-query';
+import React from 'react';
 
 import { RoomListItem, RoomListSkeleton } from '@/widgets/room-list/ui';
+import { PATH } from '@/shared/constants';
 import { RoomListItem as RoomListItemType } from '@/shared/types';
 
-interface RoomListProps {
-  data: any;
-  fetchNextPage: () => void;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
+import { useFlow } from '@/app/stackflow';
+import { Error } from '@/assets/images';
+
+interface RoomListGroupProps {
+  label: string;
+  request: string;
+  rooms: RoomListItemType[];
   isLoading: boolean;
   isError: boolean;
-  error: Error | null;
-  refetch: () => void;
 }
+
+const ROOM_LIST_GROUP_SKELETON_COUNT = 6;
 
 export default function RoomList({
-  data,
-  fetchNextPage,
-  hasNextPage,
-  isFetchingNextPage,
+  label,
+  request,
+  rooms,
   isLoading,
   isError,
-  error,
-  refetch,
-}: RoomListProps) {
-  const observer = useRef<IntersectionObserver | undefined>(undefined);
-  const lastRoomRef = useCallback(
-    (node: HTMLElement | null) => {
-      if (!hasNextPage || isLoading || isFetchingNextPage) {
-        if (observer.current) {
-          observer.current.disconnect();
-          observer.current = undefined;
-        }
-        return;
-      }
-
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-
-      observer.current = new IntersectionObserver(
-        entries => {
-          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage)
-            fetchNextPage();
-        },
-        { threshold: 0.7 },
-      );
-
-      if (node) {
-        observer.current.observe(node);
-      }
-    },
-    [fetchNextPage, hasNextPage, isFetchingNextPage, isLoading],
-  );
-
-  useEffect(() => {
-    return () => {
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-    };
-  }, []);
-
-  const rooms = data ? data.pages.flatMap((page: any) => page.content) : [];
+}: RoomListGroupProps) {
+  const { push } = useFlow();
 
   return (
-    <>
-      {isError && (
-        <div className='error-message'>
-          <p>{error?.message || '방 목록을 불러오는데 실패했습니다.'}</p>
-          <button onClick={() => refetch()}>다시 시도하기</button>
-        </div>
-      )}
-      {isLoading && (
-        <div className='flex h-fit w-full flex-col gap-0'>
-          <RoomListSkeleton /> <RoomListSkeleton /> <RoomListSkeleton />{' '}
-          <RoomListSkeleton />
-        </div>
-      )}
-      {data &&
-        rooms.length > 0 &&
-        rooms.map((room: RoomListItemType, index: number) => (
-          <RoomListItem
-            {...room}
-            key={room.id}
-            ref={index === rooms.length - 1 ? lastRoomRef : null}
-          />
-        ))}
-      {data && rooms.length === 0 && <div>방이 없어요!</div>}
-    </>
+    <div className='flex w-full flex-col'>
+      <div className='flex items-baseline justify-between gap-x-2'>
+        <span className='text-lg font-semibold'>{label}</span>
+        <button
+          name='more'
+          className='text-light hover:text-dark cursor-pointer text-sm focus:outline-none'
+          onClick={() => push(PATH.LIST, { title: label, request: request })}
+        >
+          <u>더보기</u>
+        </button>
+      </div>
+      <div className='mb-3 flex flex-col items-center gap-1.5'>
+        {!isLoading && !isError && (
+          <>
+            {rooms.length === 0 ? (
+              <div className='grid h-30 items-center'>{label}이 없어요!</div>
+            ) : (
+              rooms.map(room => <RoomListItem key={room.id} {...room} />)
+            )}
+          </>
+        )}
+        {isLoading && <RoomListGroupSkeleton />}
+        {isError && (
+          <div className='grid h-30 items-center'>
+            <div className='flex flex-col items-center justify-center gap-3'>
+              <img src={Error} className='size-14' />
+              <span> {label}을 불러오던 도중 오류가 발생했어요!</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
+
+const RoomListGroupSkeleton = () => (
+  <>
+    {Array.from({ length: ROOM_LIST_GROUP_SKELETON_COUNT }).map((_, i) => (
+      <RoomListSkeleton key={i} />
+    ))}
+  </>
+);
