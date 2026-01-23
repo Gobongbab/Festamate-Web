@@ -1,42 +1,45 @@
 import React, { ChangeEvent } from 'react';
-import type { UseFormWatch, UseFormRegister } from 'react-hook-form';
+import type { UseFormWatch, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 import { cn } from '@festamate/utils';
 
 import { FormItem, Input } from '@/shared/ui';
-import { Room } from '@/shared/types';
 import {
   CONTENT_MAX_LENGTH,
   PLACE_MAX_LENGTH,
   TITLE_MAX_LENGTH,
 } from '@/shared/constants';
 
-import { useRoomCreateContext } from '@/widgets/create/model';
+import { CreateFormData } from '@/widgets/create/model';
 
 interface GroupTitleFormProps {
-  register: UseFormRegister<Room>;
-  watch: UseFormWatch<Room>;
+  register: UseFormRegister<CreateFormData>;
+  watch: UseFormWatch<CreateFormData>;
+  setValue: UseFormSetValue<CreateFormData>;
 }
 
 export default function GroupTitleForm({
   register,
   watch,
+  setValue,
 }: GroupTitleFormProps) {
-  const { setFile, image, setImage } = useRoomCreateContext();
-  const { title, place, content } = watch();
+  const title = watch('title');
+  const place = watch('place');
+  const content = watch('content');
+  const image = watch('image');
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFile(file);
+      setValue('file', file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result as string);
+        setValue('image', reader.result as string);
       };
       reader.readAsDataURL(file);
     } else {
-      setImage('');
-      setFile(undefined);
+      setValue('image', '');
+      setValue('file', undefined);
     }
   };
 

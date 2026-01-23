@@ -11,17 +11,16 @@ import { getDate, getFormattedPhone } from '@festamate/utils';
 
 import { FormItem, Input, Radio } from '@/shared/ui';
 import { userAtom } from '@/shared/atom';
-import { Room } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL, DETAIL_OPTION } from '@/shared/constants';
 
-import { useRoomCreateContext } from '@/widgets/create/model';
+import { CreateFormData } from '@/widgets/create/model';
 import { useSubmitFriendPhone } from '@/widgets/create/api';
 
 interface GroupTitleFormProps {
-  register: UseFormRegister<Room>;
-  watch: UseFormWatch<Room>;
-  setValue: UseFormSetValue<Room>;
+  register: UseFormRegister<CreateFormData>;
+  watch: UseFormWatch<CreateFormData>;
+  setValue: UseFormSetValue<CreateFormData>;
 }
 
 export default function GroupDetailForm({
@@ -29,19 +28,15 @@ export default function GroupDetailForm({
   watch,
   setValue,
 }: GroupTitleFormProps) {
-  const {
-    preferredGender,
-    maxParticipants,
-    preferredStudentIdMin,
-    preferredStudentIdMax,
-    openChatUrl,
-  } = watch();
-  const {
-    maxParticipantsRender,
-    setMaxParticipantsRender,
-    date,
-    friendPhoneNumbers,
-  } = useRoomCreateContext();
+  const preferredGender = watch('preferredGender');
+  const maxParticipants = watch('maxParticipants');
+  const preferredStudentIdMin = watch('preferredStudentIdMin');
+  const preferredStudentIdMax = watch('preferredStudentIdMax');
+  const openChatUrl = watch('openChatUrl');
+  const maxParticipantsRender = watch('maxParticipantsRender');
+  const date = watch('date');
+  const friendPhoneNumbers = watch('friendPhoneNumbers');
+
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
   const isFormValid =
@@ -101,7 +96,7 @@ export default function GroupDetailForm({
             label={label}
             checked={Number(maxParticipants) === value}
             onChange={() => {
-              setMaxParticipantsRender(value);
+              setValue('maxParticipantsRender', value);
               setValue('maxParticipants', value);
             }}
           />
@@ -119,8 +114,10 @@ export default function GroupDetailForm({
           }
           className='flex flex-col gap-2'
         >
-          <FriendInput />
-          {maxParticipantsRender === 6 && <FriendInput />}
+          <FriendInput setValue={setValue} watch={watch} />
+          {maxParticipantsRender === 6 && (
+            <FriendInput setValue={setValue} watch={watch} />
+          )}
         </FormItem>
       )}
       <FormItem
@@ -173,12 +170,17 @@ export default function GroupDetailForm({
   );
 }
 
-const FriendInput = () => {
+interface FriendInputProps {
+  setValue: UseFormSetValue<CreateFormData>;
+  watch: UseFormWatch<CreateFormData>;
+}
+
+const FriendInput = ({ setValue, watch }: FriendInputProps) => {
   const [success, setSuccess] = useState(false);
-  const [value, setValue] = useState<string>('');
+  const [value, setInputValue] = useState<string>('');
   const { mutate } = useSubmitFriendPhone();
   const { phoneNumber, gender } = useAtomValue(userAtom)!;
-  const { setFriendPhoneNumbers, friendPhoneNumbers } = useRoomCreateContext();
+  const friendPhoneNumbers = watch('friendPhoneNumbers');
 
   return (
     <div className='flex w-fit gap-2'>
@@ -193,7 +195,7 @@ const FriendInput = () => {
           onChange={e => {
             const rawValue = e.target.value;
             const formattedValue = getFormattedPhone(rawValue);
-            setValue(formattedValue);
+            setInputValue(formattedValue);
           }}
         />
       </div>
@@ -217,7 +219,10 @@ const FriendInput = () => {
                 ) {
                   alert('친구를 추가했어요!');
                   setSuccess(true);
-                  setFriendPhoneNumbers(prev => [...prev, value]);
+                  setValue('friendPhoneNumbers', [
+                    ...friendPhoneNumbers,
+                    value,
+                  ]);
                 } else alert('가입하지 않은 친구입니다.');
               },
             });

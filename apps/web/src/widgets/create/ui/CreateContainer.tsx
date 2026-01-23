@@ -1,25 +1,17 @@
 import React from 'react';
 
-import { useForm } from 'react-hook-form';
-
 import { cn, getDate } from '@festamate/utils';
 import { Button } from '@/shared/ui';
 
 import { useRoomCreateContext, useFormMode } from '@/widgets/create/model';
-import { Room } from '@/shared/types';
 import { useFormSubmit } from '@/widgets/create/api';
 
 export default function CreateContainer() {
-  const { mode, setMode, file, date, friendPhoneNumbers } =
-    useRoomCreateContext();
-
-  const { register, watch, setValue } = useForm<Room>({
-    defaultValues: {
-      content: '',
-      preferredStudentIdMin: '20',
-      preferredStudentIdMax: '23',
-    },
-  });
+  const { register, watch, setValue } = useRoomCreateContext();
+  const mode = watch('mode');
+  const file = watch('file');
+  const date = watch('date');
+  const friendPhoneNumbers = watch('friendPhoneNumbers');
 
   const { MODE } = useFormMode({ register, watch, setValue });
   const { form, isFormValid, button } = MODE[mode];
@@ -56,7 +48,7 @@ export default function CreateContainer() {
               )}
               name='group-data-details'
               onClick={() => {
-                if (index === 0) setMode(index);
+                if (index === 0) setValue('mode', index);
               }}
             >
               {title}
@@ -72,7 +64,7 @@ export default function CreateContainer() {
         disabled={!isFormValid || isPending}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
-          if (mode === 0) setMode(1);
+          if (mode === 0) setValue('mode', 1);
           else handleSubmit();
         }}
         label={isPending ? '방을 만드는 중..' : button}

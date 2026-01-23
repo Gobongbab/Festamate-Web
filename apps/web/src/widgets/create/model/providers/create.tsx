@@ -1,33 +1,45 @@
-import React, { useState, type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 
-import { RoomCreateContext } from '@/widgets/create/model';
+import { Gender } from '@/shared/types';
+
+export interface CreateFormData {
+  title: string;
+  place: string;
+  content: string;
+  preferredGender: Gender;
+  preferredStudentIdMin: string;
+  preferredStudentIdMax: string;
+  maxParticipants: 2 | 4 | 6;
+  openChatUrl: string;
+
+  mode: number;
+  maxParticipantsRender: number;
+  file?: File;
+  image: string;
+  date: Date | null;
+  friendPhoneNumbers: string[];
+}
 
 export default function CreateProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState(0);
-  const [maxParticipantsRender, setMaxParticipantsRender] = useState(2);
-  const [file, setFile] = useState<File | undefined>(undefined);
-  const [image, setImage] = useState<string>('');
-  const [date, setDate] = useState<Date | null>(null);
-  const [friendPhoneNumbers, setFriendPhoneNumbers] = useState<string[]>([]);
+  const methods = useForm<CreateFormData>({
+    defaultValues: {
+      title: '',
+      place: '',
+      content: '',
+      preferredGender: 'MALE',
+      preferredStudentIdMin: '20',
+      preferredStudentIdMax: '23',
+      maxParticipants: 2,
+      openChatUrl: '',
+      mode: 0,
+      maxParticipantsRender: 2,
+      file: undefined,
+      image: '',
+      date: null,
+      friendPhoneNumbers: [],
+    },
+  });
 
-  return (
-    <RoomCreateContext.Provider
-      value={{
-        mode,
-        setMode,
-        maxParticipantsRender,
-        setMaxParticipantsRender,
-        file,
-        setFile,
-        image,
-        setImage,
-        date,
-        setDate,
-        friendPhoneNumbers,
-        setFriendPhoneNumbers,
-      }}
-    >
-      {children}
-    </RoomCreateContext.Provider>
-  );
+  return <FormProvider {...methods}>{children}</FormProvider>;
 }
