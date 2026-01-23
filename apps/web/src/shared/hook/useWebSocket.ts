@@ -39,7 +39,7 @@ export default function useWebSocket({
 
   const connect = useCallback(async () => {
     const stompClient = new Client({
-      brokerURL: 'wss://www.festamate.shop/ws',
+      brokerURL: import.meta.env.VITE_WS_URL,
       connectHeaders: headers,
       debug: message => console.log('[STOMP]', message),
       reconnectDelay: 5000,
