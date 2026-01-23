@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { cn } from '@festamate/utils';
 
-import { SIGNUP_PROCESS } from '@/screen/signup/model';
+import { useSignupProcess } from '@/screen/signup/model';
 import {
   StudentCertifyForm,
   GenderForm,
@@ -10,14 +10,22 @@ import {
   PhoneForm,
   SignupComplete,
 } from '@/screen/signup/ui';
-import { Gender } from '@/shared/types';
 
 export default function SignupContainer() {
-  const [process, setProcess] = useState<number>(0);
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [gender, setGender] = useState<Gender>('MALE');
+  const {
+    process,
+    setProcess,
+    phoneNumber,
+    setPhoneNumber,
+    gender,
+    setGender,
+    processInfo,
+    isComplete,
+    isInProgress,
+  } = useSignupProcess();
 
-  const { title, width } = SIGNUP_PROCESS[process];
+  const { title, width } = processInfo;
+
   const renderForm = () => {
     switch (process) {
       case 0:
@@ -43,7 +51,7 @@ export default function SignupContainer() {
 
   return (
     <>
-      {process < 4 && (
+      {isInProgress && (
         <>
           <div className='relative h-1 w-full'>
             <div className={cn('bg-dark absolute left-0 h-full', width)} />
@@ -54,7 +62,7 @@ export default function SignupContainer() {
           </div>
         </>
       )}
-      {process === 4 && <SignupComplete />}
+      {isComplete && <SignupComplete />}
     </>
   );
 }

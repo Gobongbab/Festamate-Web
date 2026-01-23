@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react';
-
 import { ActivityComponentType, useStack } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { cn, fetchLoginStatus } from '@festamate/utils';
+import { cn } from '@festamate/utils';
 
-import { Button, LoginBottomSheet } from '@/shared/ui';
+import { LoginBottomSheet } from '@/shared/ui';
 import { RoomAppBar } from '@/widgets/menu-appbar';
 import {
   MenuBottomSheet,
@@ -17,153 +15,31 @@ import {
   RoomReportModal,
   UserManageBottomSheet,
   UserReportModal,
+  RoomActionButtons,
 } from '@/screen/room/ui';
-import { RoomAuthority, RoomListItem } from '@/shared/types';
-import { useBottomSheet, useModal } from '@/shared/hook';
-import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
-// import { usePostRoomLeave } from '@/screen/room/api';
-import { useAtomValue } from 'jotai';
-import { selectedUserAtom } from '@/shared/atom';
-
-// 사용자 상태를 위한 타입 정의
-type RoomStatus = {
-  status: 'pending' | 'success';
-  data: RoomAuthority | null;
-};
+import { RoomListItem } from '@/shared/types';
+import { useRoomActions } from '@/screen/room/model';
 
 const RoomScreen: ActivityComponentType<RoomListItem> = ({
   params,
 }: {
   params: RoomListItem;
 }) => {
-  const [status, setStatus] = useState<RoomStatus>({
-    status: 'pending',
-    data: null,
-  });
   const stack = useStack();
-  const [isLogin, setIsLogin] = useState<boolean>(false);
   const {
-    maxParticipants,
-    id,
-    status: roomStatus,
-    openChatUrl,
-    preferredGender,
-  } = params;
-  // const { mutate: leave } = usePostRoomLeave(id);
-  const { openBottomSheet } = useBottomSheet();
-  const { openModal } = useModal();
-  const selectedUser = useAtomValue(selectedUserAtom);
+    status,
+    setStatus,
+    availableFriendCnt,
+    handleMenuClick,
+    handleJoin,
+    handleJoinWithFriend,
+    handleMoveToChat,
+    actionButtonConfig,
+    selectedUser,
+  } = useRoomActions({ params });
 
-  useEffect(() => {
-    setIsLogin(fetchLoginStatus());
-  }, []);
-
-  const availableFriendCnt = maxParticipants / 2 - 1;
-  const isAvailableWithFriend = maxParticipants !== 2;
+  const { id, status: roomStatus, preferredGender } = params;
   const isLoading = stack.globalTransitionState === 'loading';
-
-  const handleMenuClick = () => {
-    if (status.status === 'success') openBottomSheet(BOTTOM_SHEET.MENU);
-  };
-
-  const handleJoin = () => {
-    if (isLogin) openModal(MODAL.JOIN);
-    else openBottomSheet(BOTTOM_SHEET.LOGIN);
-  };
-
-  const handleJoinWithFriend = () => {
-    if (isLogin) openModal(MODAL.JOIN_WITH_FRIEND);
-    else openBottomSheet(BOTTOM_SHEET.LOGIN);
-  };
-
-  const handleMoveToChat = () => {
-    window.open(openChatUrl, '_blank');
-  };
-
-  // const handleLeaveRoom = () => leave(id);
-
-  const renderActionButtons = () => {
-    if (isLogin && status.status === 'pending') {
-      return (
-        <>
-          {isAvailableWithFriend ? (
-            <Button
-              name='room-participate-with-friend'
-              label='친구와 함께 참여하기'
-              onClick={handleJoinWithFriend}
-              className='mb-normal-spacing'
-            />
-          ) : (
-            <Button
-              name='room-participate'
-              label='참여하기'
-              onClick={handleJoin}
-              className='mb-normal-spacing'
-            />
-          )}
-        </>
-      );
-    }
-
-    if (isLogin && status.data === 'HOST') {
-      return (
-        <Button
-          name='room-chat'
-          label='채팅방 이동'
-          onClick={handleMoveToChat}
-          className='mb-normal-spacing'
-        />
-      );
-    }
-
-    if (isLogin && status.data === 'PARTICIPANT') {
-      return (
-        <>
-          <Button
-            name='room-chat'
-            label='오픈채팅방 이동'
-            onClick={handleMoveToChat}
-            className='mb-normal-spacing'
-          />
-          {/* <Button
-            name='room-leave'
-            label='방 나가기'
-            halfWidth
-            onClick={handleLeaveRoom}
-            className='mb-normal-spacing'
-          /> */}
-        </>
-      );
-    }
-
-    return (
-      <>
-        {roomStatus === 'MATCHING' ? (
-          isAvailableWithFriend ? (
-            <Button
-              name='room-participate-with-friend'
-              label='친구와 함께 참여하기'
-              onClick={handleJoinWithFriend}
-              className='mb-normal-spacing'
-            />
-          ) : (
-            <Button
-              name='room-participate'
-              label='참여하기'
-              onClick={handleJoin}
-              className='mb-normal-spacing'
-            />
-          )
-        ) : (
-          <Button
-            label='매칭이 종료되었어요'
-            disabled
-            className='mb-normal-spacing'
-          />
-        )}
-      </>
-    );
-  };
 
   return (
     <div className='fixed inset-0 overflow-hidden'>
@@ -178,7 +54,12 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
           isLoading ? 'translate-y-full' : 'translate-y-0',
         )}
       >
-        {renderActionButtons()}
+        <RoomActionButtons
+          actionButtonConfig={actionButtonConfig}
+          handleJoin={handleJoin}
+          handleJoinWithFriend={handleJoinWithFriend}
+          handleMoveToChat={handleMoveToChat}
+        />
       </div>
       <LoginBottomSheet />
       <UserManageBottomSheet />
