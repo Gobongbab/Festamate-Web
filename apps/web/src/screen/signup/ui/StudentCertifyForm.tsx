@@ -14,7 +14,7 @@ import { StudentIdSample } from '@/assets/images';
 import { KakaoAccessTokenAtom } from '@/shared/atom';
 import { Gender } from '@/shared/types';
 
-import { useCertifyStudent, useSignup } from '@/features/signup/api';
+import { usePostCertifyStudent, usePostSignup } from '@/screen/signup/api';
 
 interface StudentCertifyFormProps {
   setProcess: Dispatch<SetStateAction<number>>;
@@ -35,9 +35,9 @@ export default function StudentCertifyForm({
   >('idle');
 
   const { kakaoAccessToken } = useAtomValue(KakaoAccessTokenAtom);
-  const { mutate: signup } = useSignup({ setProcess });
+  const { mutate: signup } = usePostSignup({ setProcess });
   const { mutateAsync: certifyStudent, isError: isCertifyError } =
-    useCertifyStudent();
+    usePostCertifyStudent();
 
   const handleClick = async () => {
     if (!file) return;

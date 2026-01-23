@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 
 import { cn } from '@festamate/utils';
 
-import { SIGNUP_PROCESS } from '@/features/signup/model';
+import { SIGNUP_PROCESS } from '@/screen/signup/model';
 import {
   StudentCertifyForm,
   GenderForm,
   PhoneCertifyForm,
   PhoneForm,
   SignupComplete,
-} from '@/features/signup/ui';
+} from '@/screen/signup/ui';
 import { Gender } from '@/shared/types';
 
 export default function SignupContainer() {

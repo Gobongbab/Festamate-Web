@@ -27,7 +27,7 @@ interface SignupProps {
   setProcess: Dispatch<SetStateAction<number>>;
 }
 
-const submitSignup = async (data: SubmitSignupRequest) => {
+const postSignup = async (data: SubmitSignupRequest) => {
   const response = await post<SubmitSignupRequest, SubmitSignupResponse>({
     request: REQUEST.SIGNUP,
     data: data,
@@ -35,11 +35,11 @@ const submitSignup = async (data: SubmitSignupRequest) => {
   return response.data;
 };
 
-export const useSignup = ({ setProcess }: SignupProps) => {
+export const usePostSignup = ({ setProcess }: SignupProps) => {
   const setUserAtom = useSetAtom(userTokenAtom);
 
   return useMutation<SubmitSignupResponse, unknown, SubmitSignupRequest>({
-    mutationFn: data => submitSignup(data),
+    mutationFn: data => postSignup(data),
     onSuccess: data => {
       setUserAtom(data.result);
       setProcess(prev => prev + 1);

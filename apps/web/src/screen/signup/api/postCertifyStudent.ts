@@ -11,7 +11,7 @@ export interface StudentCertificationResponse {
   };
 }
 
-const submitStudentCertification = async (formData: FormData) => {
+const postCertifyStudent = async (formData: FormData) => {
   const response = await post<FormData, StudentCertificationResponse>({
     request: REQUEST.CERTIFY_STUDENT,
     data: formData,
@@ -19,8 +19,8 @@ const submitStudentCertification = async (formData: FormData) => {
   return response.data;
 };
 
-export const useCertifyStudent = () => {
+export const usePostCertifyStudent = () => {
   return useMutation({
-    mutationFn: submitStudentCertification,
+    mutationFn: postCertifyStudent,
   });
 };

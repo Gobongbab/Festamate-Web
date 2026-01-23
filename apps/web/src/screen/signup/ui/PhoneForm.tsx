@@ -2,7 +2,7 @@ import React, { type Dispatch, type SetStateAction, useState } from 'react';
 
 import { Button, Input } from '@/shared/ui';
 import { getFormattedPhone } from '@festamate/utils';
-import { useSubmitPhoneNumber } from '@/features/signup/api';
+import { usePostCertifyPhone } from '@/screen/signup/api';
 
 interface PhoneFormProps {
   setProcess: Dispatch<SetStateAction<number>>;
@@ -14,7 +14,7 @@ export default function PhoneForm({
   setPhoneNumber,
 }: PhoneFormProps) {
   const [value, setValue] = useState<string>('');
-  const { mutate, isError, isPending } = useSubmitPhoneNumber();
+  const { mutate, isError, isPending } = usePostCertifyPhone();
 
   const handleClick = () => {
     let phoneNumber = '';

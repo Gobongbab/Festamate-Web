@@ -10,7 +10,7 @@ import { useFetchUserInfo } from '@/shared/api';
 
 export default function SignupComplete() {
   // const { handleAllowNotification } = useAllowNotification();
-  // const { mutate } = useSubmitFcmToken();
+  // const { mutate } = usePostFcmToken();
   // const fcmToken = useAtomValue(fcmTokenAtom);
 
   // // const handleNotificationClick = async () => {

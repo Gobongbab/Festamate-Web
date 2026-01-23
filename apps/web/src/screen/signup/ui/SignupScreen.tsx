@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SignupContainer } from '@/features/signup/ui';
+import { SignupContainer } from '@/screen/signup/ui';
 import { RAW_PATH } from '@/shared/constants';
 import { getPath } from '@festamate/utils';
 

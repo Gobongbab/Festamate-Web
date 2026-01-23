@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 
 import { Button, Input } from '@/shared/ui';
-import { useSubmitCode, useSubmitPhoneNumber } from '../api';
+import { usePostCertifyCode, usePostCertifyPhone } from '../api';
 import { cn } from '@festamate/utils';
 
 interface PhoneCertifyFormProps {
@@ -21,10 +21,10 @@ export default function PhoneCertifyForm({
   const [timeOver, setTimeOver] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
   const [count, setCount] = useState<number>(300);
-  const { mutate, isPending, isError } = useSubmitCode({
+  const { mutate, isPending, isError } = usePostCertifyCode({
     setProcess,
   });
-  const resend = useSubmitPhoneNumber().mutate;
+  const resend = usePostCertifyPhone().mutate;
 
   const handleClick = () => {
     let phoneNumberWithoutHypen = '';
