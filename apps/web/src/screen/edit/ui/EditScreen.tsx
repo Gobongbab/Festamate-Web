@@ -2,11 +2,10 @@ import React from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { NormalAppBar } from '@/shared/ui';
+import { NormalAppBar, RoomOpenChatGuideModal } from '@/shared/ui';
 import {
   EditContainer,
   DatePickBottomSheet,
-  OpenChatGuideModal,
   TimePickBottomSheet,
 } from '@/features/edit/ui';
 import { EditProvider } from '@/features/edit/model';
@@ -26,7 +25,7 @@ const EditScreen: ActivityComponentType<{ initialData: RoomListItem }> = ({
             <EditContainer {...params.initialData} />
           </div>
         </AppScreen>
-        <OpenChatGuideModal />
+        <RoomOpenChatGuideModal />
         <DatePickBottomSheet />
         <TimePickBottomSheet />
       </div>

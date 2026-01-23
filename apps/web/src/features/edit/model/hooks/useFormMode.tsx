@@ -13,7 +13,8 @@ import {
   TITLE_MAX_LENGTH,
 } from '@/shared/constants';
 
-import { GroupDetailForm, GroupTitleForm } from '@/features/edit/ui';
+import { RoomGroupDetailForm, RoomGroupTitleForm } from '@/shared/ui';
+import { useSubmitFriendPhone } from '@/features/edit/api';
 import { EditFormData } from '@/features/edit/model';
 
 interface RoomModeProps {
@@ -40,7 +41,7 @@ export default function useFormMode({
   const MODE = [
     {
       title: '모임 기본 정보',
-      form: <GroupTitleForm register={register} watch={watch} setValue={setValue} />,
+      form: <RoomGroupTitleForm register={register} watch={watch} setValue={setValue} />,
       button: '다음으로',
       isFormValid:
         title?.length >= TITLE_MIN_LENGTH &&
@@ -53,10 +54,11 @@ export default function useFormMode({
     {
       title: '모임 세부 정보',
       form: (
-        <GroupDetailForm
+        <RoomGroupDetailForm
           register={register}
           watch={watch}
           setValue={setValue}
+          useSubmitFriendPhone={useSubmitFriendPhone}
         />
       ),
       button: '수정하기',

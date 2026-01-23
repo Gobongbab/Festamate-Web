@@ -2,11 +2,10 @@ import React from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { NormalAppBar } from '@/shared/ui';
+import { NormalAppBar, RoomOpenChatGuideModal } from '@/shared/ui';
 import {
   CreateContainer,
   DatePickBottomSheet,
-  OpenChatGuideModal,
   TimePickBottomSheet,
 } from '@/features/create/ui';
 import { CreateProvider } from '@/features/create/model';
@@ -20,7 +19,7 @@ export default function CreateScreen() {
             <CreateContainer />
           </div>
         </AppScreen>
-        <OpenChatGuideModal />
+        <RoomOpenChatGuideModal />
         <DatePickBottomSheet />
         <TimePickBottomSheet />
       </div>

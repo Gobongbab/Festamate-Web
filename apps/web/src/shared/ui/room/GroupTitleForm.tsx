@@ -10,36 +10,34 @@ import {
   TITLE_MAX_LENGTH,
 } from '@/shared/constants';
 
-import { EditFormData } from '@/features/edit/model';
-
-interface GroupTitleFormProps {
-  register: UseFormRegister<EditFormData>;
-  watch: UseFormWatch<EditFormData>;
-  setValue: UseFormSetValue<EditFormData>;
+interface GroupTitleFormProps<T extends Record<string, any>> {
+  register: UseFormRegister<T>;
+  watch: UseFormWatch<T>;
+  setValue: UseFormSetValue<T>;
 }
 
-export default function GroupTitleForm({
+export default function GroupTitleForm<T extends Record<string, any>>({
   register,
   watch,
   setValue,
-}: GroupTitleFormProps) {
-  const title = watch('title');
-  const place = watch('place');
-  const content = watch('content');
-  const image = watch('image');
+}: GroupTitleFormProps<T>) {
+  const title = watch('title' as any);
+  const place = watch('place' as any);
+  const content = watch('content' as any);
+  const image = watch('image' as any);
 
   const handleImageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setValue('file', file);
+      setValue('file' as any, file as any);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setValue('image', reader.result as string);
+        setValue('image' as any, reader.result as any);
       };
       reader.readAsDataURL(file);
     } else {
-      setValue('image', '');
-      setValue('file', undefined);
+      setValue('image' as any, '' as any);
+      setValue('file' as any, undefined as any);
     }
   };
 
@@ -77,7 +75,7 @@ export default function GroupTitleForm({
           placeholder='ex) 체대 주점 가실 분!'
           value={title}
           maxLength={TITLE_MAX_LENGTH}
-          {...register('title', { required: true })}
+          {...register('title' as any, { required: true })}
           className='h-12'
         />
       </FormItem>
@@ -87,7 +85,7 @@ export default function GroupTitleForm({
           placeholder='ex) 종강 카페 앞, 도서관 앞'
           value={place}
           maxLength={PLACE_MAX_LENGTH}
-          {...register('place', { required: true })}
+          {...register('place' as any, { required: true })}
           className='h-12'
         />
       </FormItem>
@@ -95,7 +93,7 @@ export default function GroupTitleForm({
         <textarea
           id='content'
           placeholder='설명을 입력해주세요.'
-          {...register('content', { required: true })}
+          {...register('content' as any, { required: true })}
           className={cn(
             'border-border rounded-5 text-md h-48 w-full resize-none border-[1px] px-4 py-3 focus:outline-none',
             content.length > CONTENT_MAX_LENGTH && 'border-important shake',

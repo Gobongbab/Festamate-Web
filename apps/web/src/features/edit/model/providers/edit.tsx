@@ -1,24 +1,10 @@
 import React, { type ReactNode } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { Gender, type RoomListItem } from '@/shared/types';
+import { RoomFormData, type RoomListItem } from '@/shared/types';
 
-export interface EditFormData {
-  title: string;
-  place: string;
-  content: string;
-  preferredGender: Gender;
-  preferredStudentIdMin: string;
-  preferredStudentIdMax: string;
-  maxParticipants: 2 | 4 | 6;
-  openChatUrl: string;
-
-  mode: number;
-  maxParticipantsRender: number;
-  file?: File;
-  image: string;
-  date: Date;
-  friendPhoneNumbers: string[];
+export interface EditFormData extends Omit<RoomFormData, 'date'> {
+  date: Date; // EditFormData는 date가 필수 (null 불가)
 }
 
 interface EditProviderProps {

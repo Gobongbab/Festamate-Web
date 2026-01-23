@@ -1,25 +1,9 @@
 import React, { type ReactNode } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { Gender } from '@/shared/types';
+import { RoomFormData } from '@/shared/types';
 
-export interface CreateFormData {
-  title: string;
-  place: string;
-  content: string;
-  preferredGender: Gender;
-  preferredStudentIdMin: string;
-  preferredStudentIdMax: string;
-  maxParticipants: 2 | 4 | 6;
-  openChatUrl: string;
-
-  mode: number;
-  maxParticipantsRender: number;
-  file?: File;
-  image: string;
-  date: Date | null;
-  friendPhoneNumbers: string[];
-}
+export interface CreateFormData extends RoomFormData {}
 
 export default function CreateProvider({ children }: { children: ReactNode }) {
   const methods = useForm<CreateFormData>({

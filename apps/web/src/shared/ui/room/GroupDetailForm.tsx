@@ -14,28 +14,27 @@ import { userAtom } from '@/shared/atom';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL, DETAIL_OPTION } from '@/shared/constants';
 
-import { CreateFormData } from '@/features/create/model';
-import { useSubmitFriendPhone } from '@/features/create/api';
-
-interface GroupTitleFormProps {
-  register: UseFormRegister<CreateFormData>;
-  watch: UseFormWatch<CreateFormData>;
-  setValue: UseFormSetValue<CreateFormData>;
+interface GroupTitleFormProps<T extends Record<string, any>> {
+  register: UseFormRegister<T>;
+  watch: UseFormWatch<T>;
+  setValue: UseFormSetValue<T>;
+  useSubmitFriendPhone: () => any;
 }
 
-export default function GroupDetailForm({
+export default function GroupDetailForm<T extends Record<string, any>>({
   register,
   watch,
   setValue,
-}: GroupTitleFormProps) {
-  const preferredGender = watch('preferredGender');
-  const maxParticipants = watch('maxParticipants');
-  const preferredStudentIdMin = watch('preferredStudentIdMin');
-  const preferredStudentIdMax = watch('preferredStudentIdMax');
-  const openChatUrl = watch('openChatUrl');
-  const maxParticipantsRender = watch('maxParticipantsRender');
-  const date = watch('date');
-  const friendPhoneNumbers = watch('friendPhoneNumbers');
+  useSubmitFriendPhone,
+}: GroupTitleFormProps<T>) {
+  const preferredGender = watch('preferredGender' as any);
+  const maxParticipants = watch('maxParticipants' as any);
+  const preferredStudentIdMin = watch('preferredStudentIdMin' as any);
+  const preferredStudentIdMax = watch('preferredStudentIdMax' as any);
+  const openChatUrl = watch('openChatUrl' as any);
+  const maxParticipantsRender = watch('maxParticipantsRender' as any);
+  const date = watch('date' as any);
+  const friendPhoneNumbers = watch('friendPhoneNumbers' as any);
 
   const { openBottomSheet } = useBottomSheet();
   const { openModal } = useModal();
@@ -56,7 +55,7 @@ export default function GroupDetailForm({
             type='number'
             id='preferredStudentIdMin'
             value={preferredStudentIdMin.slice(0, 2)}
-            {...register('preferredStudentIdMin', { required: true })}
+            {...register('preferredStudentIdMin' as any, { required: true })}
           />
           학번 이상
           <Input
@@ -64,7 +63,7 @@ export default function GroupDetailForm({
             type='number'
             id='preferredStudentIdMax'
             value={preferredStudentIdMax.slice(0, 2)}
-            {...register('preferredStudentIdMax', { required: true })}
+            {...register('preferredStudentIdMax' as any, { required: true })}
           />
           학번 이하
         </div>
@@ -80,7 +79,7 @@ export default function GroupDetailForm({
             label={label}
             value={value}
             checked={preferredGender === value}
-            {...register('preferredGender')}
+            {...register('preferredGender' as any)}
           />
         ))}
       </FormItem>
@@ -96,8 +95,8 @@ export default function GroupDetailForm({
             label={label}
             checked={Number(maxParticipants) === value}
             onChange={() => {
-              setValue('maxParticipantsRender', value);
-              setValue('maxParticipants', value);
+              setValue('maxParticipantsRender' as any, value as any);
+              setValue('maxParticipants' as any, value as any);
             }}
           />
         ))}
@@ -114,9 +113,9 @@ export default function GroupDetailForm({
           }
           className='flex flex-col gap-2'
         >
-          <FriendInput setValue={setValue} watch={watch} />
+          <FriendInput setValue={setValue} watch={watch} useSubmitFriendPhone={useSubmitFriendPhone} />
           {maxParticipantsRender === 6 && (
-            <FriendInput setValue={setValue} watch={watch} />
+            <FriendInput setValue={setValue} watch={watch} useSubmitFriendPhone={useSubmitFriendPhone} />
           )}
         </FormItem>
       )}
@@ -162,7 +161,7 @@ export default function GroupDetailForm({
           id='openChatUrl'
           placeholder='https://open.kakao.com/o/sgcUtX3g'
           value={openChatUrl}
-          {...register('openChatUrl', { required: true })}
+          {...register('openChatUrl' as any, { required: true })}
           className='h-12'
         />
       </FormItem>
@@ -170,17 +169,18 @@ export default function GroupDetailForm({
   );
 }
 
-interface FriendInputProps {
-  setValue: UseFormSetValue<CreateFormData>;
-  watch: UseFormWatch<CreateFormData>;
+interface FriendInputProps<T extends Record<string, any>> {
+  setValue: UseFormSetValue<T>;
+  watch: UseFormWatch<T>;
+  useSubmitFriendPhone: () => any;
 }
 
-const FriendInput = ({ setValue, watch }: FriendInputProps) => {
+const FriendInput = <T extends Record<string, any>>({ setValue, watch, useSubmitFriendPhone }: FriendInputProps<T>) => {
   const [success, setSuccess] = useState(false);
   const [value, setInputValue] = useState<string>('');
   const { mutate } = useSubmitFriendPhone();
   const { phoneNumber, gender } = useAtomValue(userAtom)!;
-  const friendPhoneNumbers = watch('friendPhoneNumbers');
+  const friendPhoneNumbers = watch('friendPhoneNumbers' as any);
 
   return (
     <div className='flex w-fit gap-2'>
@@ -208,7 +208,7 @@ const FriendInput = ({ setValue, watch }: FriendInputProps) => {
             alert('자신의 번호는 친구로 추가할 수 없어요.');
           else {
             mutate(value, {
-              onSuccess: data => {
+              onSuccess: (data: any) => {
                 if (friendPhoneNumbers.includes(value))
                   alert('이미 추가한 친구입니다.');
                 else if (data.result.gender !== gender)
@@ -219,10 +219,10 @@ const FriendInput = ({ setValue, watch }: FriendInputProps) => {
                 ) {
                   alert('친구를 추가했어요!');
                   setSuccess(true);
-                  setValue('friendPhoneNumbers', [
+                  setValue('friendPhoneNumbers' as any, [
                     ...friendPhoneNumbers,
                     value,
-                  ]);
+                  ] as any);
                 } else alert('가입하지 않은 친구입니다.');
               },
             });
