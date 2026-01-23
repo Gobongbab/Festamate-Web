@@ -1,3 +1,4 @@
+export * from './baseType';
 export * from './bottomSheet';
 export * from './gender';
 export * from './modal';

@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { get, REQUEST } from '@/shared/api';
-import type { RoomListItem } from '@/shared/types';
+import type { RoomListItem, BasePagedResponse } from '@/shared/types';
 import type { Filter } from '@/screen/search/types';
 
 interface GetSearchResultsProps {
@@ -10,43 +10,12 @@ interface GetSearchResultsProps {
   keyword: string;
 }
 
-interface FetchRoomListResponse {
-  result: {
-    content: RoomListItem[];
-    pageable: {
-      pageNumber: number;
-      pageSize: number;
-      sort: {
-        empty: boolean;
-        unsorted: boolean;
-        sorted: boolean;
-      };
-      offset: number;
-      unpaged: boolean;
-      paged: boolean;
-    };
-    last: boolean;
-    totalPages: number;
-    totalElements: number;
-    first: boolean;
-    size: number;
-    number: number;
-    sort: {
-      empty: boolean;
-      unsorted: boolean;
-      sorted: boolean;
-    };
-    numberOfElements: number;
-    empty: boolean;
-  };
-}
-
 const getSearchResults = async ({
   pageParam = 0,
   filter,
   keyword,
 }: GetSearchResultsProps) => {
-  const response = await get<FetchRoomListResponse>({
+  const response = await get<BasePagedResponse<RoomListItem>>({
     request: REQUEST.ROOM,
     params: {
       page: pageParam,

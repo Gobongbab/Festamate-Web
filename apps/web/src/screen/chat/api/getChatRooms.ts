@@ -1,40 +1,10 @@
 import { REQUEST, userGet } from '@/shared/api';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { BaseApiPagedResponse } from '@/shared/types';
 import { ChatRoom } from '@/screen/chat/types';
 
-interface ChatRoomResponse {
-  isSuccess: boolean;
-  message: string;
-  result: {
-    size: number;
-    content: ChatRoom[];
-    number: number;
-    sort: {
-      empty: boolean;
-      sorted: boolean;
-      unsorted: boolean;
-    };
-    numberOfElements: number;
-    pageable: {
-      offset: number;
-      sort: {
-        empty: boolean;
-        sorted: boolean;
-        unsorted: boolean;
-      };
-      paged: boolean;
-      pageNumber: number;
-      pageSize: number;
-      unpaged: boolean;
-    };
-    first: boolean;
-    last: boolean;
-    empty: boolean;
-  };
-}
-
 const getChatRooms = async (pageParam: number = 0) => {
-  const response = await userGet<ChatRoomResponse>({
+  const response = await userGet<BaseApiPagedResponse<ChatRoom>>({
     request: REQUEST.CHAT_ROOM_LIST,
     params: {
       page: pageParam,

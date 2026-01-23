@@ -2,41 +2,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { REQUEST, userGet } from '@/shared/api';
 import { getPath } from '@festamate/utils';
+import { BaseApiPagedResponse } from '@/shared/types';
 import { Message } from '@/screen/chat/types';
 
-interface Sort {
-  empty: boolean;
-  sorted: boolean;
-  unsorted: boolean;
-}
-
-interface Pageable {
-  offset: number;
-  sort: Sort;
-  paged: boolean;
-  pageNumber: number;
-  pageSize: number;
-  unpaged: boolean;
-}
-
-interface ChatResponse {
-  isSuccess: boolean;
-  message: string;
-  result: {
-    size: number;
-    content: Message[];
-    number: number;
-    sort: Sort;
-    pageable: Pageable;
-    numberOfElements: number;
-    first: boolean;
-    last: boolean;
-    empty: boolean;
-  };
-}
-
 const getChatDetail = async (chatRoomId: number, pageParam: number = 0) => {
-  const response = await userGet<ChatResponse>({
+  const response = await userGet<BaseApiPagedResponse<Message>>({
     request: getPath(REQUEST.CHAT_ROOM, `${chatRoomId}`),
     params: {
       page: pageParam,

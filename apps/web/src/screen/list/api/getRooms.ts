@@ -1,53 +1,22 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { get, REQUEST, userGet } from '@/shared/api';
-import { RoomListItem } from '@/shared/types';
+import { RoomListItem, BasePagedResponse } from '@/shared/types';
 
 interface GetRoomsProps {
   pageParam: number;
   request: string;
 }
 
-interface FetchRoomListResponse {
-  result: {
-    content: RoomListItem[];
-    pageable: {
-      pageNumber: number;
-      pageSize: number;
-      sort: {
-        empty: boolean;
-        unsorted: boolean;
-        sorted: boolean;
-      };
-      offset: number;
-      unpaged: boolean;
-      paged: boolean;
-    };
-    last: boolean;
-    totalPages: number;
-    totalElements: number;
-    first: boolean;
-    size: number;
-    number: number;
-    sort: {
-      empty: boolean;
-      unsorted: boolean;
-      sorted: boolean;
-    };
-    numberOfElements: number;
-    empty: boolean;
-  };
-}
-
 const getRooms = async ({ pageParam = 0, request }: GetRoomsProps) => {
   let response;
   if (request === REQUEST.ROOM_RECOMMENDED || REQUEST.ROOM_PARTICIPATED) {
-    response = await userGet<FetchRoomListResponse>({
+    response = await userGet<BasePagedResponse<RoomListItem>>({
       request: request,
       params: { page: pageParam, size: 20 },
     });
   } else {
-    response = await get<FetchRoomListResponse>({
+    response = await get<BasePagedResponse<RoomListItem>>({
       request: request,
       params: { page: pageParam, size: 20 },
     });
