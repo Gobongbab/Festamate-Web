@@ -49,7 +49,8 @@ export default function DatePickBottomSheet() {
 const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
 const Calendar = () => {
-  const { date: contextDate, setDate } = useRoomEditContext();
+  const { watch, setValue } = useRoomEditContext();
+  const contextDate = watch('date');
   const date = contextDate ?? new Date();
   const currentYear = date.getFullYear();
   const currentMonth = date.getMonth();
@@ -79,8 +80,8 @@ const Calendar = () => {
             newDate.setMonth(currentMonth - 1);
             const todayStart = new Date(today);
             todayStart.setHours(0, 0, 0, 0);
-            if (newDate < todayStart) setDate(today);
-            else setDate(newDate);
+            if (newDate < todayStart) setValue('date', today);
+            else setValue('date', newDate);
           }}
         >
           <IoChevronBackSharp />
@@ -91,7 +92,7 @@ const Calendar = () => {
           onClick={() => {
             const newDate = new Date(date);
             newDate.setMonth(currentMonth + 1);
-            setDate(newDate);
+            setValue('date', newDate);
           }}
         >
           <IoChevronForwardSharp />
@@ -137,7 +138,7 @@ const Calendar = () => {
                     d === selectedDay && 'bg-border',
                     'active:bg-border/70 hover:bg-border/70 grid size-8 place-items-center rounded-[50%]',
                   )}
-                  onClick={() => setDate(renderDate)}
+                  onClick={() => setValue('date', renderDate)}
                 >
                   {d}
                 </button>

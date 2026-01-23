@@ -1,8 +1,25 @@
-import React, { useState, type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 
-import type { RoomListItem } from '@/shared/types';
+import { Gender, type RoomListItem } from '@/shared/types';
 
-import { RoomEditContext } from '@/widgets/edit/model';
+export interface EditFormData {
+  title: string;
+  place: string;
+  content: string;
+  preferredGender: Gender;
+  preferredStudentIdMin: string;
+  preferredStudentIdMax: string;
+  maxParticipants: 2 | 4 | 6;
+  openChatUrl: string;
+
+  mode: number;
+  maxParticipantsRender: number;
+  file?: File;
+  image: string;
+  date: Date;
+  friendPhoneNumbers: string[];
+}
 
 interface EditProviderProps {
   children: ReactNode;
@@ -13,34 +30,37 @@ export default function EditProvider({
   children,
   initialData,
 }: EditProviderProps) {
-  const { maxParticipants, thumbnail, meetingDateTime } = initialData;
-  const [mode, setMode] = useState(0);
-  const [maxParticipantsRender, setMaxParticipantsRender] = useState(
-    maxParticipants as number,
-  );
-  const [file, setFile] = useState<File | undefined>(undefined);
-  const [image, setImage] = useState<string>(thumbnail.url);
-  const [date, setDate] = useState<Date>(new Date(meetingDateTime));
-  const [friendPhoneNumbers, setFriendPhoneNumbers] = useState<string[]>([]);
+  const {
+    title,
+    place,
+    content,
+    preferredGender,
+    preferredStudentIdMin,
+    preferredStudentIdMax,
+    maxParticipants,
+    openChatUrl,
+    thumbnail,
+    meetingDateTime,
+  } = initialData;
 
-  return (
-    <RoomEditContext.Provider
-      value={{
-        mode,
-        setMode,
-        maxParticipantsRender,
-        setMaxParticipantsRender,
-        file,
-        setFile,
-        image,
-        setImage,
-        date,
-        setDate,
-        friendPhoneNumbers,
-        setFriendPhoneNumbers,
-      }}
-    >
-      {children}
-    </RoomEditContext.Provider>
-  );
+  const methods = useForm<EditFormData>({
+    defaultValues: {
+      title,
+      place,
+      content,
+      preferredGender,
+      preferredStudentIdMin,
+      preferredStudentIdMax,
+      maxParticipants,
+      openChatUrl,
+      mode: 0,
+      maxParticipantsRender: maxParticipants as number,
+      file: undefined,
+      image: thumbnail.url,
+      date: new Date(meetingDateTime),
+      friendPhoneNumbers: [],
+    },
+  });
+
+  return <FormProvider {...methods}>{children}</FormProvider>;
 }

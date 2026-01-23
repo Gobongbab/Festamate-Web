@@ -9,7 +9,8 @@ import { useRoomEditContext } from '../model';
 export default function TimePickBottomSheet() {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
   const { isOpen } = bottomSheetState(BOTTOM_SHEET.TIME_PICKER);
-  const { date: contextDate, setDate } = useRoomEditContext();
+  const { watch, setValue } = useRoomEditContext();
+  const contextDate = watch('date');
   const date = contextDate ?? new Date();
 
   const [isAM, setIsAM] = useState(Number(getDate(date, 'HH')) < 12);
@@ -24,7 +25,7 @@ export default function TimePickBottomSheet() {
     const hour = isAM ? selectedHour : selectedHour + 12;
     const newDate = new Date(date);
     newDate.setHours(hour, selectedMinute);
-    setDate(newDate);
+    setValue('date', newDate);
     closeBottomSheet(BOTTOM_SHEET.TIME_PICKER);
   };
 

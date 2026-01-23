@@ -1,40 +1,19 @@
 import React from 'react';
 
-import { useForm } from 'react-hook-form';
-
 import { cn, getDate } from '@festamate/utils';
 
 import { Button } from '@/shared/ui';
-import type { Room, RoomListItem } from '@/shared/types';
+import type { RoomListItem } from '@/shared/types';
 
 import { useRoomEditContext, useFormMode } from '@/widgets/edit/model';
 import { useFormSubmit } from '@/widgets/edit/api';
 
-export default function EditContainer({
-  id,
-  title,
-  content,
-  place,
-  openChatUrl,
-  preferredStudentIdMin,
-  preferredStudentIdMax,
-  maxParticipants,
-  preferredGender,
-}: RoomListItem) {
-  const { mode, setMode, file, date, friendPhoneNumbers } =
-    useRoomEditContext();
-  const { register, watch, setValue } = useForm<Room>({
-    defaultValues: {
-      title: title,
-      content: content,
-      place: place,
-      openChatUrl: openChatUrl,
-      preferredStudentIdMin: preferredStudentIdMin,
-      preferredStudentIdMax: preferredStudentIdMax,
-      maxParticipants: maxParticipants,
-      preferredGender: preferredGender,
-    },
-  });
+export default function EditContainer({ id }: RoomListItem) {
+  const { register, watch, setValue } = useRoomEditContext();
+  const mode = watch('mode');
+  const file = watch('file');
+  const date = watch('date');
+  const friendPhoneNumbers = watch('friendPhoneNumbers');
 
   const { MODE } = useFormMode({ register, watch, setValue });
   const { form, isFormValid, button } = MODE[mode];
@@ -71,7 +50,7 @@ export default function EditContainer({
               )}
               name='group-data-details'
               onClick={() => {
-                if (index === 0) setMode(index);
+                if (index === 0) setValue('mode', index);
               }}
             >
               {title}
@@ -87,7 +66,7 @@ export default function EditContainer({
         disabled={!isFormValid || isPending}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
-          if (mode === 0) setMode(1);
+          if (mode === 0) setValue('mode', 1);
           else handleSubmit();
         }}
         label={isPending ? '방을 수정하는 중..' : button}
