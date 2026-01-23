@@ -7,10 +7,12 @@ import { MdAdd } from 'react-icons/md';
 
 import { useFlow } from '@/app/stackflow';
 
-import { AppBar, Button, Dock, LoginBottomSheet } from '@/shared/ui';
+import { Button, LoginBottomSheet } from '@/shared/ui';
 import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { userAtom } from '@/shared/atom';
+import { HomeAppBar } from '@/widgets/menu-appbar';
+import { Dock } from '@/widgets/menu-dock';
 
 import { HomeContainer, TicketInfoModal } from '@/screen/home/ui';
 import { useStack } from '@stackflow/react';
@@ -24,7 +26,7 @@ export default function HomeScreen() {
   const user = useAtomValue(userAtom);
   const isLoading = stack.globalTransitionState === 'loading';
 
-  const searchOnClick = () => replace(PATH.RESULT, { searchKey: '' });
+  const searchOnClick = () => replace(PATH.SEARCH, { searchKey: '' });
   const ticketOnClick = () => openModal(MODAL.TICKET_INFO);
   const createOnClick = () => {
     if (isLogin) push(PATH.CREATE, {});
@@ -34,12 +36,12 @@ export default function HomeScreen() {
   return (
     <div className='touch-action-none fixed inset-0 overflow-hidden overflow-x-hidden'>
       <AppScreen
-        appBar={AppBar(
+        appBar={HomeAppBar({
           searchOnClick,
-          user?.maximumTicket,
-          user?.remainingTicket,
+          maximumTicket: user?.maximumTicket,
+          remainingTicket: user?.remainingTicket,
           ticketOnClick,
-        )}
+        })}
       >
         <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding pb-dock-height flex size-full flex-col overflow-scroll overflow-y-scroll'>
           <HomeContainer />

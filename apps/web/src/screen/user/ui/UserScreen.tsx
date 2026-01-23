@@ -1,11 +1,12 @@
 import { AppScreen } from '@stackflow/plugin-basic-ui';
-import { NormalAppBar, Dock } from '@/shared/ui';
+import { NormalAppBar } from '@/widgets/menu-appbar';
+import { Dock } from '@/widgets/menu-dock';
 import {
   TermOfServiceModal,
   UserContainer,
   NotificationSettingModal,
   TicketRegisterModal,
-} from '@/features/user/ui';
+} from '@/screen/user/ui';
 
 export default function UserScreen() {
   return (

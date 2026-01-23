@@ -4,10 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ActivityComponentType } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { ChatContainer, ChatInput } from '@/features/chat/ui';
+import { ChatContainer, ChatInput } from '@/screen/chat/ui';
 import { useWebSocket } from '@/shared/hook';
-import { useFetchChatDetail } from '@/features/chat/api';
-import { Message } from '@/features/chat/types';
+import { useGetChatDetail } from '@/screen/chat/api';
+import { Message } from '@/screen/chat/types';
 
 const ChatScreen: ActivityComponentType<{ chatRoomId: number }> = ({
   params,
@@ -15,7 +15,7 @@ const ChatScreen: ActivityComponentType<{ chatRoomId: number }> = ({
   params: { chatRoomId: number };
 }) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFetchChatDetail(params.chatRoomId);
+    useGetChatDetail(params.chatRoomId);
   const [chatData, setChatData] = useState<Message[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const prevScrollHeight = useRef<number>(0);

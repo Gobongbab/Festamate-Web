@@ -1,5 +1,4 @@
 export * from './bottomSheet';
-export * from './dock';
 export * from './form';
 export * from './gender';
 export * from './modal';

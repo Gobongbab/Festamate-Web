@@ -6,7 +6,7 @@ import {
   SetStateAction,
 } from 'react';
 import { Client } from '@stomp/stompjs';
-import { Message } from '@/features/chat/types';
+import { Message } from '@/screen/chat/types';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '../atom';
 
@@ -39,7 +39,7 @@ export default function useWebSocket({
 
   const connect = useCallback(async () => {
     const stompClient = new Client({
-      brokerURL: 'wss://www.festamate.shop/ws',
+      brokerURL: import.meta.env.VITE_WS_URL,
       connectHeaders: headers,
       debug: message => console.log('[STOMP]', message),
       reconnectDelay: 5000,

@@ -3,8 +3,10 @@ import { useAtomValue } from 'jotai';
 
 import { fetchLoginStatus } from '@festamate/utils';
 
-import { GroupCarousel, GroupList } from '@/shared/ui';
+import { RoomList } from '@/widgets/room-list';
+import { RoomCarousel } from '@/widgets/room-carousel';
 import { REQUEST } from '@/shared/api';
+import { useGetRoomList } from '@/screen/home/api';
 import { userAtom } from '@/shared/atom';
 
 import { HiMiniArrowTopRightOnSquare } from 'react-icons/hi2';
@@ -13,21 +15,37 @@ export default function HomeContainer() {
   const isLogin = fetchLoginStatus();
   const user = useAtomValue(userAtom);
 
+  const { data, isLoading, isError } = useGetRoomList(REQUEST.ROOM);
+  const {
+    data: recommendedData,
+    isLoading: isRecommendedLoading,
+    isError: isRecommendedError,
+  } = useGetRoomList(REQUEST.ROOM_RECOMMENDED);
+
+  const rooms = data ? data.content : [];
+  const recommendedRooms = recommendedData ? recommendedData.content : [];
+
   return (
     <>
       <BoothInfo />
-      <GroupCarousel
+      <RoomCarousel
         label={
           isLogin && user ? `${user.nickname}님을 위한 추천 모임` : '추천 모임'
         }
         key='openedGroup'
         request={REQUEST.ROOM_RECOMMENDED}
         covered={!fetchLoginStatus()}
+        rooms={recommendedRooms}
+        isLoading={isRecommendedLoading}
+        isError={isRecommendedError}
       />
-      <GroupList
+      <RoomList
         label='개설된 모임'
         key='popularGroup'
         request={REQUEST.ROOM}
+        rooms={rooms}
+        isLoading={isLoading}
+        isError={isError}
       />
     </>
   );
