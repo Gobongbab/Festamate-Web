@@ -26,7 +26,7 @@ export const useRoomActions = ({ params }: UseRoomActionsProps) => {
   const { openModal } = useModal();
   const selectedUser = useAtomValue(selectedUserAtom);
 
-  const { maxParticipants, id, status: roomStatus, openChatUrl } = params;
+  const { maxParticipants, status: roomStatus, openChatUrl } = params;
 
   useEffect(() => {
     setIsLogin(fetchLoginStatus());

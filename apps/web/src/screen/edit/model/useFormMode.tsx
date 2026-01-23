@@ -55,8 +55,11 @@ export default function useFormMode({
       title: '모임 세부 정보',
       form: (
         <RoomGroupDetailForm
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           register={register as any}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           watch={watch as any}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           setValue={setValue as any}
           useSubmitFriendPhone={usePostCertifyUser}
         />

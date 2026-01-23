@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ChangeEvent } from 'react';
 import type { UseFormWatch, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 

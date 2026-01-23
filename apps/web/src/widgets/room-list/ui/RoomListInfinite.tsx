@@ -3,8 +3,16 @@ import React, { useCallback, useRef, useEffect } from 'react';
 import { RoomListItem, RoomListSkeleton } from '@/widgets/room-list/ui';
 import { RoomListItem as RoomListItemType } from '@/shared/types';
 
+interface PageData {
+  content: RoomListItemType[];
+}
+
+interface InfiniteData {
+  pages: PageData[];
+}
+
 interface RoomListProps {
-  data: any;
+  data: InfiniteData | undefined;
   fetchNextPage: () => void;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
@@ -62,7 +70,7 @@ export default function RoomListInfinite({
     };
   }, []);
 
-  const rooms = data ? data.pages.flatMap((page: any) => page.content) : [];
+  const rooms = data ? data.pages.flatMap(page => page.content) : [];
 
   return (
     <>

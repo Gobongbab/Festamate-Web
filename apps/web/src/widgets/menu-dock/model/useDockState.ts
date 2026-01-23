@@ -1,6 +1,5 @@
 import { useStack } from '@stackflow/react';
 
-import { PATH } from '@/shared/constants';
 import { PathItem } from '@/shared/types';
 import { DOCK_VISIBLE_PATHS } from '../constants/dockItems';
 

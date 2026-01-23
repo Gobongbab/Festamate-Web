@@ -3,7 +3,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 
 import { RoomFormData } from '@/widgets/room-form';
 
-export interface CreateFormData extends RoomFormData {}
+export type CreateFormData = RoomFormData;
 
 export default function CreateProvider({ children }: { children: ReactNode }) {
   const methods = useForm<CreateFormData>({
