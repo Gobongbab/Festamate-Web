@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { cn } from '@festamate/utils';
 
 interface SearchFilterButtonProps {
@@ -7,7 +7,7 @@ interface SearchFilterButtonProps {
   onClick?: () => void;
 }
 
-export default function SearchFilterButton({
+const SearchFilterButton = memo(function SearchFilterButton({
   label,
   isSelected,
   onClick,
@@ -23,4 +23,6 @@ export default function SearchFilterButton({
       {label}
     </button>
   );
-}
+});
+
+export default SearchFilterButton;

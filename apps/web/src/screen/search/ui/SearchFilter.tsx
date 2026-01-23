@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useCallback } from 'react';
 
 import { BottomSheet, Button } from '@/shared/ui';
 import { BOTTOM_SHEET } from '@/shared/constants';
@@ -11,9 +11,7 @@ interface SearchFilterProps {
   setFilter: Dispatch<SetStateAction<Filter>>;
 }
 
-export default function SearchFilter({
-  setFilter,
-}: SearchFilterProps) {
+export default function SearchFilter({ setFilter }: SearchFilterProps) {
   const { closeBottomSheet, bottomSheetState } = useBottomSheet();
   const { isOpen: status } = bottomSheetState(BOTTOM_SHEET.FILTER_STATUS);
   const { isOpen: gender } = bottomSheetState(BOTTOM_SHEET.FILTER_GENDER);
@@ -34,7 +32,7 @@ export default function SearchFilter({
     useFilterContent(sheetKey);
   const { title, content: filterContent } = content;
 
-  const handleClick = async () => {
+  const handleClick = useCallback(async () => {
     const result = {
       status: selectedStatus,
       gender: selectedGender,
@@ -49,7 +47,14 @@ export default function SearchFilter({
     setFilter({ ...filterChanged });
 
     closeBottomSheet(sheetKey);
-  };
+  }, [
+    selectedStatus,
+    selectedGender,
+    selectedParticipants,
+    setFilter,
+    closeBottomSheet,
+    sheetKey,
+  ]);
 
   if (!isOpen) return null;
 
