@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { FormItem, GroupCarousel } from '@/shared/ui';
+import { FormItem } from '@/shared/ui';
+import { GroupCarousel } from '@/entities/list/ui';
 import { MODAL } from '@/shared/constants';
 import { useModal } from '@/shared/hook';
 import { REQUEST } from '@/shared/api';

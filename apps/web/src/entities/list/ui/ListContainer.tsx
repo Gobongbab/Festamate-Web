@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 
-import { ListItem, ListSkeleton } from '@/shared/ui';
-import { useInfiniteRooms } from '@/features/list/api';
+import { ListItem, ListSkeleton } from '@/entities/list/ui';
+import { useInfiniteRooms } from '@/entities/list/api';
 
 export default function ListContainer({ request }: { request: string }) {
   const {

@@ -3,8 +3,9 @@ import { useAtomValue } from 'jotai';
 
 import { fetchLoginStatus } from '@festamate/utils';
 
-import { GroupCarousel, GroupList } from '@/shared/ui';
+import { GroupList, GroupCarousel } from '@/entities/list/ui';
 import { REQUEST } from '@/shared/api';
+import { useRoomList } from '@/screen/home/api';
 import { userAtom } from '@/shared/atom';
 
 import { HiMiniArrowTopRightOnSquare } from 'react-icons/hi2';
@@ -12,6 +13,9 @@ import { HiMiniArrowTopRightOnSquare } from 'react-icons/hi2';
 export default function HomeContainer() {
   const isLogin = fetchLoginStatus();
   const user = useAtomValue(userAtom);
+
+  const { data, isLoading, isError } = useRoomList(REQUEST.ROOM);
+  const rooms = data ? data.content : [];
 
   return (
     <>
@@ -28,6 +32,9 @@ export default function HomeContainer() {
         label='개설된 모임'
         key='popularGroup'
         request={REQUEST.ROOM}
+        rooms={rooms}
+        isLoading={isLoading}
+        isError={isError}
       />
     </>
   );

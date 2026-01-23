@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ListItem, ListSkeleton } from '@/shared/ui';
-import { useRoomList } from '@/shared/api';
+import { ListItem, ListSkeleton } from '@/entities/list/ui';
 import { PATH } from '@/shared/constants';
+import { RoomListItem } from '@/shared/types';
 
 import { useFlow } from '@/app/stackflow';
 import { Error } from '@/assets/images';
@@ -10,15 +10,21 @@ import { Error } from '@/assets/images';
 interface GroupListProps {
   label: string;
   request: string;
+  rooms: RoomListItem[];
+  isLoading: boolean;
+  isError: boolean;
 }
 
 const GROUP_LIST_SKELETON_COUNT = 6;
 
-export default function GroupList({ label, request }: GroupListProps) {
-  const { data, isLoading, isError } = useRoomList(request);
+export default function GroupList({
+  label,
+  request,
+  rooms,
+  isLoading,
+  isError,
+}: GroupListProps) {
   const { push } = useFlow();
-
-  const rooms = data ? data.content : [];
 
   return (
     <div className='flex w-full flex-col'>
@@ -33,7 +39,7 @@ export default function GroupList({ label, request }: GroupListProps) {
         </button>
       </div>
       <div className='mb-3 flex flex-col items-center gap-1.5'>
-        {data && (
+        {!isLoading && !isError && (
           <>
             {rooms.length === 0 ? (
               <div className='grid h-30 items-center'>{label}이 없어요!</div>

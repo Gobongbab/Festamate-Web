@@ -6,10 +6,10 @@ import { getPath } from '@festamate/utils';
 import {
   REQUEST,
   useFetchUserInfo,
-  useRoomList,
   userPatch,
   userPost,
 } from '@/shared/api';
+import { useRoomList } from '@/screen/home/api';
 import { errorMessageAtom } from '@/shared/atom';
 import { MODAL } from '@/shared/constants';
 import { useModal } from '@/shared/hook';

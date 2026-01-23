@@ -3,7 +3,8 @@ import { useSetAtom } from 'jotai';
 
 import { useFlow } from '@/app/stackflow';
 
-import { REQUEST, useFetchUserInfo, useRoomList, userPost } from '@/shared/api';
+import { REQUEST, useFetchUserInfo, userPost } from '@/shared/api';
+import { useRoomList } from '@/screen/home/api';
 import { errorMessageAtom } from '@/shared/atom';
 import { MODAL } from '@/shared/constants';
 import { useModal } from '@/shared/hook';

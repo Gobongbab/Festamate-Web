@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { REQUEST, userDel, useRoomList } from '@/shared/api';
+import { REQUEST, userDel } from '@/shared/api';
+import { useRoomList } from '@/screen/home/api';
 import { getPath } from '@festamate/utils';
 
 interface DeleteRoomResponse {

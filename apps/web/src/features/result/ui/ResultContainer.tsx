@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 
 import { cn } from '@festamate/utils';
 
-import { ListItem } from '@/shared/ui';
+import { ListItem } from '@/entities/list/ui';
 import { useBottomSheet } from '@/shared/hook';
 import {
   BOTTOM_SHEET,
