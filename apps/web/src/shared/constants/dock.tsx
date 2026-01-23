@@ -1,6 +1,8 @@
 import {
   RiHome9Fill,
   RiHome9Line,
+  RiMessage3Fill,
+  RiMessage3Line,
   RiUser3Fill,
   RiUser3Line,
 } from 'react-icons/ri';
@@ -18,6 +20,11 @@ export const DOCK = {
     title: '프로필',
     icon: <RiUser3Line size={20} />,
     selectedIcon: <RiUser3Fill size={20} />,
+  },
+  [PATH.CHAT_LIST]: {
+    title: '채팅',
+    icon: <RiMessage3Line size={20} />,
+    selectedIcon: <RiMessage3Fill size={20} />,
   },
 };
 
