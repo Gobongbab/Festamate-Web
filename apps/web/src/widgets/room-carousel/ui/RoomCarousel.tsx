@@ -6,21 +6,28 @@ import { useFlow } from '@/app/stackflow';
 import { Button, Card, CardSkeleton } from '@/shared/ui';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET, PATH } from '@/shared/constants';
-import { useGetRoomList } from '@/screen/home/api';
+import { RoomListItem } from '@/shared/types';
 
 import { COVERED_ROOM_DATA } from '@/mock';
 import { Error, Festa } from '@/assets/images';
 
-interface GroupCarouselProps {
+interface RoomCarouselProps {
   label: string;
   covered?: boolean;
   request: string;
+  rooms?: RoomListItem[];
+  isLoading?: boolean;
+  isError?: boolean;
 }
-export default function GroupCarousel({
+
+export default function RoomCarousel({
   label,
   covered = false,
   request,
-}: GroupCarouselProps) {
+  rooms = [],
+  isLoading = false,
+  isError = false,
+}: RoomCarouselProps) {
   const { push } = useFlow();
 
   return (
@@ -39,25 +46,35 @@ export default function GroupCarousel({
       {covered ? (
         <CoveredMockup />
       ) : (
-        <CarouselWithData request={request} label={label} covered={covered} />
+        <CarouselContent
+          rooms={rooms}
+          isLoading={isLoading}
+          isError={isError}
+          label={label}
+        />
       )}
     </div>
   );
 }
 
-const CarouselWithData = ({ request, label, covered }: GroupCarouselProps) => {
-  const { data, isError, isLoading } = useGetRoomList(request);
+interface CarouselContentProps {
+  rooms: RoomListItem[];
+  isLoading: boolean;
+  isError: boolean;
+  label: string;
+}
+
+const CarouselContent = ({
+  rooms,
+  isLoading,
+  isError,
+  label,
+}: CarouselContentProps) => {
   const skeleton = Array.from({ length: 4 });
-  const rooms = data ? data.content : [];
 
   return (
-    <div
-      className={cn(
-        'scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3',
-        covered ? 'overflow-hidden' : 'overflow-x-scroll',
-      )}
-    >
-      {data && (
+    <div className='scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3 overflow-x-scroll'>
+      {!isLoading && !isError && (
         <>
           {rooms.length === 0 ? (
             <div className='grid h-30 w-full place-items-center'>

@@ -1,21 +1,37 @@
 import React from 'react';
 
 import { FormItem } from '@/shared/ui';
-import { GroupCarousel } from '@/entities/list/ui';
+import { RoomCarousel } from '@/widgets/room-carousel';
 import { MODAL } from '@/shared/constants';
 import { useModal } from '@/shared/hook';
 import { REQUEST } from '@/shared/api';
+import { useGetRoomList } from '@/screen/home/api';
 
 import { logout } from '@/screen/user/utils';
 import { UserProfile } from '@/screen/user/ui';
 
 export default function UserContainer() {
   const { openModal } = useModal();
+  const {
+    data: participatedData,
+    isLoading: isParticipatedLoading,
+    isError: isParticipatedError,
+  } = useGetRoomList(REQUEST.ROOM_PARTICIPATED);
+
+  const participatedRooms = participatedData
+    ? participatedData.content
+    : [];
 
   return (
     <>
       <UserProfile />
-      <GroupCarousel label='참여한 모임' request={REQUEST.ROOM_PARTICIPATED} />
+      <RoomCarousel
+        label='참여한 모임'
+        request={REQUEST.ROOM_PARTICIPATED}
+        rooms={participatedRooms}
+        isLoading={isParticipatedLoading}
+        isError={isParticipatedError}
+      />
       <FormItem title='쿠폰'>
         <button
           name='registerCoupon'

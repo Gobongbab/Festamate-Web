@@ -1,29 +1,29 @@
 import React from 'react';
 
-import { ListItem, ListSkeleton } from '@/entities/list/ui';
+import { RoomListItem, RoomListSkeleton } from '@/widgets/room-list/ui';
 import { PATH } from '@/shared/constants';
-import { RoomListItem } from '@/shared/types';
+import { RoomListItem as RoomListItemType } from '@/shared/types';
 
 import { useFlow } from '@/app/stackflow';
 import { Error } from '@/assets/images';
 
-interface GroupListProps {
+interface RoomListGroupProps {
   label: string;
   request: string;
-  rooms: RoomListItem[];
+  rooms: RoomListItemType[];
   isLoading: boolean;
   isError: boolean;
 }
 
-const GROUP_LIST_SKELETON_COUNT = 6;
+const ROOM_LIST_GROUP_SKELETON_COUNT = 6;
 
-export default function GroupList({
+export default function RoomListGroup({
   label,
   request,
   rooms,
   isLoading,
   isError,
-}: GroupListProps) {
+}: RoomListGroupProps) {
   const { push } = useFlow();
 
   return (
@@ -44,11 +44,11 @@ export default function GroupList({
             {rooms.length === 0 ? (
               <div className='grid h-30 items-center'>{label}이 없어요!</div>
             ) : (
-              rooms.map(room => <ListItem key={room.id} {...room} />)
+              rooms.map(room => <RoomListItem key={room.id} {...room} />)
             )}
           </>
         )}
-        {isLoading && <GroupListSkeleton />}
+        {isLoading && <RoomListGroupSkeleton />}
         {isError && (
           <div className='grid h-30 items-center'>
             <div className='flex flex-col items-center justify-center gap-3'>
@@ -62,10 +62,10 @@ export default function GroupList({
   );
 }
 
-const GroupListSkeleton = () => (
+const RoomListGroupSkeleton = () => (
   <>
-    {Array.from({ length: GROUP_LIST_SKELETON_COUNT }).map((_, i) => (
-      <ListSkeleton key={i} />
+    {Array.from({ length: ROOM_LIST_GROUP_SKELETON_COUNT }).map((_, i) => (
+      <RoomListSkeleton key={i} />
     ))}
   </>
 );

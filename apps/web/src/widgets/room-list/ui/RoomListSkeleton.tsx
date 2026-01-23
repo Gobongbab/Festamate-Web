@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ListSkeleton() {
+export default function RoomListSkeleton() {
   return (
     <div className='rounded-10 grid h-28 w-full cursor-pointer grid-cols-[1fr_4fr] gap-3 py-3'>
       <div className='rounded-5 skeleton h-full' />

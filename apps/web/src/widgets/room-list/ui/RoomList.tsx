@@ -1,20 +1,30 @@
 import React, { useCallback, useRef, useEffect } from 'react';
+import { UseInfiniteQueryResult } from '@tanstack/react-query';
 
-import { ListItem, ListSkeleton } from '@/entities/list/ui';
-import { useGetRooms } from '@/entities/list/api';
+import { RoomListItem, RoomListSkeleton } from '@/widgets/room-list/ui';
+import { RoomListItem as RoomListItemType } from '@/shared/types';
 
-export default function ListContainer({ request }: { request: string }) {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useGetRooms(request);
+interface RoomListProps {
+  data: any;
+  fetchNextPage: () => void;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  isLoading: boolean;
+  isError: boolean;
+  error: Error | null;
+  refetch: () => void;
+}
 
+export default function RoomList({
+  data,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  isLoading,
+  isError,
+  error,
+  refetch,
+}: RoomListProps) {
   const observer = useRef<IntersectionObserver | undefined>(undefined);
   const lastRoomRef = useCallback(
     (node: HTMLElement | null) => {
@@ -53,25 +63,26 @@ export default function ListContainer({ request }: { request: string }) {
     };
   }, []);
 
-  const rooms = data ? data.pages.flatMap(page => page.content) : [];
+  const rooms = data ? data.pages.flatMap((page: any) => page.content) : [];
 
   return (
     <>
       {isError && (
         <div className='error-message'>
-          <p>{error.message || '방 목록을 불러오는데 실패했습니다.'}</p>
+          <p>{error?.message || '방 목록을 불러오는데 실패했습니다.'}</p>
           <button onClick={() => refetch()}>다시 시도하기</button>
         </div>
       )}
       {isLoading && (
         <div className='flex h-fit w-full flex-col gap-0'>
-          <ListSkeleton /> <ListSkeleton /> <ListSkeleton /> <ListSkeleton />
+          <RoomListSkeleton /> <RoomListSkeleton /> <RoomListSkeleton />{' '}
+          <RoomListSkeleton />
         </div>
       )}
       {data &&
         rooms.length > 0 &&
-        rooms.map((room, index) => (
-          <ListItem
+        rooms.map((room: RoomListItemType, index: number) => (
+          <RoomListItem
             {...room}
             key={room.id}
             ref={index === rooms.length - 1 ? lastRoomRef : null}

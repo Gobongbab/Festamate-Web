@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { ListItem } from '@/entities/list/ui';
+import { RoomListItem } from '@/widgets/room-list';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET } from '@/shared/constants';
 
@@ -109,7 +109,7 @@ export default function SearchResults({
       {data && rooms.length > 0 ? (
         <div className='flex flex-col gap-1.5'>
           {rooms.map((room, index) => (
-            <ListItem
+            <RoomListItem
               key={room.id}
               {...room}
               ref={index === rooms.length - 1 ? lastRoomRef : null}
