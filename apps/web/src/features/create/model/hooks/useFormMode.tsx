@@ -13,7 +13,7 @@ import {
   TITLE_MAX_LENGTH,
 } from '@/shared/constants';
 
-import { RoomGroupDetailForm, RoomGroupTitleForm } from '@/shared/ui';
+import { RoomGroupDetailForm, RoomGroupTitleForm } from '@/widgets/room-form';
 import { useSubmitFriendPhone } from '@/features/create/api';
 import { CreateFormData } from '@/features/create/model';
 

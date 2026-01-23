@@ -12,4 +12,3 @@ export { default as Radio } from './Radio';
 export { default as Toggle } from './Toggle';
 
 export * from './AppBar';
-export * from './room';

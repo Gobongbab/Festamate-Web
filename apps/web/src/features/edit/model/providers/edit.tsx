@@ -1,7 +1,8 @@
 import React, { type ReactNode } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { RoomFormData, type RoomListItem } from '@/shared/types';
+import { type RoomListItem } from '@/shared/types';
+import { RoomFormData } from '@/widgets/room-form';
 
 export interface EditFormData extends Omit<RoomFormData, 'date'> {
   date: Date; // EditFormData는 date가 필수 (null 불가)

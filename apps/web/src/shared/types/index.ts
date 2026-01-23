@@ -4,6 +4,5 @@ export * from './gender';
 export * from './modal';
 export * from './path';
 export * from './room';
-export * from './roomForm';
 export * from './status';
 export * from './user';

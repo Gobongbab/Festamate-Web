@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 
-import { RoomFormData } from '@/shared/types';
+import { RoomFormData } from '@/widgets/room-form';
 
 export interface CreateFormData extends RoomFormData {}
 

@@ -2,7 +2,8 @@ import React from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { NormalAppBar, RoomOpenChatGuideModal } from '@/shared/ui';
+import { NormalAppBar } from '@/shared/ui';
+import { RoomOpenChatGuideModal } from '@/widgets/room-form';
 import {
   CreateContainer,
   DatePickBottomSheet,
