@@ -28,6 +28,7 @@ export const { Stack, useFlow } = stackflow({
     basicRendererPlugin(),
     basicUIPlugin({
       theme: 'cupertino',
+      rootClassName: 'basic-ui-layout',
     }),
   ],
   initialActivity: () => 'HomeScreen',

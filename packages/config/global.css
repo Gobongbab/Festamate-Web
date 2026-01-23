@@ -72,6 +72,12 @@
 }
 
 @layer utilities {
+  .basic-ui-layout {
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+  }
+
   .container-mobile {
     max-width: 500px;
     margin: 0 auto;
