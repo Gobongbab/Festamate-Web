@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai';
 import { getDate } from '@festamate/utils';
 import { userAtom } from '@/shared/atom';
 
-import { Message } from '@/features/chat/types';
+import { Message } from '@/screen/chat/types';
 
 export default function ChatContainer({ data }: { data: Message[] }) {
   const userData = useAtomValue(userAtom);

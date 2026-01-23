@@ -5,11 +5,11 @@ import { getDate } from '@festamate/utils';
 import { useFlow } from '@/app/stackflow';
 import { PATH } from '@/shared/constants';
 
-import { ChatRoom } from '@/features/chat/types';
-import { useFetchChatRooms } from '@/features/chat/api';
+import { ChatRoom } from '@/screen/chat/types';
+import { useGetChatRooms } from '@/screen/chat/api';
 
 export default function ChatListContainer() {
-  const { data } = useFetchChatRooms();
+  const { data } = useGetChatRooms();
   return (
     <div className='flex flex-col'>
       {data ? (

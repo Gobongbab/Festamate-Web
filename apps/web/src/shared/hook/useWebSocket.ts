@@ -6,7 +6,7 @@ import {
   SetStateAction,
 } from 'react';
 import { Client } from '@stomp/stompjs';
-import { Message } from '@/features/chat/types';
+import { Message } from '@/screen/chat/types';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '../atom';
 
