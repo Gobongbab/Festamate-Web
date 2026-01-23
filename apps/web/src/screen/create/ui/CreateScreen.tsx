@@ -8,8 +8,8 @@ import {
   DatePickBottomSheet,
   OpenChatGuideModal,
   TimePickBottomSheet,
-} from '@/widgets/create/ui';
-import { CreateProvider } from '@/widgets/create/model';
+} from '@/features/create/ui';
+import { CreateProvider } from '@/features/create/model';
 
 export default function CreateScreen() {
   return (

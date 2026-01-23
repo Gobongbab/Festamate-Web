@@ -8,7 +8,7 @@ import { REQUEST } from './requests';
 import { post } from './axios';
 import { RAW_PATH } from '../constants';
 
-import { logout } from '@/widgets/user/utils';
+import { logout } from '@/features/user/utils';
 
 interface PostRequestParams<TData> {
   request: string;

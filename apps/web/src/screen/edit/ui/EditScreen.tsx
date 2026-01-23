@@ -8,8 +8,8 @@ import {
   DatePickBottomSheet,
   OpenChatGuideModal,
   TimePickBottomSheet,
-} from '@/widgets/edit/ui';
-import { EditProvider } from '@/widgets/edit/model';
+} from '@/features/edit/ui';
+import { EditProvider } from '@/features/edit/model';
 import { ActivityComponentType } from '@stackflow/react';
 import { RoomListItem } from '@/shared/types';
 

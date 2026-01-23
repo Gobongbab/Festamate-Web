@@ -12,7 +12,7 @@ import { BOTTOM_SHEET, MODAL, PATH } from '@/shared/constants';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { userAtom } from '@/shared/atom';
 
-import { HomeContainer, TicketInfoModal } from '@/widgets/home/ui';
+import { HomeContainer, TicketInfoModal } from '@/screen/home/ui';
 import { useStack } from '@stackflow/react';
 
 export default function HomeScreen() {

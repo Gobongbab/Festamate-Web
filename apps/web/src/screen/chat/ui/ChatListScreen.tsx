@@ -4,7 +4,7 @@ import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 import { Dock, NormalAppBar } from '@/shared/ui';
 import { useStack } from '@stackflow/react';
-import { ChatListContainer } from '@/widgets/chat/ui';
+import { ChatListContainer } from '@/features/chat/ui';
 
 export default function ChatListScreen() {
   const stack = useStack();

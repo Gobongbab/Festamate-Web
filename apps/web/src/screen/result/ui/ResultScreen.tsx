@@ -10,8 +10,8 @@ import { PATH } from '@/shared/constants';
 import { searchAtom } from '@/shared/atom';
 import { SearchAppBar, Dock, Button } from '@/shared/ui';
 
-import { FilterBottomSheet, ResultContainer } from '@/widgets/result/ui';
-import { Filter } from '@/widgets/result/types';
+import { FilterBottomSheet, ResultContainer } from '@/features/result/ui';
+import { Filter } from '@/features/result/types';
 
 const ResultScreen: ActivityComponentType<{ searchKey: string }> = ({
   params,

@@ -1,7 +1,7 @@
 import { ActivityComponentType } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 import { NormalAppBar } from '@/shared/ui';
-import { ListContainer } from '@/widgets/list/ui';
+import { ListContainer } from '@/features/list/ui';
 
 type ListScreenParams = {
   title: string;

@@ -4,10 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ActivityComponentType } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { ChatContainer, ChatInput } from '@/widgets/chat/ui';
+import { ChatContainer, ChatInput } from '@/features/chat/ui';
 import { useWebSocket } from '@/shared/hook';
-import { useFetchChatDetail } from '@/widgets/chat/api';
-import { Message } from '@/widgets/chat/types';
+import { useFetchChatDetail } from '@/features/chat/api';
+import { Message } from '@/features/chat/types';
 
 const ChatScreen: ActivityComponentType<{ chatRoomId: number }> = ({
   params,

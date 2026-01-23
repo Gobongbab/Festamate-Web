@@ -16,11 +16,11 @@ import {
   RoomReportModal,
   UserManageBottomSheet,
   UserReportModal,
-} from '@/widgets/room/ui';
+} from '@/features/room/ui';
 import { RoomAuthority, RoomListItem } from '@/shared/types';
 import { useBottomSheet, useModal } from '@/shared/hook';
 import { BOTTOM_SHEET, MODAL } from '@/shared/constants';
-// import { useLeaveRoom } from '@/widgets/room/api';
+// import { useLeaveRoom } from '@/features/room/api';
 import { useAtomValue } from 'jotai';
 import { selectedUserAtom } from '@/shared/atom';
 
