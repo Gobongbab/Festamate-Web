@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { cn } from '@festamate/utils';
-
 import { useFlow } from '@/app/stackflow';
-import { Button, Card, CardSkeleton } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET, PATH } from '@/shared/constants';
 import { RoomListItem } from '@/shared/types';
 
 import { COVERED_ROOM_DATA } from '@/mock';
 import { Error, Festa } from '@/assets/images';
+import RoomCarouselItem from './RoomCarouselItem';
+import RoomCarouselSkeleton from './RoomCarouselSkeleton';
 
 interface RoomCarouselProps {
   label: string;
@@ -81,12 +81,14 @@ const CarouselContent = ({
               {label}이 없어요!
             </div>
           ) : (
-            rooms.map(room => <Card key={room.id} {...room} />)
+            rooms.map(room => <RoomCarouselItem key={room.id} {...room} />)
           )}
         </>
       )}
       {isLoading &&
-        skeleton.map((_, i) => <CardSkeleton key={`card-skeleton-${i}`} />)}
+        skeleton.map((_, i) => (
+          <RoomCarouselSkeleton key={`card-skeleton-${i}`} />
+        ))}
       {isError && (
         <div className='grid h-30 w-full items-center'>
           <div className='flex flex-col items-center justify-center gap-3'>
@@ -106,7 +108,7 @@ const CoveredMockup = () => {
     <div className='flex w-full flex-col gap-y-3'>
       <div className='scrollbar-hide h-card-height rounded-10 relative flex items-center gap-x-3 overflow-hidden'>
         {COVERED_ROOM_DATA.map(room => (
-          <Card {...room} key={room.id} />
+          <RoomCarouselItem {...room} key={room.id} />
         ))}
         <div className='absolute inset-0 z-20 flex size-full items-center justify-center gap-3 bg-white/30 backdrop-blur-xs'>
           <img src={Festa} className='fixed -bottom-18 -left-12 size-60' />

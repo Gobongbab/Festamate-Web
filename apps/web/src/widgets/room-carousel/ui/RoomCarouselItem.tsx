@@ -10,7 +10,7 @@ import { PATH } from '@/shared/constants';
 import { RoomListItem } from '@/shared/types';
 import { cn, getDate } from '@festamate/utils';
 
-export default function Card(props: RoomListItem) {
+export default function RoomCarouselItem(props: RoomListItem) {
   const { push } = useFlow();
   const {
     title,
