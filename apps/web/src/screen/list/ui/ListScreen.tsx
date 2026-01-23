@@ -1,6 +1,6 @@
 import { ActivityComponentType } from '@stackflow/react';
 import { AppScreen } from '@stackflow/plugin-basic-ui';
-import { NormalAppBar } from '@/shared/ui';
+import { NormalAppBar } from '@/widgets/menu-appbar';
 import { RoomList } from '@/widgets/room-list';
 import { useGetRooms } from '@/screen/list/api';
 

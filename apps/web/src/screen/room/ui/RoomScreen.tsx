@@ -5,7 +5,8 @@ import { AppScreen } from '@stackflow/plugin-basic-ui';
 
 import { cn, fetchLoginStatus } from '@festamate/utils';
 
-import { Button, LoginBottomSheet, RoomAppBar } from '@/shared/ui';
+import { Button, LoginBottomSheet } from '@/shared/ui';
+import { RoomAppBar } from '@/widgets/menu-appbar';
 import {
   MenuBottomSheet,
   RoomContainer,
@@ -166,7 +167,7 @@ const RoomScreen: ActivityComponentType<RoomListItem> = ({
 
   return (
     <div className='fixed inset-0 overflow-hidden'>
-      <AppScreen appBar={RoomAppBar(handleMenuClick)}>
+      <AppScreen appBar={RoomAppBar({ menuOnClick: handleMenuClick })}>
         <div className='scrollbar-hide container-mobile gap-y-normal-spacing p-normal-padding flex size-full flex-col overflow-scroll overflow-y-scroll'>
           <RoomContainer {...params} setStatus={setStatus} />
         </div>

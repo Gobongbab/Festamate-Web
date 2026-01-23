@@ -8,7 +8,9 @@ import { MdAdd } from 'react-icons/md';
 import { useFlow } from '@/app/stackflow';
 import { PATH } from '@/shared/constants';
 import { searchAtom } from '@/shared/atom';
-import { SearchAppBar, Dock, Button } from '@/shared/ui';
+import { Button } from '@/shared/ui';
+import { SearchAppBar } from '@/widgets/menu-appbar';
+import { Dock } from '@/widgets/menu-dock';
 
 import { SearchFilter, SearchResults } from '@/screen/search/ui';
 import { Filter } from '@/screen/search/types';
@@ -32,7 +34,12 @@ const SearchScreen: ActivityComponentType<{ searchKey: string }> = ({
   return (
     <div className='fixed inset-0 overflow-hidden'>
       <AppScreen
-        appBar={SearchAppBar(closeOnClick, searchOnClick, value, setValue)}
+        appBar={SearchAppBar({
+          closeOnClick,
+          searchOnClick,
+          value,
+          setValue,
+        })}
       >
         <div className='scrollbar-hide container-mobile p-normal-padding flex size-full flex-col gap-y-2 overflow-scroll overflow-y-scroll pb-24'>
           <SearchResults searchKey={params.searchKey} filter={filter} />

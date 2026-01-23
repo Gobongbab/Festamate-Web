@@ -2,7 +2,8 @@ import React from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { Dock, NormalAppBar } from '@/shared/ui';
+import { NormalAppBar } from '@/widgets/menu-appbar';
+import { Dock } from '@/widgets/menu-dock';
 import { useStack } from '@stackflow/react';
 import { ChatListContainer } from '@/screen/chat/ui';
 

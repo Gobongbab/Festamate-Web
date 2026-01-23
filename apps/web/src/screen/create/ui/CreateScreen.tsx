@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AppScreen } from '@stackflow/plugin-basic-ui';
 
-import { NormalAppBar } from '@/shared/ui';
+import { NormalAppBar } from '@/widgets/menu-appbar';
 import { RoomOpenChatGuideModal } from '@/widgets/room-form';
 import {
   CreateContainer,
