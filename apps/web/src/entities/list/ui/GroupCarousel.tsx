@@ -6,7 +6,7 @@ import { useFlow } from '@/app/stackflow';
 import { Button, Card, CardSkeleton } from '@/shared/ui';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET, PATH } from '@/shared/constants';
-import { useRoomList } from '@/screen/home/api';
+import { useGetRoomList } from '@/screen/home/api';
 
 import { COVERED_ROOM_DATA } from '@/mock';
 import { Error, Festa } from '@/assets/images';
@@ -46,7 +46,7 @@ export default function GroupCarousel({
 }
 
 const CarouselWithData = ({ request, label, covered }: GroupCarouselProps) => {
-  const { data, isError, isLoading } = useRoomList(request);
+  const { data, isError, isLoading } = useGetRoomList(request);
   const skeleton = Array.from({ length: 4 });
   const rooms = data ? data.content : [];
 

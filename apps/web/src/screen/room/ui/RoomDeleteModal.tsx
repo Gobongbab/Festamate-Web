@@ -4,7 +4,7 @@ import { MODAL } from '@/shared/constants';
 import { Button, Modal } from '@/shared/ui';
 import { useModal } from '@/shared/hook';
 
-import { useDeleteRoomDelete } from '@/screen/room/api';
+import { useDeleteRoom } from '@/screen/room/api';
 
 interface RoomDeleteModalProps {
   roomId: number;
@@ -12,7 +12,7 @@ interface RoomDeleteModalProps {
 
 export default function RoomDeleteModal({ roomId }: RoomDeleteModalProps) {
   const { closeModal, modalState } = useModal();
-  const { mutate, isError, reset } = useDeleteRoomDelete();
+  const { mutate, isError, reset } = useDeleteRoom();
   const { isOpen } = modalState(MODAL.ROOM_DELETE);
 
   const onClose = () => closeModal(MODAL.ROOM_DELETE);

@@ -1,4 +1,4 @@
-export * from './deleteRoomDelete';
+export * from './deleteRoom';
 export * from './getRoomDetail';
 export * from './getUserRoomDetail';
 export * from './postCertifyUser';

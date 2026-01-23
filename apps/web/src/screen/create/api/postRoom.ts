@@ -4,7 +4,7 @@ import { useSetAtom } from 'jotai';
 import { useFlow } from '@/app/stackflow';
 
 import { REQUEST, useFetchUserInfo, userPost } from '@/shared/api';
-import { useRoomList } from '@/screen/home/api';
+import { useGetRoomList } from '@/screen/home/api';
 import { errorMessageAtom } from '@/shared/atom';
 import { MODAL } from '@/shared/constants';
 import { useModal } from '@/shared/hook';
@@ -19,7 +19,7 @@ const postRoom = async (data: FormData) => {
 export const usePostRoom = () => {
   const { pop } = useFlow();
   const { openModal } = useModal();
-  const { refetch } = useRoomList(REQUEST.ROOM);
+  const { refetch } = useGetRoomList(REQUEST.ROOM);
   const { refetch: fetchUserInfo } = useFetchUserInfo();
   const setErrorMessage = useSetAtom(errorMessageAtom);
 

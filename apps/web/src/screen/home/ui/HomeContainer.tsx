@@ -5,7 +5,7 @@ import { fetchLoginStatus } from '@festamate/utils';
 
 import { GroupList, GroupCarousel } from '@/entities/list/ui';
 import { REQUEST } from '@/shared/api';
-import { useRoomList } from '@/screen/home/api';
+import { useGetRoomList } from '@/screen/home/api';
 import { userAtom } from '@/shared/atom';
 
 import { HiMiniArrowTopRightOnSquare } from 'react-icons/hi2';
@@ -14,7 +14,7 @@ export default function HomeContainer() {
   const isLogin = fetchLoginStatus();
   const user = useAtomValue(userAtom);
 
-  const { data, isLoading, isError } = useRoomList(REQUEST.ROOM);
+  const { data, isLoading, isError } = useGetRoomList(REQUEST.ROOM);
   const rooms = data ? data.content : [];
 
   return (

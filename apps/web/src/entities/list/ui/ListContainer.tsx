@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 
 import { ListItem, ListSkeleton } from '@/entities/list/ui';
-import { useInfiniteRooms } from '@/entities/list/api';
+import { useGetRooms } from '@/entities/list/api';
 
 export default function ListContainer({ request }: { request: string }) {
   const {
@@ -13,7 +13,7 @@ export default function ListContainer({ request }: { request: string }) {
     isError,
     error,
     refetch,
-  } = useInfiniteRooms(request);
+  } = useGetRooms(request);
 
   const observer = useRef<IntersectionObserver | undefined>(undefined);
   const lastRoomRef = useCallback(

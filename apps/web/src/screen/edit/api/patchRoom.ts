@@ -4,7 +4,7 @@ import { useSetAtom } from 'jotai';
 import { getPath } from '@festamate/utils';
 
 import { REQUEST, useFetchUserInfo, userPatch } from '@/shared/api';
-import { useRoomList } from '@/screen/home/api';
+import { useGetRoomList } from '@/screen/home/api';
 import { errorMessageAtom } from '@/shared/atom';
 import { MODAL } from '@/shared/constants';
 import { useModal } from '@/shared/hook';
@@ -24,7 +24,7 @@ const patchRoom = async ({
 
 export const usePatchRoom = (roomId: number) => {
   const { openModal } = useModal();
-  const { refetch: fetchRoomList } = useRoomList(REQUEST.ROOM);
+  const { refetch: fetchRoomList } = useGetRoomList(REQUEST.ROOM);
   const { refetch: fetchUserInfo } = useFetchUserInfo();
   const setErrorMessage = useSetAtom(errorMessageAtom);
 

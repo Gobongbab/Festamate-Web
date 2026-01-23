@@ -1,1 +1,1 @@
-export { useRoomList } from './list';
+export * from './getRoomList';

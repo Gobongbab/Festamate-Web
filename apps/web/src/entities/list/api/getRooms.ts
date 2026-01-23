@@ -1,13 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { get, REQUEST } from '@/shared/api';
-import type { RoomListItem } from '@/shared/types';
-import type { Filter } from '@/screen/search/types';
+import { get, REQUEST, userGet } from '@/shared/api';
+import { RoomListItem } from '@/shared/types';
 
-interface FetchRoomListProps {
+interface GetRoomsProps {
   pageParam: number;
-  filter?: Filter;
-  keyword: string;
+  request: string;
 }
 
 interface FetchRoomListResponse {
@@ -41,31 +39,27 @@ interface FetchRoomListResponse {
   };
 }
 
-const fetchRoomsWithFilters = async ({
-  pageParam = 0,
-  filter,
-  keyword,
-}: FetchRoomListProps) => {
-  const response = await get<FetchRoomListResponse>({
-    request: REQUEST.ROOM,
-    params: {
-      page: pageParam,
-      size: 20,
-      keyword: keyword,
-      ...filter,
-    },
-  });
+const getRooms = async ({ pageParam = 0, request }: GetRoomsProps) => {
+  let response;
+  if (request === REQUEST.ROOM_RECOMMENDED || REQUEST.ROOM_PARTICIPATED) {
+    response = await userGet<FetchRoomListResponse>({
+      request: request,
+      params: { page: pageParam, size: 20 },
+    });
+  } else {
+    response = await get<FetchRoomListResponse>({
+      request: request,
+      params: { page: pageParam, size: 20 },
+    });
+  }
+
   return response.data.result;
 };
 
-export const useInfiniteRoomsWithFilters = (
-  keyword: string,
-  filter?: FetchRoomListProps['filter'],
-) => {
+export const useGetRooms = (request: string) => {
   return useInfiniteQuery({
-    queryKey: ['rooms', filter],
-    queryFn: ({ pageParam }) =>
-      fetchRoomsWithFilters({ pageParam, filter, keyword }),
+    queryKey: ['rooms', request],
+    queryFn: ({ pageParam }) => getRooms({ pageParam, request }),
     initialPageParam: 0,
     getNextPageParam: lastPage => {
       if (lastPage.last || lastPage.empty) return undefined;

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { REQUEST, userDel } from '@/shared/api';
-import { useRoomList } from '@/screen/home/api';
+import { useGetRoomList } from '@/screen/home/api';
 import { getPath } from '@festamate/utils';
 
 interface DeleteRoomResponse {
@@ -9,17 +9,17 @@ interface DeleteRoomResponse {
   message: string;
 }
 
-const deleteRoomDelete = async (roomId: number) => {
+const deleteRoom = async (roomId: number) => {
   await userDel<DeleteRoomResponse>({
     request: getPath(REQUEST.ROOM, `${roomId}`),
   });
 };
 
-export const useDeleteRoomDelete = () => {
-  const { refetch } = useRoomList(REQUEST.ROOM);
+export const useDeleteRoom = () => {
+  const { refetch } = useGetRoomList(REQUEST.ROOM);
 
   return useMutation({
-    mutationFn: deleteRoomDelete,
+    mutationFn: deleteRoom,
     onSuccess: () => {
       refetch();
       window.location.replace(`${import.meta.env.VITE_PRODUCTION_URL}`);

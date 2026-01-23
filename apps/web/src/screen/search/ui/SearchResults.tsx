@@ -4,7 +4,7 @@ import { ListItem } from '@/entities/list/ui';
 import { useBottomSheet } from '@/shared/hook';
 import { BOTTOM_SHEET } from '@/shared/constants';
 
-import { useInfiniteRoomsWithFilters } from '@/screen/search/api';
+import { useGetSearchResults } from '@/screen/search/api';
 import { Filter } from '@/screen/search/types';
 import { SearchFilterTag } from '@/screen/search/ui';
 
@@ -18,7 +18,7 @@ export default function SearchResults({
   filter,
 }: SearchResultsParams) {
   const { data, hasNextPage, isLoading, isFetchingNextPage, fetchNextPage } =
-    useInfiniteRoomsWithFilters(searchKey, { ...filter });
+    useGetSearchResults(searchKey, { ...filter });
   const { openBottomSheet } = useBottomSheet();
 
   const observer = useRef<IntersectionObserver | undefined>(undefined);

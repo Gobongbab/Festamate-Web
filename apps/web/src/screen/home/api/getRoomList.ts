@@ -34,16 +34,16 @@ interface FetchRoomListResponse {
   };
 }
 
-const fetchRoomList = async (request: string) => {
+const getRoomList = async (request: string) => {
   const response = await userGet<FetchRoomListResponse>({
     request: request,
   });
   return response.data.result;
 };
 
-export const useRoomList = (request: string) => {
+export const useGetRoomList = (request: string) => {
   return useQuery({
     queryKey: [`room-list-${request}`],
-    queryFn: () => fetchRoomList(request),
+    queryFn: () => getRoomList(request),
   });
 };
